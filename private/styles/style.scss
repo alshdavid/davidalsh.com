@@ -21,8 +21,6 @@
 
 #aboutMe {
     display: none;
-    height: 1000px;
-    //background: green;
     -webkit-animation: vkr-fade-in .5s forwards;
     -moz-animation:    vkr-fade-in .5s forwards;
     -o-animation:      vkr-fade-in .5s forwards; 
@@ -307,7 +305,7 @@ a {
         position: absolute;
         right: 100px;
         top: -7px;
-        background-image: url('../images/me.jpg');
+        background-image: url('./images/me.jpg');
         background-position: center;
         background-size: cover;
         border-radius: 50%;
