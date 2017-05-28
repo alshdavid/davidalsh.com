@@ -1,1 +1,0 @@
-"C:\Users\alshd\Desktop\profile-site\private\scripts\script.ts" "C:\Users\alshd\Desktop\profile-site\private\scripts\.baseDir.ts" --sourcemap --removeComments --target ES5 --outDir public/scripts

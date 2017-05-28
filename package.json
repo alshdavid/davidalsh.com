@@ -1,34 +1,26 @@
 {
-  "name": "webtemplar",
+  "name": "vue-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alshdavid/webTemplar.git"
+    "start": "webpack-dev-server --progress --colors",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alshdavid/webTemplar/issues"
-  },
-  "homepage": "https://github.com/alshdavid/webTemplar#readme",
-  "dependencies": {
-    "grunt": "^1.0.1",
-    "grunt-ts": "^6.0.0-beta.3",
-    "typescript": "^1.8.10"
-  },
   "devDependencies": {
-    "grunt-browser-sync": "^2.2.0",
-    "grunt-concurrent": "^2.3.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-htmlclean": "^2.7.7",
-    "grunt-sass": "^1.2.0",
-    "load-grunt-tasks": "^3.5.0"
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.4.0",
+    "css-loader": "^0.28.0",
+    "node-sass": "^4.5.2",
+    "postcss-loader": "^1.3.3",
+    "postcss-smart-import": "^0.6.11",
+    "precss": "^1.4.0",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }

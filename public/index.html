@@ -3,224 +3,183 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="theme-color" content="#000000">
+
+        <!-- Search engines -->
+        <meta name="description" content="Projects Created by Yours Truly">
+        <!-- Google Plus -->
+        <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+        <!-- html itemscope itemtype="http://schema.org/{CONTENT_TYPE}" -->
+        <meta itemprop="name" content="David Alsh">
+        <meta itemprop="description" content="Projects Created by Yours Truly">
+        <meta itemprop="image" content="http://davidalsh.com/social.jpg">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summery">
+        <meta name="twitter:site" content="http://davidalsh.com/">
+        <meta name="twitter:title" content="David Alsh">
+        <meta name="twitter:description" content="Projects Created by Yours Truly">
+        <meta name="twitter:image:src" content="http://davidalsh.com/social.jpg">
+        <!-- Open Graph General (Facebook & Pinterest) -->
+        <meta property="og:url" content="http://davidalsh.com/">
+        <meta property="og:title" content="David Alsh">
+        <meta property="og:description" content="Projects Created by Yours Truly">
+        <meta property="og:image" content="http://davidalsh.com/social.jpg">
+        <meta property="og:type" content="website">
 
         <title>David Alsh</title>
-        <meta name="description" content="The HTML5 Herald">
-        <meta name="author" content="SitePoint">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="styles/style.css">
-        <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,500" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+
     </head>
-    <body>
-        <nav class="sticky-header">
-            <ul>
-                <a href="/portfolio"><li id="mainNavPortfolio">Portfolio</li></a>
-                <a href="/about-me"><li id="mainNavAboutMe">About Me</li></a>
-            </ul>
-        </nav>
-        <section id="pageHeader"> 
-            <div class="pageHeaderCursorOutlet">
-                <h2 id="pageHeaderCursor"></h2>
-            </div>
-        </section>  
-        <section class="profile-banner">
-            <nav class="nav">  
-                <ul>
-                    <a href="/portfolio"><li onclick="scrollToContent()" id="smallNavPortfolio">Portfolio</li></a>
-                    <a href="/about-me"><li onclick="scrollToContent()" id="smallNavAboutMe">About Me</li></a>
-                </ul>
-            </nav>
-            <div class="img" alt="profile picture"></div>
-            <div class="personal-details">
-                <h1>Software Developer</h1>
-                <h3>Auckland, New Zealand</h3>
-            </div>
-            <div class="page-width title"> 
-                <h2>David Alsh</h2>
-            </div>
+    <body base="./" style="display: none;">
+
+        <section id="project-drawer" open="asdasd" data-open="false">
+            <div id="feature-outlet"></div>
         </section>
-        <section id="contentOutlet">
 
-            <section id="aboutMe" class="profile-content page-width">
-                <article>
-                    <h2>A bit about me</h2> 
-                    <br />
-                    <p>
-                        My name is David, I am a technology enthusiast and have been playing with tech for as long as I can remember. 
-                        <br /><br />
-                        A little while ago, a friend of mine started studying programming at university, which was the catalyst for my realisation that my skills and understanding of technology was valuable, so I sought to refine them. 
-                        <br /><br />
-                        Since then I have immersed myself in the world of programming, start ups, and coffee. Led teams, coordinated with team, broke things, googled things, traveled, met people and wouldn't trade my experience for the world/ 
-                        <br /><br />
-                        I love efficiency and simplicity. Single Page Web Applications are a something of an obsession of mine. 
-                        <br /><br />
-                        I find learning new systems and putting them into practice extremely rewarding. I'm the kind of person who would suggest amendments or alternative ways of approaching a problem. 
-                        <br /><br />
-                        Interests outside of programming involve travel, spending time with friends or family, working on motorbikes, fire-spinning, beer.  
-                        <br /><br />
-                    </p>
-                    <h4>A project I put together a while ago</h4>
-                    <iframe class="video" src="https://www.youtube.com/embed/IO_xM_IdeAw" frameborder="0" allowfullscreen></iframe>
-                    <br /><br />
-                    <h4>Contact:</h4>
-                    <p>
-                        If you want to contact me, feel free to do so via email or mobile phone.
-                        <br /><br />
-                        My contact details are:
-                        <br /><br />
-                        Phone: <a href="tel:0284041700"><strong>028 404 1700</strong></a>
-                        <br />
-                        Email: <a href="mailto:alshdavid@gmail.com"><strong>alshdavid@gmail.com</strong></a>
-                    </p>
-                </article>
-            </section>    
+        <header>
+            <div class="content-wrapper">
+                <a href="#portfolio">Portfoilio</a>
+                <a href="#about">My Story</a>
+                <a href="#contact">CV</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </header>
 
-            <section id="portfolio" class="profile-content page-width">
-                <h1>Portfolio</h1>
-                <div id="projectsArticles">
+        <a href="#hero" class="go-up"><i class="ion-arrow-up-b"></i></a>
 
-                    <article>
-                        <div class="content">
-                            <h2>My GitHub Toolbox</h2> <br />
-                            <h3>My Spare Time</h3><time>2016</time>
-                            <p>
-                                I'm a little obsessed with single page web applications, I have built a couple of frameworks that you can use to construct SPAs simply, which include a route handling service along with resource lazyloading. 
-                                <br /><br />
-                                For those projects I used Vanilla JavaScript for that extra performance boost. .
-                                <br /><br />
-                                Otherwise I have an example Angular2 app in my repository, as well as some simple web development tools like a prepackaged task runner template to get you started with TypeScript and SCSS (with mixins).
-                            </p>
-                            <div id="links">
-                                <a href="https://github.com/alshdavid/" target="blank">www.github.com/alshdavid</a>
-                                <!-- <a href="">Github</a> -->
-                            </div>                                
-                        </div>    
-                        <div style="background-image: url('./images/projects/github.com.jpg');" class="img"></div>  
-                    </article>
+        <main class="page-index">
+            <section id="hero" class="hero full-viewheight">
+                <div class="hero-text">
+                    <h1>David Alsh</h1>
+                    <h2>Software Developer</h2>
+                    <h3>Auckland, New Zealand</h3>
+                </div>
+                <div class="mountain"></div>
+            </section>
 
-                    <article>
-                        <div class="content">
-                            <h2>Brown Paper Bag</h2> <br />
-                            <h3>Current Employer</h3><time>August 2016</time>
-                            <p>
-                                Currently Employed by Brown Paper Bag in Auckland. 
-                                <br /><br />
-                                Brown Paper Bag is a fast paced, agile workplace that involves high levels of collaboration and attention to detail. 
-                                <br /><br />
-                                I am a front end developer, using task runners, Laravel, JavaScript, SCSS.. They put me through my paces, let me tell you. 
-                                <br /><br />
-                                So far it has been an incredible experience working for one of New Zealand's best.
-                            </p>
-                            <div id="links">
-                                <a href="http://brownpaperbag.co.nz/" target="blank">www.brownpaperbag.co.nz</a>
-                                <!-- <a href="">Github</a> -->
-                            </div>                                
-                        </div>    
-                        <div style="background-image: url('./images/projects/brownpaperbag.co.nz.jpg');" class="img"></div>
-                    </article>
-
-                    <article>
-                        <div class="content">
-                            <h2>Whispr</h2> <br />
-                            <h3>An App. A Story.<span>(NSFW)</span></h3><time>November 2015</time>
-                            <p>
-                                This was one of those "did this really happen?" kind of things. 
-                                <br /><br />  
-                                By this point in my career, I had started getting good at making web apps and I wanted to put my chisel to work on a real app project. So a few friends and I started throwing around ideas, and the idea of an "Uber for the adult industry" was floated.
-                                <br /><br />
-                                We all had a good laugh about it, but quickly changed the subject. The next morning I began looking for third parties that would be interested. Within the day I found a business partner and the race was off. 
-                                <br />
-                                The next morning I began looking for third parties that would be interested. Within the day I found a 
-                                buisness partner and the race was off.
-                                <br /><br />
-                                What started as a joke ended up in months of learning AngularJS, mixed with 18 hour 7 day weeks, coffee, coffee, sleeping on the floor, coffee and I still can't believe it happened. 
-                            </p>
-                            <div id="links">
-                                <a href="http://whispr.online/" target="blank">www.whispr.online</a>
-                                <!-- <a href="">Github</a> -->
-                            </div>                                
-                        </div>    
-                        <div style="background-image: url('./images/projects/whispr.online.jpg');" class="img"></div>
-                    </article>
-
-                    <article>
-                        <div class="content">
-                            <h2>Oz Kiwi</h2> <br />
-                            <h3>Volunteered to Help a Cause I Believe in</h3><time>April 2015</time>
-                            <p>
-                                As a New Zealander who was living in Australia at the time, it was crazy when I learned about the insane circumstances the immigration laws of Australia put New Zealanders. 
-                                <br /><br />  
-                                My initial instinct was to do something about it, I didn't have the disposable income to donate to anyone, so I found the most popular organisation and offered to help them with their IT woes.  
-                                <br /><br />
-                                I put together a communication platform, document sharing service and built them a website in WordPress.
-                            </p>
-                            <div id="links">
-                                <a href="http://www.ozkiwi2001.org/" target="blank">www.ozkiwi2001.org</a>
-                                <!-- <a href="">Github</a> -->
-                            </div>                                
-                        </div>    
-                        <div style="background-image: url('./images/projects/ozkiwi2001.org.jpg');" class="img"></div>
-                    </article>
-
-                    <article>
-                        <div class="content">
-                            <h2>Primary Training</h2> <br />
-                            <h3>Private Contract, The First One</h3><time>January 2015</time>
-                            <p>
-                                I began my journey of software development with this site. 
-                                <br /><br />  
-                                The combination of my basic understanding of HTML and my natural affinity for being entrepreneurial led me to seek and destroy little web development contracts.
-                                <br /><br />
-                                This was the first site I put together commercially, while I cringe at it, I feel a great deal of pride as I remember how hard I worked.
-                            </p>
-                            <div id="links">
-                                <a href="http://www.primarytraining.com.au/" target="blank">www.primarytraining.com.au</a>
-                                <!-- <a href="">Github</a> -->
-                            </div>                                
-                        </div>    
-                        <div style="background-image: url('./images/projects/primarytraining.com.au.jpg');" class="img"></div>
-                    </article>
-
+            <section id="portfolio" class="section-portfolio section">
+                <h2>Portfolio</h2>
+                <div class="projects">
+                    <div class="project half" onclick="openProject('Manor Homes')" style="background-image: url('assets/projects/manorbuild/image.jpg')"></div>
+                    <div class="project half" onclick="openProject('Textile Recycle Center')" style="background-image: url('assets/projects/trc/image.jpg')"></div>
+                    <div class="project wide" onclick="openProject('Marshall Installs')" style="background-image: url('assets/projects/marshallinstalls/image.jpg')"></div>
+                    <div class="project half" onclick="openProject('BDG Architects')" style="background-image: url('assets/projects/bdg/image.jpg')"></div>
+                    <div class="project half" onclick="openProject('BrownPaperBag')" style="background-image: url('assets/projects/brownpaperbag/image.jpg')"></div>
                 </div>
             </section>
-           
-        </section>
-         <footer>
-            If you're reading this that means you got to the bottom of my page. I like you.
-            <br /><br />
-            So... Call me
-            <br /><br />
-            <a href="tel:0284041700">028 404 1700</a> | <a href="mailto:alshdavid@gmail.com">alshdavid@gmail.com</a>
-        </footer>
-        <script src="scripts/script.js"></script>
-        <script src="scripts/typed.js"></script>
-        <script>
-            $(function(){ 
-                $("#pageHeaderCursor").typed({
-                    strings: [
-                        "Hi, ^200 welcome to my site.",
-                        "My name is David Alsh.", 
-                        "I'm a software developer.",
-                        "I build apps", 
-                        "websites", 
-                        "and desktop applications.", 
-                        "I use technologies like <br /> Angular2 and NodeJS",
-                        "MongoDB, ^700 Firebase, ^700 ASP.net Core, ^700 Java.",
-                        "Check me out"
-                    ],
-                    typeSpeed: 0,
-                    showCursor: true,
-                });
-            });
 
-            
-            function scrollToContent(){
-                $('html, body').animate({
-                    scrollTop: $("#contentOutlet").offset().top + 100
-                }, 1000);
-            }
-            
-        </script>
+            <section id="about" class="section-about section dark">
+                <article class="content-wrapper">
+                    <h2>My Story</h2>
+                    <h4>
+                        I'm a technology enthusiast, beer drinker and backwards hat wearer
+                    </h4>
+                    <p>
+                        Software Development. What a journey.
+                    </p>
+                    <p>
+                        For me, it all started when I was 12. My father had bought me my first (and last) console, a
+                        PSP. Unfortunately, I had no games with it, and the sound of the menu items clicking only remained entertaining
+                        for so long.
+                    </p>
+                    <p>
+                        The console reminded me of a Game Boy Advanced, so I assumed it would "just" have Poke'mon.
+                        When I discovered it didn't, I realised that I had to find out how to get it working. <strong>BAM.</strong>                    Enter the world of source code, compilers and homebrew games.
+                    </p>
+                    <p>
+                        That eventually led on to many late nights, sitting around at night with a pad and a pen, working
+                        out game mechanics for fictitious games. I had no idea how to make them, but that didn't stop me from
+                        trying to work it out. I thought about what would work, broke down genres and fantasized about the games
+                        I would make for myself.
+                    </p>
+                    <p>
+                        Eventually, I started making projects like IDEs for PSP homebrew development in C# (essentially
+                        a transpiler for LUA that ran off a homebrew LUA interpreter).
+                    </p>
+                    <p>
+                        I wanted to be a hacker one day, so I picked up a copy of Red Hat Linux from Dick Smith. I'd
+                        installed Windows 98 before, how hard could Linu- oh shi.. what is ext2?
+                    </p>
+                    <p>
+                        <strong>Skip to today</strong> and I have become a man of shenanigans.
+                    </p>
+                    <p> 
+                        Leading start-ups. Traveling. Coffee. Engineering. Random Hobbies. Coffee. It kills me to not
+                        be doing something ridiculous.
+                    </p>
+                    <p>
+                        I was previously employed by Brown Paper Bag in Auckland - an incredible company with some of
+                        the most talented people I have met. I am humbled to have been a part of their team, and have enjoyed
+                        every minute of it
+                    </p>
+                    <p>
+                        The entire experience was like being strapped into a rollercoaster. Learning new technologies,
+                        given creative freedom and even led a team building a Progressive Web App.
+                    </p>
+                    <p>
+                        In the future I look forward to more travel, more shenanigans, more coffee, and more beer.
+                    </p>
+                    <h4>
+                        Okay hot shot, so what can you do?
+                    </h4>
+                    <p>
+                        I am passionate about web technologies. My current favourite stack is Angular paired with Node/Express along with the appropriate database technology. I have experience in using both relational and non relational DBs.
+                    </p>
+                    <p>
+                        I handle all of the DevOps, load balancing, security, sysAdmin, etc of my projects and enjoy a bit of terminal Kung Fu.
+                    </p>
+                    <p>
+                        I have some skills in UX/UI design and can make HTML do whatever I want it to.
+                    </p>
+                    <p>
+                        In the past I have worked with Java, C#, Python. I had a background in object orientation before
+                        I moved into the crazy world of JavaScript, with it's prototypes, observables, promises and asynchronous chaos.
+                    </p>
+                    <p>
+                        Initially, my introduction to JavaScript involved anger. <i>Why can I not just get a return value?.. ok non blocking fine ok.</i>                    Eventually the pain turned into a fondness for it's expressive nature.
+                    </p>
+                    <p>
+                        I am currently enjoying implementing more functional programming systems into my applications.
+                    </p>
+                    <p>
+                        I really love the flexibility in JavaScript, plus saying big words like "higher order function"
+                        and scaring other developers makes me feel good about myself.
+                    </p>
+                </article>
+            </section>
+
+            <section id="contact" class="section-contact section full-viewheight">
+                <h2>Contact</h2>
+                <div class="content-wrapper">
+                    <div>
+                        <a class="email" href="mailto:alshdavid@gmail.com">alshdavid@gmail.com</a>
+                        <a class="phone" href="tel:0284041700">028 404 1700</a>
+                        <a class="cv" href="#">CV / Resume</a>
+                    </div>
+                </div>
+            </section>
+        </main> 
+
+        <footer>
+        </footer>
+ 
+        
     </body>
-</html> 
+    <section>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
+        <script>
+            window.setTimeout(function(){
+                $('.section').css({ display: "block" })
+            },4000)
+
+            $('.full-viewheight').css({ height: $(window).innerHeight() })
+
+        </script>
+    </section>
+</html>
