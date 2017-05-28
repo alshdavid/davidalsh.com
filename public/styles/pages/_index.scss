@@ -1,0 +1,187 @@
+.page-index {
+    .hero {
+        position: relative;
+        height: 100vh;
+        .hero-text {
+            position: relative;
+            z-index: 99;
+            opacity: 0;
+            animation: fadeup 2s forwards;
+            animation-delay: 2s;
+            padding-top: 200px;
+            text-align: center;
+            h1 { 
+                font-weight: 400; 
+                font-size: 56px;
+                padding-bottom: 10px;
+            }
+            h2, h3 { 
+                font-weight: 300; 
+                font-size: 30px;
+            }
+            h3 {
+                font-size: 20px;
+                padding-top: 7px;
+            }
+        }
+
+        .mountain {
+            animation: fadein 2s forwards;
+            position: absolute;
+            left: 0; bottom: 0; right: 0;
+            @include bg(cover, '/assets/1.jpeg');
+            filter: grayscale(100%);
+            height: 300px;
+
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0; top: 0; right: 0; bottom: 0;
+                //height: 100px;
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+0,0+100;White+to+Transparent */
+                background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+            }
+        }
+
+    }
+
+    .section-portfolio {
+        .projects {
+            font-size: 0;
+        }
+
+        .project {
+            background: #fafafa;
+            height: 350px;
+            margin: 20px;
+            cursor: pointer;
+            @include bg(cover);
+            border: 1px #e0e0e0 solid;
+            transition: opacity .25s; 
+
+            &:hover { opacity: 0.8; }
+            &:active {  opacity: 0.6; transition: opacity 0s; }
+
+
+            @media(min-width: $tablet){
+
+                &.half {
+                    width: calc(50% - 40px);
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .section-about {
+        h4, h2 {
+            font-weight: 400;
+            font-size: 18px;
+            text-align: center;
+            margin: 40px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 22px;
+
+            strong {
+                font-weight: 400;
+            }
+        }
+    }
+
+    .section-contact {
+        height: 100vh;
+        position: relative;
+        z-index: -1;
+
+        .content-wrapper {
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        a {
+            display: block;
+        }
+
+        .email {
+            font-size: 45px;
+            padding-bottom: 20px;
+
+            @media(max-width: $tablet){
+                font-size: 20px;
+            }
+        }
+        .phone {
+            font-size: 30px;
+            padding-bottom: 15px;
+            @media(max-width: $tablet){
+                font-size: 15px;
+            }
+        }
+        .cv {
+            font-size: 20px;
+
+            @media(max-width: $tablet){
+                font-size: 14px;
+            }
+        }
+    }
+
+    .section {
+        padding: 30px 0;
+        display: none;
+
+        @media(min-width: $tablet){
+            padding: 80px;
+        }
+
+        h2 {
+            margin-top: 0px;
+            margin-bottom: 30px;
+            font-size: 25px;  
+            text-align: center;
+         
+            @media(min-width: $tablet){
+                margin-bottom: 80px;
+            }        
+        }
+
+        &.dark {
+            background: $color-brand-1;
+        
+            * {
+                color: white;
+            }
+        }
+    }
+}
+
+.go-up {
+    animation: fadein 2s forwards;
+    animation-delay: 2s;
+    opacity: 0;
+    position: fixed;
+    bottom: 40px;
+    right: 3%;
+    background: #333;
+    color: white;
+    border-radius: 2px;
+    border: 1px white solid;
+
+    i {
+        display: block;
+        color: white;
+        padding: 5px 11px;
+    }
+}
