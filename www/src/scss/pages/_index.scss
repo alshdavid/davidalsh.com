@@ -1,20 +1,81 @@
 .page-index {
-    #hero-carousel {
-        $slide-height-desktop: 550px;
-        $slide-height-mobile: 300px;
+    .hero {
+        height: calc(100vh - 40px);
+        background-image: url("");
+        background-position: center;
+        background-size: cover;
+        opacity: 0.7; 
+        position: relative;
 
-        height: $slide-height-mobile;
-
-        @media(min-width: $tablet){
-            height: $slide-height-desktop;
+        .app-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
-        .slide {
-            height: $slide-height-mobile;
-            @include bg(cover);
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+0,ffffff+100&1+0,0+100 */
+            background: -moz-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+        }
 
-            @media(min-width: $tablet){
-                height: $slide-height-desktop;
+        .title-text {
+            position: absolute;
+            @include pos(0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            //animation: fadedown 2s forwards;
+
+            * {
+                font-weight: 300;
+                font-size: 30px;
+            }
+
+            h1 {
+                font-size: 70px;
+                font-weight: 400;
+            }
+        }
+
+        .bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+
+            * {
+                color: white;
+                display: inline-block;
+            }
+
+            a {
+                cursor: pointer;
+            }
+
+            span {
+                font-size: 20px;
+                font-weight: 200;
+            }
+            
+            i {
+                font-size: 60px;
+                color: white;
+                line-height: 0px;
+                margin-top: -5px;
             }
         }
     }

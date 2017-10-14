@@ -2,9 +2,50 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Webpack App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000">
+    <link rel="manifest" href="assets/manifest.json">
+    <link rel="icon"  type="image/png" href="assets/logo.png">
+    <title>David Alsh</title>
   </head>
-  <body>
+  <body class="page page-index" style="visibility: hidden" onload="document.body.style.visibility = 'visible'">
+    <main id="app">
+      <nav class="top">
+        <a class="left"><img src="https://vectr.com/ihsanm/a1kQC3Waye.svg?width=640&height=640&select=a1kQC3Wayepage0" width="60px" alt=""/> </a>
+        <a class="right">
+          MENU
+          <i class="ion-navicon"></i>
+        </a>
+      </nav>
+
+      <div class="hero">
+        <app-image 
+          thumb="assets/hero.min.jpg" 
+          src="assets/hero.src.jpg"
+        ></app-image>
+        <div class="title-text">
+          <div>
+            <h1>David Alsh</h1>
+            <h3>Auckland, New Zealand</h3>
+            <h2>Software Developer</h2>
+          </div>
+        </div>
+
+        <div class="bottom">
+          <a>
+            <span>Read On</span><br>
+            <i class="ion-ios-arrow-down"></i>
+          </a>
+        </div>
+      </div>
+
+
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js" integrity="sha256-0rNBIaIMGY7KaD8u+PwjVYX8kMjvxxeKCKviu5+tFuk=" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400" rel="stylesheet">
     <script src="app.bundle.js"></script>
   </body>
 </html>

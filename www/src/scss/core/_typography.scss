@@ -60,6 +60,43 @@
     clear: both;
 }
 
+.page {
+    main {
+        margin: 20px;
+        background: #eee;
+        height: calc(100vh - 40px);
+        overflow-y: scroll;
+        position: relative;
+        @include no-scroll();
+    }
+
+    nav.top {
+        padding: 20px 30px;
+        position: absolute;
+        top:0; right: 0; left: 0;
+        z-index: 10;
+
+        *  {
+            vertical-align: middle;
+            letter-spacing: 1px;
+            color: rgba(#333, 0.7);
+            display: inline-block;
+        }
+        
+        a {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        i {
+            padding-left: 5px;
+            font-size: 40px; 
+            position: relative;
+            bottom: 1px;
+        }
+    }
+}
+
 // To show and hide elements for desktop / mobile
 .desktop { @media (max-width: $desktop){ display: none !important; } }
 .mobile  { @media (min-width: $desktop){ display: none !important; } }
@@ -73,3 +110,54 @@
 
 
 
+@keyframes fadedown {
+    from {
+        opacity: 0;
+        transform: translate(0, -50px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0px);
+    }
+}
+
+@keyframes unblur {
+    from {
+        filter: blur(13px);
+    }
+    to {
+        filter: blur(0px);
+    }
+}
+
+.app-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-position: center;
+    background-size: cover;
+
+    .app-image-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-position: center;
+        background-size: cover;
+        filter: blur(13px);
+    }
+
+    .app-image-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-position: center;
+        background-size: cover;
+        animation: unblur 1s forwards ease-in-out;
+    }   
+}
