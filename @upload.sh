@@ -1,26 +1,21 @@
 #!/bin/bash
 script="$0"
 basename="$(dirname $script)"
-
-rm -rf @build
-mkdir @build
-cp -r www @build/dist
-cd @build/dist
-zip -r ../dist.zip *
-cd ../../
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 PEN=$(echo "console.log(require('./jsonpen.json').pen)" | node)
 USERNAME=$(echo "console.log(require('./jsonpen.json').username)" | node)
 PASSWORD=$(echo "console.log(require('./jsonpen.json').password)" | node)
+FILE=$(echo "console.log(require('./jsonpen.json').zipDir)" | node)
 
-echo $PEN
-echo $USERNAME
-echo $PASSWORD
-
-
+if [ -z "$PEN" ] || [ -z "$USERNAME" ] || [ -z "$PASSWORD" ] || [ -z "$PEN" ]
+then 
+  echo "Can't Get Credentials"
+  exit 1
+fi
 
 num=$(curl \
+  -s \
   -X POST -H 'Content-Type: application/json' \
   -d "{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\"}" \
   https://api.jsonpen.com/login/$PEN)
@@ -33,10 +28,17 @@ authorization=$(echo "\
     console.log(null) \
   }" | node)
 
+if [ $authorization == "null" ] 
+then 
+  echo "Login Failed"
+  exit 1
+fi
+
 UPLOAD=$(curl \
+  --progress-bar \
   -H "Content-Type: multipart/form-data" \
   -H "authorization: $authorization" \
-  -F "file=@$basename/@build/dist.zip;type=application/zip" \
+  -F "file=@$DIR/$FILE;type=application/zip" \
   https://api.jsonpen.com/admin/upload)
 
 SAVED=$(echo "console.log( ${UPLOAD}.message )" | node)
