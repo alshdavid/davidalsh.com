@@ -3,6 +3,22 @@ script="$0"
 basename="$(dirname $script)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+
+
+
+rm -rf @build
+mkdir @build
+cd www
+npm run build
+cd ..
+cp -r www/public @build/dist
+cd @build/dist
+zip -r ../dist.zip *
+cd ../../
+
+
+
+
 PEN=$(echo "console.log(require('./jsonpen.json').pen)" | node)
 USERNAME=$(echo "console.log(require('./jsonpen.json').username)" | node)
 PASSWORD=$(echo "console.log(require('./jsonpen.json').password)" | node)
