@@ -10,9 +10,14 @@ zip -r ../dist.zip *
 cd ../../
 
 
-PEN="davidalsh"
-USERNAME="alshdavid"
-PASSWORD=""
+PEN=$(echo "console.log(require('./jsonpen.json').pen)" | node)
+USERNAME=$(echo "console.log(require('./jsonpen.json').username)" | node)
+PASSWORD=$(echo "console.log(require('./jsonpen.json').password)" | node)
+
+echo $PEN
+echo $USERNAME
+echo $PASSWORD
+
 
 
 num=$(curl \
