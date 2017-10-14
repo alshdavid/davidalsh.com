@@ -2,3 +2,7 @@
 node_modules
 .tscache
 jsonpen.json
+@build
+@build/*
+./@build
+./@build/*
