@@ -161,3 +161,101 @@
         animation: unblur 1s forwards ease-in-out;
     }   
 }
+
+.wysiwyg {
+    * {
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    b {
+        font-weight: 400;
+    }
+
+    h1 {
+        font-size: 30px;
+        line-height: 34px;
+        border-bottom: 2px #eee solid;
+        padding-bottom: 5px;
+    }
+
+    h2 {
+        font-size: 28px;
+        line-height: 32px;
+    }
+
+    h3 {
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    h4 {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    h5 {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    h6 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 100;
+        text-align: justify;
+    }
+
+    code {
+        display: block;
+        font-size: 14px;
+        font-family: 'Inconsolata', monospace;
+        padding: 10px;
+        background: #eee;
+        border-radius: 4px;
+        white-space: pre-wrap;
+    }
+
+    em {
+        display: inline-block;
+        font-size: 14px;
+        font-family: 'Inconsolata', monospace;
+        padding: 5px;
+        font-style: normal;
+        background: #eee;
+        border-radius: 4px;
+        margin: 0;
+    }
+
+    img {
+        max-width: 80%;
+        display: block;
+    }
+
+    video {
+        max-width: 80%;
+        display: block;
+    }
+}
+
+.btn {
+    display: inline-block;
+    cursor: pointer;
+
+
+    &.standard {
+        background: white;
+        border: 1px #e0e0e0 solid;
+        padding: 5px 20px;
+    }
+
+}

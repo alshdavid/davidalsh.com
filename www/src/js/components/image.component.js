@@ -2,6 +2,7 @@ export default {
     template: `
         <div class="app-image">
             <div class="app-image-thumb" 
+                v-if="!loadedImage"
                 v-bind:style="{
                     'background-image' : 'url(' + thumb + ')'
                 }
@@ -10,8 +11,8 @@ export default {
                 v-if="loadedImage"
                 v-bind:style="{
                     'background-image' : 'url(' + loadedImage + ')'
-                }
-            "></div>
+                }"
+            ></div>
         </div>
     `,
     props: ["src", "thumb"],
@@ -19,9 +20,38 @@ export default {
         loadedImage: ""
     }),
     methods: {},
+    watch: { 
+        src: function(newVal, oldVal) {
+            console.log('Image changed: ', newVal)
+            loadImage(newVal)
+                .then(x => {
+                    this.loadedImage = x
+                    console.log("loaded")
+                })
+
+        },
+        thumb: function(newVal, oldVal) {
+            
+        }
+    },
     created: function(){
-        let hero = document.createElement("IMG")
-        hero.onload = () => this.loadedImage = this.src
-        hero.src = this.src
+        if (this.src) {
+            loadImage(this.src)
+                .then(x => {
+                    this.loadedImage = x
+                    console.log("loaded")
+                })
+        }
     }
-  }
+}
+
+function loadImage(url){
+    return new Promise((res) => {
+        let hero = document.createElement("IMG")
+        hero.onload = () => {
+            res(url)
+            hero.remove()
+        }
+        hero.src = url
+    })
+}

@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#000">
-        <link rel="manifest" href="assets/manifest.json">
-        <link rel="icon"  type="image/jpeg" href="assets/logo.jpg">
-        <title>David Alsh</title>
-    </head>
-    <body class="page page-index" style="visibility: hidden"> <!-- </body> style="visibility: hidden" onload="document.body.style.visibility = 'visible'"> -->
-        <main id="app">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000">
+    <link rel="manifest" href="assets/manifest.json">
+    <link rel="icon"  type="image/jpeg" href="assets/logo.jpg">
+    <title>David Alsh</title>
+  </head>
+  <body class="page page-index" style="visibility: hidden" onload="document.body.style.visibility = 'visible'">
+    <div id="app">
+        <main v-if="admin.is" class="login">
+            <div class="panel">
+                <h1>Login</h1>
+                <input type="text" placeholder="Username" v-model="admin.details.username">
+                <input type="password" placeholder="Password" v-model="admin.details.password">
+                <button v-on:click="admin.login()">Login</button>
+            </div>
+        </main>
+        <main v-if="!admin.is">
+            <a class="save-changes" v-on:click="save()">Save Changes</a>
 
             <nav class="top">
                 <a class="left">
-                <!-- <img src="assets/logo.svg" width="60px" alt=""/>  -->
-                
+                    <!-- <img src="assets/logo.svg" width="60px" alt=""/>  --> 
                 </a>
                 <a class="right">
-                <!-- MENU
-                <i class="ion-navicon"></i> -->
+                    <!-- MENU
+                    <i class="ion-navicon"></i> -->
                 </a>
             </nav>
 
             <section class="hero">
+
+                <div class="admin">
+                    <a class="btn standard" v-on:click="admin.updateHero.thumb()">Change Thumb <i class="ion-image"></i></a>
+                    <a class="btn standard" v-on:click="admin.updateHero.src()">Change Image <i class="ion-image"></i></a>
+                </div>
 
                 <app-image 
                     v-bind:thumb="state.hero.thumb" 
@@ -53,8 +67,15 @@
 
                 <div class="content-max-width">
             
-                    <div class="item" v-for="skill of state.skills">
+                    <div class="item" v-for="(skill, index) of state.skills">
                         <img v-bind:src="skill.image" alt="">
+                        <a class="remove" v-on:click="state.skills.splice(index, 1)">REMOVE</a>
+                    </div>
+
+                    <div class="item to-add">
+                        <div class="adder" v-on:click="admin.addSkill()">
+                            <i class="ion-plus"></i>
+                        </div>
                     </div>
                     
                 </div>
@@ -66,14 +87,19 @@
                         About
                         <small>A Journey, A Story, A Nuisance</small>
                     </h3>
-                
+                    
                     <div 
                         class="image" 
                         v-bind:style="{
                             'background-image' : 'url(' + state.my_picture + ')'
                         }"
-                    ></div>
-                    <article class="wysiwyg" v-html="state.about_me"></article>
+                    >
+                        <a class="btn standard" v-on:click="admin.updateMyPicture()">Change Thumb <i class="ion-image"></i></a>
+                    </div>
+                    
+                    <article class="wysiwyg">
+                        <app-wysiwyg v-model="state.about_me"></app-wysiwyg>
+                    </article>
 
                     <div class="clear"></div>
                 </div>
@@ -87,7 +113,7 @@
                     </h3>
                     <ul>
                         <li 
-                            v-for="portfolio of state.projects"
+                            v-for="(portfolio, index) of state.projects"
                             v-bind:style="{
                                 'background-color' : portfolio.brand_color.muted
                             }"
@@ -99,9 +125,13 @@
                                 }"
                             ></div>
                         </li>
+                        <li style="background: #e0e0e0" v-on:click="admin.addPortfolio()">
+                            <i class="ion-plus"></i>
+                        </li>
                     </ul>
                 </div>
             </section>
+        
 
         </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js" integrity="sha256-0rNBIaIMGY7KaD8u+PwjVYX8kMjvxxeKCKviu5+tFuk=" crossorigin="anonymous"></script>
@@ -109,5 +139,6 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400" rel="stylesheet">
         <script src="app.bundle.js"></script>
-    </body>
+    </div>
+  </body>
 </html>
