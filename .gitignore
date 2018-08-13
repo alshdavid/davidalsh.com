@@ -1,8 +1,4 @@
 #Ignore node modules
 node_modules
 .tscache
-jsonpen.json
-@build
-@build/*
-./@build
-./@build/*
+dist

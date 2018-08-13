@@ -1,0 +1,21 @@
+{
+  "name": "davidalsh.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo tests pass",
+    "build": "cp -r src dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alshdavid/davidalsh.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alshdavid/davidalsh.com/issues"
+  },
+  "homepage": "https://github.com/alshdavid/davidalsh.com#readme"
+}
