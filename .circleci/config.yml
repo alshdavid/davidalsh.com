@@ -6,6 +6,11 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: apt-get -qq update
+      - run: apt-get -qq install --yes python-dev 
+      - run: apt-get -qq install --yes python-pip
+      - run: pip install -U pip
+      - run: pip install awscli --upgrade
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -16,7 +21,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
-      - run: npm build
+      - run: npm run build
       - run: aws s3 rm --recursive s3://davidalsh.com
       - run: aws s3 cp --recursive ./dist s3://$BUCKET
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT --paths /\*
