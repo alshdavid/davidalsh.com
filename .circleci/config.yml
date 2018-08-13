@@ -17,13 +17,19 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm run test
       - run: npm run build
+      - run: ls
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - dist
       
   deploy:
     docker:
       - image: circleci/python:2.7-jessie
     working_directory: ~/repo
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run: ls
       - run: sudo pip install awscli
       - run: aws s3 rm --recursive s3://davidalsh.com
