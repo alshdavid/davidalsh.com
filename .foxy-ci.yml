@@ -1,8 +1,15 @@
 name: test-deployment
 
 actions:
-  test:
+  step-one:
     image: node:latest
     steps:
       - echo "Hi"
       - echo "World"
+
+  step-two:
+    image: node:latest
+    steps:
+      - echo "Yo"
+      - echo "What's up"
+      
