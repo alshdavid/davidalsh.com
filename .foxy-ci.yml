@@ -1,8 +1,8 @@
 name: test-deployment
 
-pipelines:
-  name: test
-  image: node:latest
-  steps:
-    - echo "Hi"
-    - echo "World"
+actions:
+  test:
+    image: node:latest
+    steps:
+      - echo "Hi"
+      - echo "World"
