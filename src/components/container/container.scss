@@ -1,0 +1,9 @@
+.content-max-width {
+  padding: 0 3%;
+
+  @media (min-width: 980px) {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0;
+  }
+}
