@@ -19,7 +19,9 @@ jobs:
       run: |
         yarn
         yarn build
-        ls dist
+        aws s3 rm --recursive s3://davidalsh.com
+        aws s3 cp --recursive ./dist s3://davidalsh.com
+        aws cloudfront create-invalidation --distribution-id E1RN9EP7R6042I --paths /\*
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
