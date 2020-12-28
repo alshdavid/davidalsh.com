@@ -19,7 +19,7 @@ jobs:
       run: |
         yarn
         yarn build
-        ls build
+        ls dist
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
