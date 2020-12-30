@@ -17,7 +17,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Upload HTML to AWS
       run: |
-        apt install brotli -y
         yarn
         yarn build
         aws s3 rm --recursive s3://davidalsh.com
