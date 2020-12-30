@@ -1,0 +1,14 @@
+.component-page {
+  padding: 20px 48px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.10);
+  background-color: #fff;
+  box-sizing: border-box;
+  min-height: calc(100vh - 140px);
+}
+
+.component-page-outlet {
+  min-height: 100vh;
+  background-color: #eceff1;
+  padding-top: 20px;
+  box-sizing: border-box;
+}

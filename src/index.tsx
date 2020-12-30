@@ -5,6 +5,7 @@ import { Unsubscribable } from 'rxjs'
 import { GlobalProvider } from 'global-context'
 import { If } from './components'
 import * as Pages from './pages'
+import * as Partials from './partials'
 import { State } from './state'
 
 const state = new State()
@@ -31,6 +32,7 @@ class App extends Component {
 
   render() {
     return <GlobalProvider value={state}>
+      <Partials.Navbar />
       <If condition={this.state.pathname === '/home'}><Pages.HomePage/></If>
       {/* <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlePage/></If> */}
       <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlesPage/></If>
