@@ -17,10 +17,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Upload HTML to AWS
       run: |
+        apt install brotli -y
         yarn
         yarn build
         aws s3 rm --recursive s3://davidalsh.com
         aws s3 cp --recursive ./dist s3://davidalsh.com
+        aws s3 cp --recursive ./dist/*.js --content-encoding br s3://davidalsh.com
+        aws s3 cp --recursive ./dist/*.css --content-encoding br s3://davidalsh.com
         aws cloudfront create-invalidation --distribution-id E1RN9EP7R6042I --paths /\*
       env:
         CI: true

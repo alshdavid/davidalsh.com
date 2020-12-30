@@ -7,6 +7,8 @@ const { SourceMapDevToolPlugin } = require("webpack")
 const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const argv = require('yargs').argv
+const CompressionPlugin = require("compression-webpack-plugin");
+const zlib = require("zlib");
 
 const modes = {
   production: 'production',
@@ -21,7 +23,7 @@ if (argv.mode === modes.production) {
 }
 
 const ENTRY_NAME = 'index'
-const __outdir = [__dirname, 'build']
+const __outdir = [__dirname, 'dist']
 
 if (fs.existsSync(path.join(...__outdir))) {
   fs.rmdirSync(path.join(...__outdir), { recursive: true })
@@ -95,6 +97,19 @@ if (mode === modes.production) {
   config.output.filename = '[name].[chunkhash].js'
   config.module.rules[1].use.unshift(MiniCssExtractPlugin.loader)
   config.plugins.push(new MiniCssExtractPlugin({ filename: '[name].[chunkhash].css' }))
+  config.plugins.push(new CompressionPlugin({
+    filename: "[path][base]",
+    algorithm: "brotliCompress",
+    test: /\.(js|css)$/,
+    compressionOptions: {
+      params: {
+        [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+      },
+    },
+    threshold: 10240,
+    minRatio: 0.8,
+    deleteOriginalAssets: true,
+  }))
 } else {
   config.module.rules[1].use.unshift('style-loader')
 }
