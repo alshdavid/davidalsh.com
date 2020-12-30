@@ -1,33 +1,30 @@
 import "./article.scss"
-import React, { useMemo, Fragment, useState } from "react"
-import { useGlobalSelector } from "global-context"
+import React, { useMemo, useState } from "react"
+import { useGlobalContext } from "global-context"
 import { State } from "../../state"
-import { Container, Markdown, Comments } from "../../components"
+import { Page, Markdown, Comments, If } from "../../components"
+import { BASE_URL } from "../../platform/github"
 
 export const ArticlePage = () => {
-  const outlet = useGlobalSelector<State, Element>((ctx) => ctx.outlet)
+  const { articles } = useGlobalContext<State>()
   const [markdown, setMarkdown] = useState<string | undefined>(undefined)
 
-  useMemo(() => (outlet.classList.value = "page-article"), [outlet])
   useMemo(async () => {
-    const path = window.location.pathname.split("/")[2]
-    const baseUrl = `https://raw.githubusercontent.com/alshdavid/articles/master/${path}`
-    const res = await fetch(`${baseUrl}/readme.md`)
-    const md = await res.text()
-    const parsed = md.replaceAll("assets/", `${baseUrl}/assets/`).replaceAll('(#', `(${window.location.pathname}#`)
+    const articleName = window.location.pathname.split("/")[2]
+    const md = await articles.getOne(articleName)
+    const baseUrl = BASE_URL('alshdavid', 'articles', articleName)
+    const parsed = md!.replaceAll("assets/", `${baseUrl}/assets/`).replaceAll('(#', `(${window.location.pathname}#`)
     setMarkdown(parsed)
   }, [window])
 
-  if (markdown === undefined) {
-    return null
-  }
-
   return (
-    <Fragment>
-      <Container>
-        <Markdown content={markdown} />
+    <Page 
+    pageTitle="Articles" 
+    className="page-articles">
+      <If condition={markdown !== undefined}>
+        <Markdown content={markdown!} />
         <Comments />
-      </Container>
-    </Fragment>
+      </If>
+    </Page>
   )
 }

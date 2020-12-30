@@ -34,10 +34,14 @@ class App extends Component {
     return <GlobalProvider value={state}>
       <Partials.Navbar />
       <If condition={this.state.pathname === '/home'}><Pages.HomePage/></If>
-      {/* <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlePage/></If> */}
-      <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlesPage/></If>
+      <If condition={this.state.pathname === '/articles'}><Pages.ArticlesPage/></If>
+      <If condition={this.state.pathname.startsWith('/articles/')}><Pages.ArticlePage/></If>
     </GlobalProvider>
   }
 }
 
 ReactDOM.render(<App />, state.outlet)
+
+;(async () => {
+  state.articles.getList()
+})()

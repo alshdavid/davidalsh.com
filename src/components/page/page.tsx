@@ -10,13 +10,13 @@ export type PageProps = {
   children: any
 }
 
-export const Page = ({ pageTitle, children, className }: PageProps) => {
+export const Page = ({ pageTitle, children, className = '' }: PageProps) => {
   const { outlet, _window } = useGlobalContext<State>()
 
-  useMemo(() => outlet.classList.value = `component-page-outlet ${className}`, [className])
+  useMemo(() => outlet.classList.value = `component-page-outlet ${className}-outlet`, [className])
   useMemo(() => _window.document.title = pageTitle, [pageTitle])
   
-  return <Container className="component-page">
+  return <Container className={`component-page ${className}`}>
     {children}
   </Container>
 }

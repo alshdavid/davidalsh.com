@@ -1,5 +1,5 @@
 import './markdown.scss'
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { classNameSwitch } from "../../platform/class-name-switch"
 import marked from 'marked'
 
@@ -8,12 +8,22 @@ export type MarkdownProps = JSX.IntrinsicElements['div'] & {
 }
 
 export const Markdown = ({ className, content, ...props }: MarkdownProps) => {
-  if (!content) {
-    return null
-  }
-  console.log(marked(content))
+  const [ markdown, setMarkdown ] = useState('')
+  const [ ref, setRef ] = useState<HTMLDivElement | null>(null)
+  
+  useEffect(() => {
+    if (!content) return
+    setMarkdown(marked(content))
+  }, [content])
+
+  useEffect(() => {
+    if (!ref || !markdown) return
+    ;(window as any).Prism.highlightAllUnder(ref)
+  }, [markdown, ref])
+
   return <div
-    dangerouslySetInnerHTML={{ __html: marked(content) }}
+    dangerouslySetInnerHTML={{ __html: markdown }}
+    ref={setRef}
     className={classNameSwitch({
       'markdown-body': true,
       [className!]: className,

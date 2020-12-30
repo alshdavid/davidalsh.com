@@ -11,6 +11,7 @@
     "watch": "npx webpack --watch"
   },
   "devDependencies": {
+    "@types/highlight.js": "^10.1.0",
     "@types/jest": "^26.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -38,6 +39,7 @@
   "dependencies": {
     "@types/marked": "^1.2.1",
     "global-context": "^1.1.1",
+    "highlight.js": "^10.5.0",
     "marked": "^1.2.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
