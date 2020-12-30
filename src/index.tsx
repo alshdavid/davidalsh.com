@@ -32,7 +32,8 @@ class App extends Component {
   render() {
     return <GlobalProvider value={state}>
       <If condition={this.state.pathname === '/home'}><Pages.HomePage/></If>
-      <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlePage/></If>
+      {/* <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlePage/></If> */}
+      <If condition={this.state.pathname.startsWith('/articles')}><Pages.ArticlesPage/></If>
     </GlobalProvider>
   }
 }
