@@ -15,14 +15,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Upload HTML to AWS
+    - name: Upload HTML to AWSq
       run: |
         yarn
         yarn build
         aws s3 rm --recursive s3://davidalsh.com
-        aws s3 cp --recursive ./dist s3://davidalsh.com
-        aws s3 cp --recursive ./dist/*.js --content-encoding br s3://davidalsh.com
-        aws s3 cp --recursive ./dist/*.css --content-encoding br s3://davidalsh.com
+        aws s3 cp --recursive --exclude "*.js" --exclude "*.css" ./dist s3://davidalsh.com
+        aws s3 cp --recursive --content-encoding br --exclude "*" --include "*.js" --include "*.css" ./dist s3://davidalsh.com
         aws cloudfront create-invalidation --distribution-id E1RN9EP7R6042I --paths /\*
       env:
         CI: true

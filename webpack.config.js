@@ -98,7 +98,7 @@ if (mode === modes.production) {
   config.module.rules[1].use.unshift(MiniCssExtractPlugin.loader)
   config.plugins.push(new MiniCssExtractPlugin({ filename: '[name].[chunkhash].css' }))
   config.plugins.push(new CompressionPlugin({
-    filename: "[path][base]",
+    filename: "[path][base].br",
     algorithm: "brotliCompress",
     test: /\.(js|css)$/,
     compressionOptions: {
@@ -108,8 +108,23 @@ if (mode === modes.production) {
     },
     threshold: 10240,
     minRatio: 0.8,
-    deleteOriginalAssets: true,
+    deleteOriginalAssets: false,
   }))
+  config.plugins.push({
+    apply(compiler) {
+      compiler.hooks.done.tap('ReplaceWithBrotliPlugin', () => {
+        const output = fs.readdirSync(path.join(...__outdir))
+        for (const asset of output) {
+          const fullPath = path.join(...[...__outdir, asset])
+          if (fullPath.endsWith('.br')) {
+            const uncomrpessed = fullPath.slice(0, fullPath.length - 3)
+            fs.rmSync(uncomrpessed)
+            fs.renameSync(fullPath, uncomrpessed)
+          }
+        }
+      });
+    }
+  })
 } else {
   config.module.rules[1].use.unshift('style-loader')
 }
