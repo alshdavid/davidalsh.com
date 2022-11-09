@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
   <%- include('../../partials/meta'); -%>
+  <%- renderStyleTag('./style.scss') %>
+  <%- renderStyleTag('../../style.scss') %>
   <title>Document</title>
 </head>
 <body>
+  <% for (const [key, value] of Object.entries(meta().tags)) { %>
+    <%= key %> <%= value %>
+  <% } %>
+
   <%- renderMarkdown('./readme.md') %>
 </body>
 </html>
+<link rel="stylesheet" href="style.css">

@@ -5,8 +5,7 @@ export AWS_EC2_METADATA_DISABLED=true
 
 npm install -g pnpm
 
-pnpm install
-pnpm build
+make build
 
 aws s3 rm --recursive s3://alshdavid-web-com-davidalsh-www
 aws s3 cp --recursive ./dist s3://alshdavid-web-com-davidalsh-www

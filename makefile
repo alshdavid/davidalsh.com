@@ -1,14 +1,8 @@
 clean:
 	rm -rf dist
 
-build-markdown:
-	find ./src -type f -name "*.md" -exec sh -c 'cd .github/scripts && pnpm script compile-markdown "{}"' \;
-
-build-ejs2:
-	cd src && \
-	find ./ -type f -name "*.ejs" -exec sh -c 'cd .github/scripts && pnpm script compile-ejs "{}"' \;
-
 build-ejs:
+	test -d .github/scripts/node_modules || cd .github/scripts && pnpm install
 	cd .github/scripts && \
 	pnpm script crawl \
 		--cwd ../../src \
@@ -16,4 +10,13 @@ build-ejs:
 		--ignore partials \
 		--run-script compile-ejs
 
-build: clean build-markdown
+build: clean build-ejs
+
+watch:
+	nodemon \
+		--signal SIGTERM \
+		--watch src \
+		--ext .* \
+		--delay .5 \
+		--exec 'clear && make build && echo'
+
