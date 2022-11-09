@@ -1,17 +1,51 @@
+<% 
+  meta = parseYaml(readFile('meta.yaml')) 
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('../../partials/meta'); -%>
-  <%- renderStyleTag('./style.scss') %>
-  <%- renderStyleTag('../../style.scss') %>
-  <title>Document</title>
+  <%- includeStyle('./style.scss') %>
+  <%- includeStyle('../../style.scss') %>
+  <%  includeDir('./assets') %>
+  <title>Blog - <%= meta.title %></title>
 </head>
-<body>
-  <% for (const [key, value] of Object.entries(meta().tags)) { %>
-    <%= key %> <%= value %>
-  <% } %>
 
-  <%- renderMarkdown('./readme.md') %>
+<body>
+  <div class="content-max-width framed">
+    <iframe frameborder=0 
+        style="min-width: 200px; width: 60%; height: 460px;" 
+        scrolling="no" 
+        seamless="seamless" 
+        srcdoc='<html><body><style type="text/css">.gist .gist-data { height: 400px; }</style><script src="https://gist.github.com/sundbry/5e0507d93d4c89023b2ba5f39f27f722.js"></script></body></html>'
+        ></iframe>
+    <!-- <header>
+      <nav>
+        <div>
+          <a href="/">Back home</a>
+        </div>
+        <p class="article-author">David Alsh</p>
+      </nav>
+      <div class="article-details">
+        <div>
+          <h1 class="article-title"><%- meta.title %></h1>
+          <p class="article-subtitle"><%- meta.subtitle %></p>
+        </div>
+        <div>
+          <p class="article-publish-date">Published<br class="for-desktop"> <%- meta.publish_date %></p>
+        </div>
+      </div>
+      <img class="article-image" src="<%- meta.image %>" alt="<%- meta.image_alt %>">
+    </header>
+
+    <main lang="en" class="markdown">  
+      <%- renderMarkdown('./readme.md') %>
+    </main>
+
+    <footer>
+
+    </footer> -->
+  </div>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">

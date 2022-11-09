@@ -1,0 +1,37 @@
+<% 
+  getBlogs = function() { 
+    const ls = readDir('.')
+    const blogs = []
+
+    for (const item of ls) {
+      if (stat(item).isDirectory()) {
+        const meta = parseYaml(readFile(`./${item}/meta.yaml`))
+        blogs.push({ slug: item, ...meta })
+      }
+    }
+
+    blogs.sort((a,b) => new Date(b.publish_date) - new Date(a.publish_date))
+
+    return blogs
+  }
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include('../partials/meta'); -%>
+  <title>Document</title>
+</head>
+<body>
+  List of blogs!
+
+  <% for (const entry of getBlogs()) { %>
+    <div>
+      <%= entry.title %> <br>
+      <%= entry.publish_date %><br>
+      <a href="<%= entry.slug %>"><%= entry.title %></a>
+      <br><br><br>
+    </div>
+  <% } %>
+</body>
+</html>
