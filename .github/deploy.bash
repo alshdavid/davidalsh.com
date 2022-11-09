@@ -11,7 +11,7 @@ npm install -g pnpm
 make build
 
 aws s3 rm --recursive s3://alshdavid-web-com-davidalsh-www
-aws s3 cp --recursive ./dist s3://alshdavid-web-com-davidalsh-www
+aws s3 cp --recursive ./dist s3://alshdavid-web-com-davidalsh-www --cache-control 'no-cache, no-store, must-revalidate'
 aws cloudfront create-invalidation --distribution-id E1RN9EP7R6042I --paths /\*
 
 # TODO maybe pre-compress the files and upload them?
