@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 export AWS_DEFAULT_OUTPUT="yaml"
 export AWS_PAGER=
 export AWS_EC2_METADATA_DISABLED=true

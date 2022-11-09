@@ -79,7 +79,7 @@ One could think of a "package" as an externally installable package obtained fro
 
 An example is the following `person` package
 
-```
+```plain
 /person
   index.ts
   person.ts

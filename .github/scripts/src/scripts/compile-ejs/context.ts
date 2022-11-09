@@ -3,7 +3,7 @@ import * as path from 'node:path'
 import * as fs from 'node:fs'
 import * as yaml from 'yaml'
 import * as prettier from "prettier"
-import * as sass from "node-sass"
+import * as sass from "sass"
 
 export class TemplateContext {
   #targetFileDirAbs: string
@@ -28,7 +28,6 @@ export class TemplateContext {
 
   readDir(srcPathRel: string): string[] {
     const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#targetFileDirAbs, srcPathRel)
-    console.log(fs.readdirSync(srcPathAbs))
     return fs.readdirSync(srcPathAbs)
   }
 
