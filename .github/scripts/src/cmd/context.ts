@@ -51,6 +51,10 @@ export class TemplateContext {
     let outFilePathAbs = path.join(this.#outDirAbs, srcFilePathRel)
     let content: string
 
+    if (!fs.existsSync(srcFilePathAbs)) {
+      return
+    }
+
     if (srcFilePathRel.endsWith('.scss')) {
       fileType = 'scss'
       outFilePathAbs = outFilePathAbs.replace('.scss', '.css')
@@ -88,6 +92,9 @@ export class TemplateContext {
   }
 
   includeDir(srcPathRel: string) {
+    if (!fs.existsSync(srcPathRel)) {
+      return
+    }
     const srcPathAbs = path.join(this.#targetFileDirAbs, srcPathRel)
     const outputPathAbs = path.join(this.#outDirAbs, srcPathRel)
     if (fs.existsSync(outputPathAbs)) {

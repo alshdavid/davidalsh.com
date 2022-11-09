@@ -4,6 +4,7 @@
     const blogs = []
 
     for (const item of ls) {
+    if (item.startsWith('_')) continue
       if (stat(item).isDirectory()) {
         const meta = parseYaml(readFile(`./${item}/meta.yaml`))
         blogs.push({ slug: item, ...meta })
@@ -19,7 +20,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <% include('../partials/meta'); -%>
+  <% include('../_partials/meta'); -%>
+  <%- includeStyle('../style.scss') %>
   <title>Document</title>
 </head>
 <body>

@@ -3,12 +3,7 @@ clean:
 
 build-ejs:
 	cd .github/scripts && test -d node_modules || pnpm install
-	cd .github/scripts && \
-		pnpm script crawl \
-			--cwd ../../src \
-			--target .*\.ejs$$ \
-			--ignore partials \
-			--run-script compile-ejs
+	cd .github/scripts && pnpm run start
 
 build: clean build-ejs
 
