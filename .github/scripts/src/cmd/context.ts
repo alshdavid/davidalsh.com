@@ -92,10 +92,11 @@ export class TemplateContext {
   }
 
   includeDir(srcPathRel: string) {
-    if (!fs.existsSync(srcPathRel)) {
+    const srcPathAbs = path.join(this.#targetFileDirAbs, srcPathRel)
+
+    if (!fs.existsSync(srcPathAbs)) {
       return
     }
-    const srcPathAbs = path.join(this.#targetFileDirAbs, srcPathRel)
     const outputPathAbs = path.join(this.#outDirAbs, srcPathRel)
     if (fs.existsSync(outputPathAbs)) {
       fs.rmSync(outputPathAbs, { recursive: true })
