@@ -1,3 +1,5 @@
+#!/bin/env ts-node
+
 import * as path from 'node:path'
 
 const scriptPath = path.join(__dirname, '..', '..', 'scripts', process.argv[2], 'index.ts')
