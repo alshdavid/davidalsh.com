@@ -12,38 +12,53 @@
   --font-color-light: #292929;
   --font-color-dark: #e1e1e1;
   --font-color: var(--font-color-light);
+  --font-color-invert: var(--font-color-dark);
 
   --background-color-dark: #202125;
   --background-color-light: #fff;
   --background-color: var(--background-color-light);
+  --background-color-invert: var(--background-color-dark);
 
   --border-color-light: #e6e6e6;
   --border-color-dark: #757575;
   --border-color: var(--border-color-light);
+  --border-color-invert: var(--border-color-dark);
 
   --color-scheme-transistion-duration: 150ms;
 
   @media (prefers-color-scheme: dark) {
     --background-color: var(--background-color-dark);
+    --background-color-invert: var(--background-color-light);
     --font-color: var(--font-color-dark);
+    --font-color-invert: var(--font-color-light);
     --border-color: var(--border-color-dark);
+    --border-color-invert: var(--border-color-light);
   }
   
   @media (prefers-color-scheme: light) {
     --background-color: var(--background-color-light);
+    --background-color-invert: var(--background-color-dark);
     --font-color: var(--font-color-light);
+    --font-color-invert: var(--font-color-dark);
     --border-color: var(--border-color-light);
+    --border-color-invert: var(--border-color-dark);
   }
 }
 
 html.dark {
   --background-color: var(--background-color-dark);
+  --background-color-invert: var(--background-color-light);
   --font-color: var(--font-color-dark);
+  --font-color-invert: var(--font-color-light);
   --border-color: var(--border-color-dark);
+  --border-color-invert: var(--border-color-light);
 }
 
 html.light {
   --background-color: var(--background-color-light);
+  --background-color-invert: var(--background-color-dark);
   --font-color: var(--font-color-light);
+  --font-color-invert: var(--font-color-dark);
   --border-color: var(--border-color-light);
+  --border-color-invert: var(--border-color-dark);
 }

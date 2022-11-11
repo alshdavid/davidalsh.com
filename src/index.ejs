@@ -3,10 +3,27 @@
 <head>
   <%- include('./_partials/meta'); -%>
   <%- includeStyle('./style.scss') %>
+  <%- include('./_partials/dark-mode'); -%>
+  <%  includeDir('./assets') %>
   <title>Document</title>
 </head>
-<body>
-  David's Website!
-  <a href="blogs">All Blogs</a>
+<body class="page-home">
+  <nav class="content-max-width framed">
+    <div>
+      <a href="/articles">Articles</a>
+      <a href="/portfolio">Portfolio</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div>
+      <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+  </nav>
+  <main class="content-max-width framed markdown">
+    <h1 class="name">David Alsh</h1>
+    <h3>Recent Posts</h3>
+  </main>
+  <footer class="content-max-width framed">
+
+  </footer>
 </body>
 </html>
