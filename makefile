@@ -1,11 +1,11 @@
+default: build
+
 clean:
 	rm -rf dist
 
-build-ejs:
+build: clean
 	cd .github/scripts && test -d node_modules || pnpm install
 	cd .github/scripts && pnpm run start
-
-build: clean build-ejs
 
 watch:
 	nodemon \
@@ -16,3 +16,5 @@ watch:
 		--delay .5 \
 		--exec 'clear && make build && echo'
 
+serve:
+	http-server -c=-1 ./dist

@@ -1,27 +1,10 @@
-:root {
-  --base: .8rem;
-  --width: 1000px;
-  --grid-gutter: var(--base);
-  --grid-height: calc(2 * var(--base));
-  --font-family-1: 'Lora', serif;
-  --font-family-2: 'Inter', sans-serif;
-  --font-family-3: 'Inconsolata', monospace;
-  --margin-bottom-desktop: 28px;
-  --margin-bottom-mobile: 18px;
-  --font-color-light: rgba(41, 41, 41, 1);
-  --font-color-dark: #e1e1e1;
-}
+@import './_styles/variables.scss';
+@import './_styles/markdown.scss';
 
 body {
   font-family: var(--font-family-1);
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #202125;
-  }
-
-  @media (prefers-color-scheme: light) {
-    background-color: #fff;
-  }
+  background-color: var(--background-color);
+  transition: background-color var(--color-scheme-transistion-duration) ease-in-out;
 }
 
 * {
@@ -31,16 +14,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  color: var(--font-color-light);
+  color: var(--font-color);
   box-sizing: border-box;
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--font-color-dark);
-  }
-
-  @media (prefers-color-scheme: light) {
-    color: var(--font-color-light);
-  }
 }
 
 .content-max-width {
@@ -52,18 +27,13 @@ body {
     margin: 0 auto;
 
     &.framed {
-      border-left: 1px solid #e6e6e6;
-      border-right: 1px solid #e6e6e6;
-
-      @media (prefers-color-scheme: dark) {
-        border-left: 1px solid #757575;
-        border-right: 1px solid #757575;
-      }
-    
-      @media (prefers-color-scheme: light) {
-        border-left: 1px solid #e6e6e6;
-        border-right: 1px solid #e6e6e6;
-      }
+      border-left-width: 1px;
+      border-right-width: 1px;
+      border-top-width: 0px;
+      border-bottom-width: 0px;
+      border-color: var(--border-color);
+      border-style: solid;
+      transition: border-color var(--color-scheme-transistion-duration) ease-in-out;
     }
   }
 }
@@ -73,6 +43,20 @@ nav {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+
+  &>div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.toggle-dark-mode {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 8px;
 }
 
 .article-details {
@@ -95,9 +79,6 @@ nav {
   .article-title {
     font-family: var(--font-family-2);
     margin: 0 0 4px 0;
-    // font-size: 25px;
-    // font-size: 32px;
-    // margin: 36px 0 24px 0;
     font-weight: 800;
     font-size: 30px;
     
@@ -157,190 +138,3 @@ footer {
   }
 }
 
-.markdown {
-  >*:last-child {
-    margin-bottom: 0;
-  }
-
-  h1, h2, h3, h4, h5, h6, b, strong {
-    font-family: var(--font-family-2);
-    letter-spacing: -0.016em;
-  }
-  
-  h1 {
-    font-size: 28px;
-    margin: 32px 0 20px 0;
-    font-weight: 700;
-    
-    @media (min-width: 1000px) {
-      font-size: 30px;
-      margin: 36px 0 24px 0;
-    }
-  }
-
-  h2 {
-    font-size: 25px;
-    margin: 30px 0 20px 0;
-    font-weight: 600;
-
-    @media (min-width: 1000px) {
-      font-size: 27px;
-      margin: 32px 0 20px 0;
-    }
-  }
-
-  h3 {
-    font-size: 23px;
-    margin: 24px 0 16px 0;
-    font-weight: 500;
-
-    @media (min-width: 1000px) {
-      font-size: 25px;
-      margin: 28px 0 16px 0;
-    }
-  }
-
-  h4 {
-    font-size: 20px;
-    margin: 24px 0 16px 0;
-    font-weight: 500;
-
-    @media (min-width: 1000px) {
-      font-size: 22px;
-      margin: 28px 0 16px 0;
-    }
-  }
-
-  h5 {
-    font-size: 18px;
-    margin: 24px 0 16px 0;
-    font-weight: 500;
-
-    @media (min-width: 1000px) {
-      font-size: 19px;
-      margin: 28px 0 16px 0;
-    }
-  }
-
-  h6 {
-    font-size: 17px;
-    margin: 24px 0 16px 0;
-    font-weight: 500;
-
-    @media (min-width: 1000px) {
-      font-size: 18px;
-      margin: 28px 0 16px 0;
-    }
-  }
-
-  strong, b {
-    font-weight: 500;
-  }
-
-  p, li {
-    letter-spacing: -0.003em;
-    font-weight: 400;
-    font-size: 17px;
-    margin: 0 0 var(--margin-bottom-mobile) 0;
-    line-height: 26px;
-
-    @media (prefers-color-scheme: dark) {
-      font-weight: 500;
-    }
-
-    @media (min-width: 1000px) {
-      font-size: 17px;
-      margin: 0 0 var(--margin-bottom-desktop) 0;
-      line-height: 29px;
-    }
-  }
-
-  img {
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-  }
-
-  ul {
-    list-style-type: none;
-    margin: 0 0 var(--margin-bottom-mobile) 0;
-
-    @media (min-width: 1000px) {
-      margin: 0 0 var(--margin-bottom-desktop) 0;
-    }
-  }
-
-  li {
-    padding-left: 20px;
-    margin: 0 0 8px 0;
-    position: relative;
-
-    @media (min-width: 1000px) {
-      padding-left: 30px;
-    }
-
-    &:before {
-      content: '';
-      position: absolute;
-      left: 4px;
-      top: 11px;
-      height: 6px;
-      width: 6px;
-      background-color: var(--font-color-light);
-      border-radius: 100%;
-
-      @media (prefers-color-scheme: dark) {
-        background-color: var(--font-color-dark);
-      }
-    
-      @media (prefers-color-scheme: light) {
-        background-color: var(--font-color-light);
-      }
-    }
-  }
-
-  iframe {
-    border-radius: 4px;
-    margin: 0 0 var(--margin-bottom-desktop) 0;
-  }
-
-  code {
-    background-color: #e6e6e6;
-    padding: 2px 8px;
-    font-family: var(--font-family-3);
-    margin: 0 2px;
-
-    @media (prefers-color-scheme: dark) {
-      background-color: #263238;
-      color: #e6e6e6;
-    }
-  }
-
-  pre {
-    margin: 0 0 var(--margin-bottom-desktop) 0;
-
-    code {
-      margin: 0;
-      font-family: var(--font-family-3);
-      border-radius: 4px;
-      font-size: 18px;
-      line-height: 22px;
-      background-color: #e6e6e6;
-      padding: 1.25em 1em;
-      display: block;
-      overflow-x: scroll;
-      max-width: 100%;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-      
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        background-color: #263238;
-        color: #e6e6e6;
-      }
-    }
-  }
-}

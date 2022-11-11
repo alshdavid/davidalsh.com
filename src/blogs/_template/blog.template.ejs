@@ -1,0 +1,116 @@
+<% 
+  meta = parseYaml(readFile('meta.yaml'))
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../../_partials/meta'); -%>
+  <title>Blog - <%= meta.title %></title>
+
+  <meta property="og:url"                content="https://davidalsh.com/<%- relative_dirname() %>" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="<%- meta.title %>" />
+  <meta property="og:description"        content="<%- meta.description %>" />
+  <meta property="og:image"              content="https://davidalsh.com/<%- relative_dirname() %>/<%- meta.image %>" />
+  
+  <%- include('../../_partials/links'); -%>  
+  <%- includeStyle('./style.scss') %>
+  <%- includeStyle('../../style.scss') %>
+  <%  includeDir('./assets') %>
+  <%- include('../../_partials/dark-mode'); -%>
+</head>
+
+<body>
+  <div class="content-max-width framed">
+    <header>
+      <nav>
+        <div>
+          <a href="/">Back home</a>
+        </div>
+        <div>
+          <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+          <p class="article-author">David Alsh</p>
+        </div>
+      </nav>
+      <div class="article-details">
+        <div>
+          <h1 class="article-title"><%- meta.title %></h1>
+          <p class="article-subtitle"><%- meta.subtitle %></p>
+        </div>
+        <div>
+          <p class="article-publish-date">Published<br class="for-desktop"> <%- meta.publish_date %></p>
+        </div>
+      </div>
+      <img class="article-image" src="<%- meta.image %>" alt="<%- meta.image_alt %>">
+    </header>
+
+    <main lang="en" class="markdown">
+      <%- renderMarkdown('./readme.md') %>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script type="module">
+      window.addEventListener('DOMContentLoaded', async () => {
+        const frameUrl = new URL('https://cdn.davidalsh.com/syntax-highlight-iframe')
+        // const frameUrl = new URL('http://localhost:8081')
+        const frames = new Map()
+
+        window.addEventListener('color-scheme-change', () => {
+          for (const frame of frames.values()) {
+            frame.contentWindow.postMessage({
+              action: 'CONFIG',
+              theme: window.currentColorScheme === 'light' ? 'prism-light' : 'prism-dark',
+            }, frameUrl.origin)
+          }
+        })
+        
+        window.addEventListener('message', (ev) => {
+          if (ev.origin !== frameUrl.origin) return
+          if (ev.data.action === 'RESIZE') {
+            const { identifier, height } = ev.data
+            frames.get(identifier).style.height = height
+          }
+        })
+
+        for (const codeBlock of document.querySelectorAll('pre code')) {
+          for (const className of codeBlock.classList) {
+            if (!className.startsWith('language-')) continue
+
+            const frameElement = document.createElement('iframe')
+            frameElement.src = frameUrl.href
+            frameElement.style.display = 'block'
+            frameElement.style.border = 'none'
+            frameElement.style.width = '100%'
+            // frameElement.loading = 'lazy'
+
+            const identifier = (Math.random() * 10000).toFixed()
+            frames.set(identifier, frameElement)
+
+            frameElement.onload = () => {
+              frameElement.contentWindow.postMessage({
+                action: 'CONFIG',
+                identifier,
+                code: codeBlock.innerHTML,
+                theme: window.currentColorScheme === 'light' ? 'prism-light' : 'prism-dark',
+                language: className.replace('language-', '')
+              }, frameUrl.origin)
+
+              preElement.style.display = 'none'
+            }
+
+            const onload = new Promise(res => res)
+
+            const preElement = codeBlock.parentElement
+            const markdownElement = codeBlock.parentElement.parentElement
+            markdownElement.insertBefore(frameElement, preElement)
+          }
+        }
+      })
+    </script>
+  </div>
+</body>
+</html>

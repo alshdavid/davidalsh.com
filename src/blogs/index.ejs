@@ -1,14 +1,15 @@
 <% 
   getBlogs = function() { 
-    const ls = readDir('.')
+    const blogFolderAbs = path.resolve(dirname())
+    const ls = readDir(blogFolderAbs)
     const blogs = []
 
-    for (const item of ls) {
-    if (item.startsWith('_')) continue
-      if (stat(item).isDirectory()) {
-        const meta = parseYaml(readFile(`./${item}/meta.yaml`))
-        blogs.push({ slug: item, ...meta })
-      }
+    for (const itemName of ls) {
+      const itemPathAbs = path.join(blogFolderAbs, itemName)
+      if (itemName.startsWith('_')) continue
+      if (!stat(itemPathAbs).isDirectory()) continue
+      const meta = parseYaml(readFile(path.join(itemPathAbs, 'meta.yaml')))
+      blogs.push({ slug: itemName, ...meta })
     }
 
     blogs.sort((a,b) => new Date(b.publish_date) - new Date(a.publish_date))
