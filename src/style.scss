@@ -24,38 +24,58 @@ html.light {
     width: 100%;
   }
 
-  &>main {
-    flex-grow: 1;
-
-    .name {
-      display: flex;
-      text-align: center;
-      flex-direction: column;
-      align-items: center;
-      font-size: 50px;
-      letter-spacing: 2px;
-      font-weight: 500;
-
-      &:after {
-        content: "";
-        display: block;
-        width: 138px;
-        height: 2px;
-        background-color: var(--font-color);
-        margin-top: 8px;
-        margin-left: 12px;
-      }
-    }
-  }
-
   nav {
-    padding-top: 40px;
-    padding-bottom: 4px;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &>div {
+      display: flex;
+      align-items: center;
+    }
 
     a {
       font-size: 18px;
+      margin-right: 12px;
+      border-bottom: 1px solid;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+
+    .logo {
+      margin-right: 24px;
+    }
+
+    .name {
+      font-size: 34px;
+      letter-spacing: 2px;
+      font-weight: 500;
+      border-bottom: 1px solid;
+      margin-bottom: 6px;
+      margin-left: -2px;
+    }
+
+    .blurb {
+      font-size: 14px;
+      font-weight: 400;
     }
   }
 
+  &>main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 
+    .hero-image {
+      // margin: 24px auto;
+      // filter: grayscale(1);
+      height: 400px;
+    }
+
+    .recent-posts {
+      font-family: var(--font-family-1);
+      margin-top: 10px;
+    }
+  }
 }
