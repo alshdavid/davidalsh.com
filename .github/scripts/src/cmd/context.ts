@@ -4,6 +4,8 @@ import * as fs from 'fs-extra'
 import * as yaml from 'yaml'
 import * as prettier from "prettier"
 import * as sass from "sass"
+import * as crypto from "node:crypto"
+
 import { Directories } from '../platform/directories'
 
 export class TemplateContext {
@@ -51,6 +53,15 @@ export class TemplateContext {
     return fs.statSync(srcPathAbs)
   }
 
+  escapeHtml(unsafe: string): string{
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   renderMarkdown(srcPath: string) {
     return marked(this.readFile(srcPath))
   }
@@ -60,16 +71,18 @@ export class TemplateContext {
   }
 
   includeStyle(srcFilePathRel: string, { inline = false }: { inline?: boolean } = {}): string {
-    console.log('  ∟ Including...'.padEnd(20) + srcFilePathRel)
+    process.stdout.write('  ∟ Including... '.padEnd(21) + path.join(this.#targetFileDirRel, srcFilePathRel).padEnd(40))
 
     let fileType = 'css'
     let srcFilePathAbs = path.join(this.#targetFileDirAbs, srcFilePathRel)
     let outFilePathRel = srcFilePathRel
     let outFilePathAbs = path.join(this.#outDirAbs, srcFilePathRel)
-    let content: string
+    let content: string = ''
+    let hash: string = ''
 
     if (!fs.existsSync(srcFilePathAbs)) {
-      return
+      process.stdout.write('...Already Exists\n')
+      return ''
     }
 
     if (srcFilePathRel.endsWith('.scss')) {
@@ -96,11 +109,15 @@ export class TemplateContext {
         tabWidth: 2,
       })
 
+      hash = crypto.createHash('md5').update(content).digest('hex')
+      outFilePathAbs = outFilePathAbs.replace('.css', `.${hash}.css`)
+      outFilePathRel = outFilePathRel.replace('.css', `.${hash}.css`)
       if (!inline) {
         fs.writeFileSync(outFilePathAbs, content, { encoding: 'utf8' })
       }
     }
 
+    process.stdout.write('...Done\n')
     if (inline) {
       return `<style>${content}</style>`
     } else {
@@ -114,7 +131,8 @@ export class TemplateContext {
       return
     }
     const outputPathAbs = path.join(this.#outDirAbs, srcPathRel)
-    console.log('  ∟ Copying...'.padEnd(20) + srcPathRel)
+    process.stdout.write('  ∟ Copying... '.padEnd(21) + path.join(this.#targetFileDirRel, srcPathRel).padEnd(40))
     fs.copySync(srcPathAbs, outputPathAbs, { recursive: true })
+    process.stdout.write('...Done')
   }
 }

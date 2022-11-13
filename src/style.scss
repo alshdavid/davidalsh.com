@@ -1,7 +1,7 @@
 @import './_styles/variables.scss';
 @import './_styles/markdown.scss';
 @import './_styles/common.scss';
-@import './blogs/_template/style.scss';
+@import './posts/_template/style.scss';
 
 :root {
   --arrow-height: 40px;
@@ -15,7 +15,7 @@ html.light {
   --hero-image-grayscale: var(--hero-image-grayscale-light);
 }
 
-.page-home {
+.page-home, .page-posts {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -35,7 +35,7 @@ html.light {
       align-items: center;
     }
 
-    a {
+    .link {
       font-size: 18px;
       margin-right: 12px;
       border-bottom: 1px solid;
@@ -45,6 +45,8 @@ html.light {
 
     .logo {
       margin-right: 24px;
+      text-decoration: none;
+      display: block;
     }
 
     .name {
@@ -73,9 +75,16 @@ html.light {
       height: 400px;
     }
 
-    .recent-posts {
+    .recent-posts, .all-posts {
       font-family: var(--font-family-1);
       margin-top: 10px;
+      font-size: 23px;
+      font-weight: 500;
+
+      @media (min-width: 1000px) {
+        font-size: 25px;
+        margin: 10px 0 16px 0;
+      }
     }
   }
 }

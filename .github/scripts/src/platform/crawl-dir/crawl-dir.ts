@@ -18,7 +18,7 @@ export function crawlDir({
     
     let currentDepth = 1
 
-    function _crawl(_relPath) {
+    function _crawl(_relPath: string) {
         const contents = fs.readdirSync(path.join(cwd, _relPath))
 
         for (const target of contents) {

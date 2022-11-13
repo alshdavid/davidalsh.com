@@ -1,0 +1,46 @@
+<% 
+  getBlogs = function() { 
+    const postFolderAbs = path.resolve(dirname(), '..')
+    const ls = readDir(postFolderAbs)
+    const posts = []
+    const all_tags = new Set()
+
+    const HeadingsWithProps = new RegExp("<h[1-6][^>].*?<\/h[1-6]>", "g")
+    const HeadingsWithoutProps = new RegExp("<h[1-6]>.*?<\/h[1-6]>", "g")
+    const SpecialCharacters = new RegExp("&.*?;", "g")
+    const Sanitize = new RegExp("(<([^>]+)>)", "g")
+
+    for (const itemName of ls) {
+      const itemPathAbs = path.join(postFolderAbs, itemName)
+      if (itemName.startsWith('_')) continue
+      if (itemName === 'api') continue
+      if (!stat(itemPathAbs).isDirectory()) continue
+      const meta = parseYaml(readFile(path.join(itemPathAbs, 'meta.yaml')))
+      const preview = (renderMarkdown(path.join(itemPathAbs, 'readme.md'))
+        .substring(0, 500))
+        .replaceAll(HeadingsWithProps, '')
+        .replaceAll(HeadingsWithoutProps, '')
+        .replaceAll(Sanitize, '')
+        .replaceAll(SpecialCharacters, '')
+        .replaceAll('\n', ' ')
+        .replaceAll('\t', '')
+        .replaceAll('\r', '')
+
+      posts.push({ 
+        preview,
+        ...meta,
+      })
+
+      for (const tag of meta.tags) all_tags.add(tag)
+    }
+
+    posts.sort((a,b) => new Date(b.publish_date) - new Date(a.publish_date))
+
+    return {
+      all_tags: Array.from(all_tags),
+      posts,
+    }
+  }
+%>
+
+<%- JSON.stringify(getBlogs(), null, 2) %>

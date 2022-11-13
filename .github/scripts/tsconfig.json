@@ -6,7 +6,9 @@
     "lib": ["ESNext"],
     "types": [
       "@types/node",
-    ]
+    ],
+    "strict": true,
+    "outDir": "dist"
   },
   "include": ["src/**/*.ts"]
 }

@@ -5,7 +5,7 @@ export type ParsedArgs<T extends Array<string>> = {
 export function parseArgs(argsList: string[]): ParsedArgs<['_']> & { [key: string]: string[] | undefined }
 export function parseArgs<T extends Array<string>>(argsList: string[]): ParsedArgs<['_']> & ParsedArgs<T>
 export function parseArgs<T extends Array<string>>(argsList: string[]): ParsedArgs<['_']> & ParsedArgs<T> {
-    const args: ParsedArgs<['_']> = {
+    const args: any = {
         _: [],
     }
 

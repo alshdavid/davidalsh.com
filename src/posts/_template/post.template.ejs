@@ -35,8 +35,8 @@
       </nav>
       <div class="article-details">
         <div>
-          <h1 class="article-title"><%- meta.title %></h1>
-          <p class="article-subtitle"><%- meta.subtitle %></p>
+          <h1 class="article-title"><%- escapeHtml(meta.title) %></h1>
+          <p class="article-subtitle"><%- escapeHtml(meta.subtitle) %></p>
         </div>
         <div>
           <p class="article-publish-date">Published<br class="for-desktop"> <%- meta.publish_date %></p>

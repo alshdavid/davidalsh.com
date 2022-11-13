@@ -2,26 +2,14 @@
 <html lang="en">
 <head>
   <%- include('./_partials/meta'); -%>
-  <%- includeStyle('./style.scss') %>
+  <%- include('./_partials/links'); -%>
   <%- include('./_partials/dark-mode'); -%>
+  <%- includeStyle('./style.scss') %>
   <%  includeDir('./assets') %>
-  <title>Document</title>
+  <title>David Alsh Portfolio</title>
 </head>
 <body class="page-home">
-  <nav class="content-max-width framed">
-    <div>
-      <div class="logo">
-        <h1 class="name">David Alsh</h1>
-        <h2 class="blurb">Engineer. Enthusiast. Explorer.</h2>
-      </div>
-      <a href="/posts">Posts</a>
-      <a href="/portfolio">Portfolio</a>
-      <a href="/contact">Contact</a>
-    </div>
-    <div>
-      <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-    </div>
-  </nav>
+  <%- include('./_partials/nav'); -%>
   <main class="content-max-width framed markdown grow">
     <h3 class="recent-posts">Recent Posts</h3>
   </main>
