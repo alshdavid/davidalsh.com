@@ -1,6 +1,6 @@
 <% 
-  getBlogs = function() { 
-    const postFolderAbs = path.resolve(dirname(), '..')
+  getBlogs = function() {
+    const postFolderAbs = path.resolve(dirname(), '..' , '..', '..', 'posts')
     const ls = readDir(postFolderAbs)
     const posts = []
     const all_tags = new Set()
