@@ -2,7 +2,8 @@ import * as node_path from 'node:path'
 import * as node_fs from 'node:fs'
 
 export function path(target: string): string {
-  return node_path.join(...target.split('/'))
+  const parsed = node_path.parse(target)
+  return node_path.join(parsed.dir, parsed.base)
 }
 
 export type ListDirectoryResult = node_fs.Stats & { 
@@ -28,7 +29,13 @@ export function ls(target: string, { cwd = process.cwd() }: { cwd?: string} = {}
 }
 
 export function readFile(target: string, { cwd = process.cwd() }: { cwd?: string} = {}): string {
-  const joined = path(target)
-  const pathAbs = node_path.isAbsolute(joined) ? joined : node_path.resolve(cwd, joined)
-  return node_fs.readFileSync(pathAbs, { encoding: 'utf8' })
+  const normalized_path = path(target)
+  const absolute_path = node_path.isAbsolute(normalized_path) ? normalized_path : node_path.resolve(cwd, normalized_path)
+  try {
+    return node_fs.readFileSync(absolute_path, { encoding: 'utf8' })
+  } catch (error) {
+    console.log({normalized_path, absolute_path, target, cwd})
+    console.log(error)
+    throw new Error('Failed to read file')
+  }
 }

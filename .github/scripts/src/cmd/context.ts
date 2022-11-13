@@ -5,24 +5,30 @@ import * as yaml from 'yaml'
 import * as prettier from "prettier"
 import * as sass from "sass"
 import * as crypto from "node:crypto"
+import * as url from "node:url"
 
 import { Directories } from '../platform/directories'
 
+
+const col_1_padding = 30
+const col_2_padding = 50
+
 export class TemplateContext {
   #filename: string
-  #targetFileDirAbs: string
-  #targetFileDirRel: string
-  #outDirAbs: string
+  #inputDirAbs: string
+  #inputDirRel: string
+  #outputDirAbs: string
   path: typeof path
 
   constructor(
-    targetFileDirRel: string,
-    outDirAbs: string
+    fileName: string,
+    inputDirRel: string,
+    outputDirAbs: string
   ) {
-    this.#filename = path.basename(targetFileDirRel)
-    this.#targetFileDirRel = path.dirname(targetFileDirRel)
-    this.#targetFileDirAbs = path.dirname(path.join(Directories.Src, targetFileDirRel))
-    this.#outDirAbs = outDirAbs
+    this.#filename = fileName
+    this.#inputDirRel = inputDirRel
+    this.#inputDirAbs = path.join(Directories.Src, inputDirRel)
+    this.#outputDirAbs = outputDirAbs
     this.path = path
   }
 
@@ -31,25 +37,25 @@ export class TemplateContext {
   }
 
   dirname() {
-    return this.#targetFileDirAbs
+    return this.#inputDirAbs
   }
 
   relative_dirname() {
-    return this.#targetFileDirRel
+    return this.#inputDirRel
   }
 
   readFile(srcPathRel: string): string {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#targetFileDirAbs, srcPathRel)
+    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
     return fs.readFileSync(srcPathAbs, { encoding: 'utf8' })
   }
 
   readDir(srcPathRel: string): string[] {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#targetFileDirAbs, srcPathRel)
+    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
     return fs.readdirSync(srcPathAbs)
   }
 
   stat(srcPathRel: string) {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#targetFileDirAbs, srcPathRel)
+    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
     return fs.statSync(srcPathAbs)
   }
 
@@ -71,17 +77,23 @@ export class TemplateContext {
   }
 
   includeStyle(srcFilePathRel: string, { inline = false }: { inline?: boolean } = {}): string {
-    process.stdout.write('  ∟ Including... '.padEnd(21) + path.join(this.#targetFileDirRel, srcFilePathRel).padEnd(40))
-
+    process.stdout.write('  ∟ Including... '.padEnd(col_1_padding) + path.join(this.#inputDirRel, srcFilePathRel).padEnd(col_2_padding))
     let fileType = 'css'
-    let srcFilePathAbs = path.join(this.#targetFileDirAbs, srcFilePathRel)
+    let srcFilePathAbs = path.join(this.#inputDirAbs, srcFilePathRel)
     let outFilePathRel = srcFilePathRel
-    let outFilePathAbs = path.join(this.#outDirAbs, srcFilePathRel)
+    let outFilePathAbs = path.join(this.#outputDirAbs, srcFilePathRel)
+    let outDirPathAbs = path.dirname(outFilePathAbs)
     let content: string = ''
     let hash: string = ''
 
-    if (!fs.existsSync(srcFilePathAbs)) {
+
+    if (fs.existsSync(outFilePathAbs)) {
       process.stdout.write('...Already Exists\n')
+      return ''
+    }
+
+    if (!fs.existsSync(srcFilePathAbs)) {
+      process.stdout.write('...Doesn\'t Exist\n')
       return ''
     }
 
@@ -91,30 +103,38 @@ export class TemplateContext {
       outFilePathRel = outFilePathRel.replace('.scss', '.css')
     }
 
-    if (!fs.existsSync(outFilePathAbs)) {
-      fs.mkdirSync(path.dirname(outFilePathAbs), { recursive: true })
+    fs.mkdirSync(path.dirname(outFilePathAbs), { recursive: true })
 
-
-      if (fileType === 'scss') {
-        const result = sass.renderSync({
-          file: srcFilePathAbs
-        })
-        content = result.css.toString()
-      } else {
-        content = this.readFile(srcFilePathRel)
-      }
-
-      content = prettier.format(content, {
-        parser: 'css',
-        tabWidth: 2,
+    if (fileType === 'scss') {
+      const sourceContent = this.readFile(srcFilePathRel)
+      const result = sass.compileString(sourceContent, {
+        url: url.pathToFileURL(srcFilePathAbs)// new URL(srcFilePathAbs),
       })
+      // const result = sass.renderSync({
+      //   file: srcFilePathAbs
+      // })
+      content = result.css.toString()
+      // content = srcFilePathAbs
+    } else {
+      content = this.readFile(srcFilePathRel)
+    }
 
-      hash = crypto.createHash('md5').update(content).digest('hex')
-      outFilePathAbs = outFilePathAbs.replace('.css', `.${hash}.css`)
-      outFilePathRel = outFilePathRel.replace('.css', `.${hash}.css`)
-      if (!inline) {
-        fs.writeFileSync(outFilePathAbs, content, { encoding: 'utf8' })
+    content = prettier.format(content, {
+      parser: 'css',
+      tabWidth: 2,
+    })
+
+    hash = crypto.createHash('md5').update(content).digest('hex')
+    outFilePathAbs = outFilePathAbs.replace('.css', `.${hash}.css`)
+    outFilePathRel = outFilePathRel.replace('.css', `.${hash}.css`)
+    
+    if (!inline) {
+
+      if (!fs.existsSync(outDirPathAbs)) {
+        fs.mkdirSync(outDirPathAbs, { recursive: true })
       }
+
+      fs.writeFileSync(outFilePathAbs, content, { encoding: 'utf8' })
     }
 
     process.stdout.write('...Done\n')
@@ -126,13 +146,13 @@ export class TemplateContext {
   }
 
   includeDir(srcPathRel: string) {
-    const srcPathAbs = path.join(this.#targetFileDirAbs, srcPathRel)
+    const srcPathAbs = path.join(this.#inputDirAbs, srcPathRel)
     if (!fs.existsSync(srcPathAbs)) {
       return
     }
-    const outputPathAbs = path.join(this.#outDirAbs, srcPathRel)
-    process.stdout.write('  ∟ Copying... '.padEnd(21) + path.join(this.#targetFileDirRel, srcPathRel).padEnd(40))
+    const outputPathAbs = path.join(this.#outputDirAbs, srcPathRel)
+    process.stdout.write('  ∟ Copying... '.padEnd(col_1_padding) + path.join(this.#inputDirRel, srcPathRel).padEnd(col_2_padding))
     fs.copySync(srcPathAbs, outputPathAbs, { recursive: true })
-    process.stdout.write('...Done')
+    process.stdout.write('...Done\n')
   }
 }

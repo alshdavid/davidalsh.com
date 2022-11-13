@@ -7,6 +7,10 @@
 
     const HeadingsWithProps = new RegExp("<h[1-6][^>].*?<\/h[1-6]>", "g")
     const HeadingsWithoutProps = new RegExp("<h[1-6]>.*?<\/h[1-6]>", "g")
+    const PreTags = new RegExp("<pre>.*?<\/pre>", "g")
+    const PreTagsWithProps = new RegExp("<pre[^>].*?<\/pre>", "g")
+    const CodeTags = new RegExp("<code>.*?<\/code>", "g")
+    const CodeTagsWithPros = new RegExp("<code[^>].*?<\/code>", "g")
     const SpecialCharacters = new RegExp("&.*?;", "g")
     const Sanitize = new RegExp("(<([^>]+)>)", "g")
 
@@ -16,15 +20,20 @@
       if (itemName === 'api') continue
       if (!stat(itemPathAbs).isDirectory()) continue
       const meta = parseYaml(readFile(path.join(itemPathAbs, 'meta.yaml')))
-      const preview = (renderMarkdown(path.join(itemPathAbs, 'readme.md'))
-        .substring(0, 500))
+      
+      const preview = meta.description || (renderMarkdown(path.join(itemPathAbs, 'readme.md'))
         .replaceAll(HeadingsWithProps, '')
         .replaceAll(HeadingsWithoutProps, '')
+        .replaceAll(PreTagsWithProps, '')
+        .replaceAll(PreTags, '')
+        .replaceAll(CodeTagsWithPros, '')
+        .replaceAll(CodeTags, '')
         .replaceAll(Sanitize, '')
         .replaceAll(SpecialCharacters, '')
         .replaceAll('\n', ' ')
         .replaceAll('\t', '')
         .replaceAll('\r', '')
+        .substring(0, 500))
 
       posts.push({ 
         preview,

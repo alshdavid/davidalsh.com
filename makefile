@@ -3,9 +3,15 @@ default: build
 clean:
 	rm -rf dist
 
-build: clean
-	cd .github/scripts && test -d node_modules || pnpm install
-	cd .github/scripts && pnpm run start
+build:
+	@cd .github/scripts && test -d node_modules || pnpm install
+ifeq (${COMPILE_SCRIPTS}, true)
+	@cd .github/scripts && pnpm run build
+else
+	@cd .github/scripts && test -d dist || pnpm run build
+endif
+	@make clean -s
+	@cd .github/scripts && pnpm run start
 
 watch:
 	nodemon \

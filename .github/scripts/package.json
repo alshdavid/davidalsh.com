@@ -2,8 +2,9 @@
   "name": "@alshavid/davidalsh-com-scripts",
   "private": true,
   "scripts": {
-    "start": "ts-node ./src/cmd/main.ts",
-    "script": "ts-node ./src/platform/runner/index.ts"
+    "start": "node ./dist/cmd/main.js",
+    "build": "npx tsc",
+    "script": "ts-node ./src/cmd/main.ts"
   },
   "dependencies": {
     "@types/ejs": "^3.1.1",
