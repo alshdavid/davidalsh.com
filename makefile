@@ -16,7 +16,7 @@ endif
 watch:
 	nodemon \
 		--signal SIGTERM \
-		--watch src \
+		--watch web \
 		--watch .github/scripts/src \
 		--ext .* \
 		--delay .5 \

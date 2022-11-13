@@ -1,35 +1,45 @@
+import { Directories } from '../platform/directories'
+import *as fs from '../platform/fs'
 import { marked } from 'marked'
-import * as path from 'node:path'
-import * as fs from 'fs-extra'
+import * as node_path from 'node:path'
+import * as node_fs from 'fs-extra'
 import * as yaml from 'yaml'
 import * as prettier from "prettier"
 import * as sass from "sass"
 import * as crypto from "node:crypto"
 import * as url from "node:url"
 
-import { Directories } from '../platform/directories'
-
-
 const col_1_padding = 30
 const col_2_padding = 50
+
+function writeStatus(title: string, target: string) {
+  process.stdout.write(`  ∟ ${title}... `.padEnd(col_1_padding))
+  process.stdout.write(target.padEnd(col_2_padding))
+  return (doneMessage: string = 'Done') => process.stdout.write(`...${doneMessage}\n`)
+}
 
 export class TemplateContext {
   #filename: string
   #inputDirAbs: string
   #inputDirRel: string
+  #virtualInputDirRel: string | undefined
+  #virtualInputDirAbs: string | undefined
   #outputDirAbs: string
-  path: typeof path
+  path: typeof node_path
 
   constructor(
     fileName: string,
     inputDirRel: string,
-    outputDirAbs: string
+    outputDirAbs: string,
+    virtualInputDirRel?: string,
   ) {
     this.#filename = fileName
     this.#inputDirRel = inputDirRel
-    this.#inputDirAbs = path.join(Directories.Src, inputDirRel)
+    this.#inputDirAbs = node_path.join(Directories.Src, inputDirRel)
+    this.#virtualInputDirRel = virtualInputDirRel
+    this.#virtualInputDirAbs = virtualInputDirRel && node_path.join(Directories.Src, virtualInputDirRel)
     this.#outputDirAbs = outputDirAbs
-    this.path = path
+    this.path = node_path
   }
 
   filename() {
@@ -41,22 +51,22 @@ export class TemplateContext {
   }
 
   relative_dirname() {
-    return this.#inputDirRel
+    return this.#virtualInputDirRel || this.#inputDirRel
   }
 
   readFile(srcPathRel: string): string {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
-    return fs.readFileSync(srcPathAbs, { encoding: 'utf8' })
+    const srcPathAbs = node_path.isAbsolute(srcPathRel) ? srcPathRel : node_path.join(this.#inputDirAbs, srcPathRel)
+    return node_fs.readFileSync(srcPathAbs, { encoding: 'utf8' })
   }
 
   readDir(srcPathRel: string): string[] {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
-    return fs.readdirSync(srcPathAbs)
+    const srcPathAbs = node_path.isAbsolute(srcPathRel) ? srcPathRel : node_path.join(this.#inputDirAbs, srcPathRel)
+    return node_fs.readdirSync(srcPathAbs)
   }
 
   stat(srcPathRel: string) {
-    const srcPathAbs = path.isAbsolute(srcPathRel) ? srcPathRel : path.join(this.#inputDirAbs, srcPathRel)
-    return fs.statSync(srcPathAbs)
+    const srcPathAbs = node_path.isAbsolute(srcPathRel) ? srcPathRel : node_path.join(this.#inputDirAbs, srcPathRel)
+    return node_fs.statSync(srcPathAbs)
   }
 
   escapeHtml(unsafe: string): string{
@@ -76,24 +86,37 @@ export class TemplateContext {
     return yaml.parse(yamlSrc)
   }
 
-  includeStyle(srcFilePathRel: string, { inline = false }: { inline?: boolean } = {}): string {
-    process.stdout.write('  ∟ Including... '.padEnd(col_1_padding) + path.join(this.#inputDirRel, srcFilePathRel).padEnd(col_2_padding))
+  includeStyle(srcFilePathRel: string, { inline = false, fromVirtualPath = false }: { inline?: boolean, fromVirtualPath?: boolean } = {}): string {
+    if (fromVirtualPath && !this.#virtualInputDirRel) {
+      throw new Error('Tried to use virtual path without setting')
+    }
     let fileType = 'css'
-    let srcFilePathAbs = path.join(this.#inputDirAbs, srcFilePathRel)
+    let srcFilePathAbs = node_path.join(this.#inputDirAbs, srcFilePathRel)
+    if (fromVirtualPath && this.#virtualInputDirAbs) {
+      srcFilePathAbs = node_path.join(this.#virtualInputDirAbs, srcFilePathRel)
+    }
     let outFilePathRel = srcFilePathRel
-    let outFilePathAbs = path.join(this.#outputDirAbs, srcFilePathRel)
-    let outDirPathAbs = path.dirname(outFilePathAbs)
+    let outFilePathAbs = node_path.join(this.#outputDirAbs, srcFilePathRel)
+    let outDirPathAbs = node_path.dirname(outFilePathAbs)
     let content: string = ''
     let hash: string = ''
 
 
-    if (fs.existsSync(outFilePathAbs)) {
-      process.stdout.write('...Already Exists\n')
+    let doneMessage
+
+    if (fromVirtualPath) {
+      doneMessage = writeStatus('Including', fs.path(srcFilePathRel) + ' (virtual)')
+    } else {
+      doneMessage = writeStatus('Including', fs.path(srcFilePathRel))
+    }
+
+    if (node_fs.existsSync(outFilePathAbs)) {
+      doneMessage('Already Exists')
       return ''
     }
 
-    if (!fs.existsSync(srcFilePathAbs)) {
-      process.stdout.write('...Doesn\'t Exist\n')
+    if (!node_fs.existsSync(srcFilePathAbs)) {
+      doneMessage('Doesn\'t Exist')
       return ''
     }
 
@@ -103,10 +126,10 @@ export class TemplateContext {
       outFilePathRel = outFilePathRel.replace('.scss', '.css')
     }
 
-    fs.mkdirSync(path.dirname(outFilePathAbs), { recursive: true })
+    node_fs.mkdirSync(node_path.dirname(outFilePathAbs), { recursive: true })
 
     if (fileType === 'scss') {
-      const sourceContent = this.readFile(srcFilePathRel)
+      const sourceContent = this.readFile(srcFilePathAbs)
       const result = sass.compileString(sourceContent, {
         url: url.pathToFileURL(srcFilePathAbs)// new URL(srcFilePathAbs),
       })
@@ -130,14 +153,14 @@ export class TemplateContext {
     
     if (!inline) {
 
-      if (!fs.existsSync(outDirPathAbs)) {
-        fs.mkdirSync(outDirPathAbs, { recursive: true })
+      if (!node_fs.existsSync(outDirPathAbs)) {
+        node_fs.mkdirSync(outDirPathAbs, { recursive: true })
       }
 
-      fs.writeFileSync(outFilePathAbs, content, { encoding: 'utf8' })
+      node_fs.writeFileSync(outFilePathAbs, content, { encoding: 'utf8' })
     }
 
-    process.stdout.write('...Done\n')
+    doneMessage('Done')
     if (inline) {
       return `<style>${content}</style>`
     } else {
@@ -146,13 +169,16 @@ export class TemplateContext {
   }
 
   includeDir(srcPathRel: string) {
-    const srcPathAbs = path.join(this.#inputDirAbs, srcPathRel)
-    if (!fs.existsSync(srcPathAbs)) {
+    const srcPathAbs = node_path.join(this.#inputDirAbs, srcPathRel)
+    if (!node_fs.existsSync(srcPathAbs)) {
       return
     }
-    const outputPathAbs = path.join(this.#outputDirAbs, srcPathRel)
-    process.stdout.write('  ∟ Copying... '.padEnd(col_1_padding) + path.join(this.#inputDirRel, srcPathRel).padEnd(col_2_padding))
-    fs.copySync(srcPathAbs, outputPathAbs, { recursive: true })
-    process.stdout.write('...Done\n')
+    const outputPathAbs = node_path.join(this.#outputDirAbs, srcPathRel)
+    
+    const doneMessage = writeStatus('Copying', fs.path(srcPathRel))
+
+    node_fs.copySync(srcPathAbs, outputPathAbs, { recursive: true })
+
+    doneMessage()
   }
 }

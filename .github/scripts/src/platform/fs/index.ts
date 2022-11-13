@@ -2,6 +2,7 @@ import * as node_path from 'node:path'
 import * as node_fs from 'node:fs'
 
 export function path(target: string): string {
+  if (target === '') return ''
   const parsed = node_path.parse(target)
   return node_path.join(parsed.dir, parsed.base)
 }

@@ -1,10 +1,8 @@
 import { Directories } from "../platform/directories"
 import { TemplateContext } from "./context"
 import * as fs from "../platform/fs"
-import * as node_path from 'node:path'
 import * as node_fs from 'node:fs'
 import * as ejs from 'ejs'
-// import * as prettier from "prettier"
 import * as yaml from 'yaml'
 
 type EntryConfigFile = {
@@ -15,6 +13,7 @@ type EntryConfigFile = {
 type EntryConfigTemplate = {
   type: 'template',
   virtualFileName: string,
+  virtualInputDirectory: string,
   template: string,
 }
 
@@ -26,13 +25,13 @@ type EntryConfig = (EntryConfigFile | EntryConfigTemplate) & {
 }
 
 const Entries: EntryConfig[] = [
-  { type: 'file', processor: 'ejs', inputDirRel: './', fileName: 'index.ejs' },
-  { type: 'file', processor: 'ejs', inputDirRel: './posts', fileName: 'index.ejs' },
-  { type: 'file', processor: 'ejs', inputDirRel: './posts/api', fileName: 'all.ejs', outputExtension: 'json' },
+  { type: 'file', processor: 'ejs', inputDirRel: '', fileName: 'index.ejs' },
+  { type: 'file', processor: 'ejs', inputDirRel: 'posts', fileName: 'index.ejs' },
+  { type: 'file', processor: 'ejs', inputDirRel: 'posts/api', fileName: 'all.ejs', outputExtension: 'json' },
 ]
 
 // Populate post entries
-for (const item of fs.ls(`${Directories.Src}/posts`)) {
+for (const item of fs.ls(`${Directories.Root}/posts`)) {
   if (item.target_name.startsWith('_')) continue
   if (item.target_name === 'api') continue
   if (!item.isDirectory()) continue
@@ -42,9 +41,10 @@ for (const item of fs.ls(`${Directories.Src}/posts`)) {
     type: 'template',
     processor: 'ejs',
     virtualFileName: 'index.ejs',
-    inputDirRel: `./posts/${item.target_name}`,
-    template: './posts/_template/post.template.ejs',
-    outputDirRel: `./posts/${meta.slug}`,
+    inputDirRel: `../posts/${item.target_name}`,
+    virtualInputDirectory: `posts/${meta.slug}`,
+    template: 'posts/_template/post.template.ejs',
+    outputDirRel: `posts/${meta.slug}`,
   })
 }
 
@@ -80,33 +80,36 @@ for (const entry of Entries) {
     }
 
     if (entry.type === 'file') {
-      inputDirRel = fs.path(`${entry.inputDirRel}/${entry.fileName}`)
+      inputDirRel = entry.inputDirRel ? fs.path(`${entry.inputDirRel}/${entry.fileName}`) : entry.fileName      
     }
 
     if (!inputDirRel) {
       throw new Error(`Unable to load file: ${JSON.stringify(entry, null, 2)}`)
     }
 
-    console.log(fs.path(inputDirRel))
     const inputContent = fs.readFile(`${Directories.Src}/${inputDirRel}`)
-
-    const ctx = new TemplateContext(inputName, entry.inputDirRel, outDirAbs)
-
-    let firstRender: string
     
-    try {
-      firstRender = ejs.render(inputContent, ctx, {
+    if (entry.type === 'template') {
+      console.log(fs.path(`${entry.virtualInputDirectory}/${entry.virtualFileName}`) + ' (virtual)')
+
+      const ctx = new TemplateContext(inputName, entry.inputDirRel, outDirAbs, entry.virtualInputDirectory)
+
+      result = ejs.render(inputContent, ctx, {
+        async: false,
+        filename: fs.path(`${Directories.Src}/${entry.virtualInputDirectory}/${inputName}`),
+      })
+    }
+
+    if (entry.type === 'file') {
+      console.log(fs.path(inputDirRel))
+
+      const ctx = new TemplateContext(inputName, entry.inputDirRel, outDirAbs)
+
+      result = ejs.render(inputContent, ctx, {
         async: false,
         filename: fs.path(`${Directories.Src}/${outDir}/${inputName}`),
       })
-    } catch (error) {
-      console.log(error)
-      console.log(JSON.stringify(entry, null, 2))
-      throw new Error(`Unable to render file`)  
-    }
-    
-
-    result = firstRender
+    }    
   }
 
   if (!node_fs.existsSync(outDirAbs)) {

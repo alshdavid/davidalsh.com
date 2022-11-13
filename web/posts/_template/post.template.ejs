@@ -16,7 +16,7 @@
   
   <%- include('../../_partials/links'); -%>  
   <%- includeStyle('./style.scss') %>
-  <%- includeStyle('../../style.scss') %>
+  <%- includeStyle('../../style.scss', { fromVirtualPath: true }) %>
   <%  includeDir('./assets') %>
   <%- include('../../_partials/dark-mode'); -%>
 </head>
