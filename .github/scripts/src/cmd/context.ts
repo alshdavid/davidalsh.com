@@ -111,7 +111,7 @@ export class TemplateContext {
 
         const output = Prism.highlight(code, Prism.languages[lang], lang) + lineNumbersWrapper;
 
-        const hash = crypto.createHash('md5').update(output).digest('hex').substring(0,10)
+        const hash = crypto.createHash('sha256').update(output).digest('hex').substring(0,10)
 
         const sourcePath = `fragments/${hash}/${hash}.txt`
         const fragPath = `fragments/${hash}/${hash}.html`
@@ -190,7 +190,7 @@ export class TemplateContext {
       tabWidth: 2,
     })
 
-    hash = crypto.createHash('md5').update(content).digest('hex')
+    hash = crypto.createHash('sha256').update(content).digest('hex').substring(0,10)
     outFilePathAbs = outFilePathAbs.replace('.css', `.${hash}.css`)
     outFilePathRel = outFilePathRel.replace('.css', `.${hash}.css`)
     
@@ -223,5 +223,9 @@ export class TemplateContext {
     node_fs.copySync(srcPathAbs, outputPathAbs, { recursive: true })
 
     doneMessage()
+  }
+
+  includeFile(srcPathRel: string) {
+    this.includeDir(srcPathRel)
   }
 }

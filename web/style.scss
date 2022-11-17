@@ -28,14 +28,34 @@ html.light {
   }
 
   nav {
-    padding: 20px 100px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    margin: 0 0 24px;
+
+    @media (min-width: 1000px) {
+      flex-direction: row;
+      margin: 0 auto;
+      padding: 20px 100px;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     &>div {
       display: flex;
       align-items: center;
+      flex-direction: column;
+
+      @media (min-width: 1000px) {
+        flex-direction: row;
+      }
+    }
+
+    .links {
+      margin: 0 0 16px 0;
+
+      @media (min-width: 1000px) {
+        margin: none;
+      }
     }
 
     .link {
@@ -47,9 +67,16 @@ html.light {
     }
 
     .logo {
-      margin-right: 24px;
+      margin: 16px 0;
       text-decoration: none;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      @media (min-width: 1000px) {
+        display: block;
+        margin: 0 24px 0 0;
+      }
     }
 
     .name {
@@ -72,6 +99,12 @@ html.light {
     flex-direction: column;
     flex-grow: 1;
 
+    &.hidden-content {
+      &>* {
+        display: none;
+      }
+    }
+
     .hero-image {
       // margin: 24px auto;
       // filter: grayscale(1);
@@ -89,5 +122,167 @@ html.light {
         margin: 10px 0 16px 0;
       }
     }
+
+    article {
+      display: flex;
+      border-top: 1px solid var(--border-color);
+      padding: 20px 0;
+      justify-content: space-between;
+
+      @media (min-width: 1000px) {
+        padding: 60px 0;
+      }
+
+      &>div:first-child {
+        padding-right: 24px;
+
+        @media (min-width: 1000px) {
+          padding-right: 60px;
+        }
+      }
+      
+      &>div:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        flex-shrink: 0;
+        
+        @media (min-width: 1000px) {
+          width: 150px;
+          padding: 0 0 0 16px;
+        }
+      }
+
+      .publish-date {
+        font-family: var(--font-family-2);
+        font-size: 14px;
+        margin: 0 0 16px 0;
+      }
+
+      h2 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+
+        @media (min-width: 1000px) {
+          margin: 0 0 20px 0;
+          font-size: 22px;
+        }
+
+        a {
+          text-decoration: none;
+          display: block;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        margin: 0;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0 0 20px 0;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      p, .read-more {
+        @media (max-width: 1000px) {
+          display: none;
+        }
+      }
+
+      .tags {
+        margin: 0 0 8px 0;
+
+        &>span {
+          display: inline-block;
+          background-color: #0d47a1;
+          color: white;
+          // background-color: var(--border-color-dark);
+          // color: var(--font-color-dark);
+          font-weight: 500;
+          border-radius: 4px;
+          padding: 1px 5px;
+          margin-right: 4px;
+          font-size: 12px;
+          font-family: var(--font-family-2);
+        }
+      }
+    }
+
   }
 }
+
+/*
+    article {
+      margin: 0 0 12px 0;
+
+      &>div {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 12px 0;
+
+        &>div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+
+          &:last-child {
+            align-items: flex-end;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+
+        a {
+          text-decoration: none;
+          display: block;
+
+          &:after {
+            content: '';
+            display: block;
+            height: 1px;
+            margin-top: 4px;
+            background-color: var(--font-color);
+          }
+        }
+      }
+
+      .subtitle {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 8px 0;
+        width: 100%;
+      }
+
+      h3 {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+        font-style: italic;
+      }
+
+
+
+      .publish-date {
+        span {
+          font-size: 12px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        text-align: justify;
+      }
+    }
+*/

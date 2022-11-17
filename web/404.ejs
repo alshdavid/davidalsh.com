@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./_partials/meta'); -%>
+  <%- include('./_partials/links'); -%>
+  <%- include('./_partials/dark-mode'); -%>
+  <%- includeStyle('./style.scss') %>
+  <%  includeDir('./assets') %>
+  <%  includeFile('./robots.txt') %>
+  <title>David Alsh Portfolio</title>
+</head>
+<body class="page-home">
+  <%- include('./_partials/nav'); -%>
+  <main class="content-max-width framed markdown grow">
+    <h1>Page Not Found!</h1>
+    <a href="/">Back Home</a>
+  </main>
+</body>
+</html>
+
+
+<div class="heading">
+  <div>
+    <h2><a v-bind:href="'/posts/' + post.slug">{{ post.title }}</a></h2>
+    <h3>{{ post.subtitle }}</h3>
+  </div>
+  <div>
+    <div class="tags">
+      <span v-for="tag of post.tags">{{tag}}</span>
+    </div>
+    <div class="publish-date">
+      <span>Published</span>
+      <time v-bind:datetime="{{ post.publish_date }}">{{ post.publish_date }}</time>
+    </div>
+  </div>
+</div>
+<p>{{ post.preview.substring(0, 200) }} <a v-bind:href="'/posts/' + post.slug">...continue</a></p>

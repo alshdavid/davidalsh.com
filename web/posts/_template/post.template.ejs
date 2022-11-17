@@ -30,7 +30,6 @@
         </div>
         <div>
           <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-          <p class="article-author">David Alsh</p>
         </div>
       </nav>
       <div class="article-details">
@@ -49,19 +48,18 @@
       <%- renderMarkdown('./readme.md') %>
     </main>
 
-    <footer>
-
-    </footer>
     <script type="module">
-      for (const el of document.querySelectorAll('embed[data-type="code"]')) {
-        const src = el.src
-        const content = await fetch(src).then(r => r.text())
-        const template = document.createElement('template')
-        template.innerHTML = content
-        el.parentElement.parentElement.classList.add(el.parentElement.className)
-        el.parentElement.parentElement.classList.add("line-numbers")
-        el.replaceWith(template.content)
-      }
+      (async () => {
+        for (const el of document.querySelectorAll('embed[data-type="code"]')) {
+          const src = el.src
+          const content = await fetch(src).then(r => r.text())
+          const template = document.createElement('template')
+          template.innerHTML = content
+          el.parentElement.parentElement.classList.add(el.parentElement.className)
+          el.parentElement.parentElement.classList.add("line-numbers")
+          el.replaceWith(template.content)
+        }
+      })()
     </script>
   </div>
 </body>

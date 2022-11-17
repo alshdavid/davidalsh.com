@@ -1,8 +1,8 @@
-slug: the-case-for-a-sandboxed-script
+slug: the-case-for-a-sandboxed-script-tag
 publish_date: 2022-07-18
-tags: [html, security, web, new-frontiers]
+tags: [web, html, security, new-frontiers]
 
-title: A case for a sandbox-able <script> tag
+title: The Case For a Sandboxed Script Tag
 subtitle: Enhancing security on the web
 
 image: assets/hero.png

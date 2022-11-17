@@ -1,6 +1,6 @@
 # What does it mean to “Sandbox” a script?
 
-_tl;dr: Sandboxed scripts are isolated from their environment and can only talk to other scripts through a secure channel — think Docker or Virtual Machines_
+Sandboxed scripts are isolated from their environment and can only talk to other scripts through a secure channel — think Docker or Virtual Machines_
 
 First off, let’s define what we mean by “script” in this context. We are talking about JavaScript that is executed in the browser. For example:
 
