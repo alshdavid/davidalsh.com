@@ -4,14 +4,22 @@
   }
 
   .article-image {
-    width: 80%;
-    flex-shrink: 0;
-    display: block;
-    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 
     @media (min-width: 1000px) {
-      max-width: 60%;
-      margin: 0 auto 32px;
+      margin-bottom: 32px;
+    }
+    img {
+      max-width: 80%;
+      flex-shrink: 0;
+      display: block;
+
+      @media (min-width: 1000px) {
+        max-width: 60%;
+      }
     }
   }
 
@@ -20,7 +28,7 @@
     flex-flow: row wrap;
     justify-content: space-between;
     padding-top: 20px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 
     @media (min-width: 1000px) {
       padding-top: 36px;

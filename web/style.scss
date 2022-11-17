@@ -133,6 +133,10 @@ html.light {
         padding: 60px 0;
       }
 
+      &:last-child {
+        border-bottom: 1px solid var(--border-color);
+      }
+
       &>div:first-child {
         padding-right: 24px;
 
