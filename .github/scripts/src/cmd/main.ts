@@ -4,6 +4,7 @@ import * as fs from "../platform/fs"
 import * as node_fs from 'node:fs'
 import * as ejs from 'ejs'
 import * as yaml from 'yaml'
+import * as prettier from "prettier"
 
 type EntryConfigFile = {
   type: 'file',
@@ -119,6 +120,11 @@ for (const entry of Entries) {
   if (!result) {
     throw new Error(`No render produced: ${JSON.stringify(entry, null, 2)}`)
   }
+
+  result = prettier.format(result, {
+    parser: entry.outputExtension || 'html',
+    tabWidth: 2,
+  })
 
   try {
     node_fs.writeFileSync(fs.path(`${outDirAbs}/${outputName}`), result, { encoding: 'utf8' })

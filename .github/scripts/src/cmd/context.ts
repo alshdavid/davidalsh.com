@@ -1,5 +1,5 @@
 import { Directories } from '../platform/directories'
-import *as fs from '../platform/fs'
+import * as fs from '../platform/fs'
 import { marked } from 'marked'
 import * as node_path from 'node:path'
 import * as node_fs from 'fs-extra'
@@ -8,6 +8,8 @@ import * as prettier from "prettier"
 import * as sass from "sass"
 import * as crypto from "node:crypto"
 import * as url from "node:url"
+import * as Prism from 'prismjs'
+import * as PrismComponents from 'prismjs/components/'
 
 const col_1_padding = 30
 const col_2_padding = 50
@@ -59,6 +61,14 @@ export class TemplateContext {
     return node_fs.readFileSync(srcPathAbs, { encoding: 'utf8' })
   }
 
+  writeFile(destPathRel: string, data: string) {
+    const srcPathAbs = node_path.join(this.#outputDirAbs, destPathRel)
+    if (!node_fs.existsSync(node_path.dirname(srcPathAbs))) {
+      node_fs.mkdirSync(node_path.dirname(srcPathAbs), { recursive: true })
+    }
+    return node_fs.writeFileSync(srcPathAbs, data, { encoding: 'utf8' })
+  }
+
   readDir(srcPathRel: string): string[] {
     const srcPathAbs = node_path.isAbsolute(srcPathRel) ? srcPathRel : node_path.join(this.#inputDirAbs, srcPathRel)
     return node_fs.readdirSync(srcPathAbs)
@@ -78,8 +88,46 @@ export class TemplateContext {
       .replace(/'/g, "&#039;");
   }
 
-  renderMarkdown(srcPath: string) {
-    return marked(this.readFile(srcPath))
+  renderMarkdown(srcPath: string, { renderHighlighting = true }: { renderHighlighting?: boolean } = {}) {
+    let result = marked(this.readFile(srcPath), {
+      highlight: (code, lang) => {
+        if (!renderHighlighting) {
+          return ''
+        }
+        // @ts-ignore
+        PrismComponents.silent = true
+        PrismComponents(lang)
+
+        var NEW_LINE_EXP = /\n(?!$)/g;
+        var lineNumbersWrapper;
+
+        Prism.hooks.add('after-tokenize', function (env) {
+          var match = env.code.match(NEW_LINE_EXP);
+          var linesNum = match ? match.length + 1 : 1;
+          var lines = new Array(linesNum + 1).join('<span></span>');
+        
+          lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
+        });
+
+        const output = Prism.highlight(code, Prism.languages[lang], lang) + lineNumbersWrapper;
+
+        const hash = crypto.createHash('md5').update(output).digest('hex').substring(0,10)
+
+        const sourcePath = `fragments/${hash}/${hash}.txt`
+        const fragPath = `fragments/${hash}/${hash}.html`
+        const fragMeta = { 
+          lang, 
+          source: `/${this.#virtualInputDirRel || this.#inputDirRel}/${sourcePath}`, 
+          rendered: `/${this.#virtualInputDirRel || this.#inputDirRel}/${fragPath}`,
+        }
+        this.writeFile(`fragments/${hash}/${hash}.json`, JSON.stringify(fragMeta, null, 2))
+        this.writeFile(`fragments/${hash}/${hash}.html`, output)
+        this.writeFile(`fragments/${hash}/${hash}.txt`, code)
+
+        return `<embed data-type="code" data-lang="${lang}" type="text/html" style="display: none;" src="${fragPath}" />`
+      },
+    })
+    return result
   }
 
   parseYaml(yamlSrc: string): Record<string, any> {
@@ -100,7 +148,6 @@ export class TemplateContext {
     let outDirPathAbs = node_path.dirname(outFilePathAbs)
     let content: string = ''
     let hash: string = ''
-
 
     let doneMessage
 
@@ -133,11 +180,7 @@ export class TemplateContext {
       const result = sass.compileString(sourceContent, {
         url: url.pathToFileURL(srcFilePathAbs)// new URL(srcFilePathAbs),
       })
-      // const result = sass.renderSync({
-      //   file: srcFilePathAbs
-      // })
       content = result.css.toString()
-      // content = srcFilePathAbs
     } else {
       content = this.readFile(srcFilePathRel)
     }

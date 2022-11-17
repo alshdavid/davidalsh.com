@@ -17,6 +17,7 @@ watch:
 	nodemon \
 		--signal SIGTERM \
 		--watch web \
+		--watch posts \
 		--watch .github/scripts/src \
 		--ext .* \
 		--delay .5 \

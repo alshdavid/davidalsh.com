@@ -2,6 +2,9 @@
 @import './_styles/markdown.scss';
 @import './_styles/common.scss';
 @import './_styles/posts-page.scss';
+@import './_styles/syntax-highlighting/line-numbers.scss';
+@import './_styles/syntax-highlighting/prism-dark.scss';
+@import './_styles/syntax-highlighting/prism-light.scss';
 
 :root {
   --arrow-height: 40px;

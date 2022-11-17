@@ -3,7 +3,7 @@
     "target": "ESnext",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "types": [
       "@types/node",
     ],

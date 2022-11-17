@@ -21,7 +21,7 @@
       if (!stat(itemPathAbs).isDirectory()) continue
       const meta = parseYaml(readFile(path.join(itemPathAbs, 'meta.yaml')))
       
-      const preview = meta.description || (renderMarkdown(path.join(itemPathAbs, 'readme.md'))
+      const preview = meta.description || (renderMarkdown(path.join(itemPathAbs, 'readme.md'), { renderHighlighting: false })
         .replaceAll(HeadingsWithProps, '')
         .replaceAll(HeadingsWithoutProps, '')
         .replaceAll(PreTagsWithProps, '')
