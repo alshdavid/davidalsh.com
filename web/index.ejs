@@ -1,10 +1,10 @@
 <%
   includeStyle = requireModule('./_require/include-style.ts').includeStyle
+  getPosts = requireModule('./_require/get-posts.ts').getPosts
 
   includeDir('./assets')
   includeFile('./robots.txt')
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,36 +18,29 @@
   <script type="application/json">
   </script>
   <%- include('./_partials/nav'); -%>
-  <main class="content-max-width framed markdown grow hidden-content">
-    <article v-for="post of posts">
+  <main class="content-max-width framed markdown grow">
+    <% for (const post of getPosts(locals).posts) { %>
+    <article>
       <div>
         <div class="publish-date">
-          <time v-bind:datetime="post.publish_date">{{ post.publish_date }}</time>
+          <time datetime="<%= post.publish_date %>"><%= post.publish_date %></time>
         </div>
-        <h2><a v-bind:href="'/posts/' + post.slug">{{ post.title }}</a></h2>
-        <p><a v-bind:href="'/posts/' + post.slug">{{ post.preview }}</a></p>
+        <h2><a href="/posts/<%= post.slug %>"><%= post.title %></a></h2>
+        <p><a href="/posts/<%= post.slug %>"><%= post.preview %></a></p>
         <div class="tags">
-          <span v-for="tag of post.tags">{{tag}}</span>
+          <% for (const tag of post.tags) { %>
+          <span><%= tag %></span>
+          <% } %>
         </div>
         <div class="read-more">
-          <a v-bind:href="'/posts/' + post.slug">Read More</a>
+          <a href="/posts/<%= post.slug %>">Read More</a>
         </div>
       </div>
       <div>
-        <img v-bind:src="'/posts/' + post.slug + '/' + post.image" v-bind:alt="post.image_alt">
+        <img src="/posts/<%= post.slug %>/<%= post.image %>" alt="<%= post.image_alt %>">
       </div>
     </article>
+    <% } %>
   </main>
-  <script type="module">
-    import * as Vue from 'https://unpkg.com/petite-vue?module'
-
-    void async function main(){
-      const posts = await window.fetch('/posts/api/all.json').then(r => r.json())
-
-      Vue.createApp({...posts}).mount(document.querySelector('main'))
-
-      document.querySelector('main').classList.remove('hidden-content')
-    }()
-  </script>
 </body>
 </html>
