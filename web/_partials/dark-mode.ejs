@@ -7,14 +7,14 @@
   }
   
   let userOverride = window.localStorage.getItem(ModeKey)
-  let systemPreffered = window.matchMedia('(prefers-color-scheme: dark)').matches ? ColorScheme.Dark : ColorScheme.Light
-  let currentMode = systemPreffered
+  let systemPreferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? ColorScheme.Dark : ColorScheme.Light
+  let currentMode = systemPreferred
 
   function forceLight() {
     htmlElement.classList.remove(ColorScheme.Dark)
     htmlElement.classList.add(ColorScheme.Light)
     currentMode = ColorScheme.Light
-    if (currentMode === systemPreffered) {
+    if (currentMode === systemPreferred) {
       window.localStorage.removeItem(ModeKey)
       userOverride = null
     }
@@ -29,7 +29,7 @@
     htmlElement.classList.remove(ColorScheme.Light)
     htmlElement.classList.add(ColorScheme.Dark)
     currentMode = ColorScheme.Dark
-    if (currentMode === systemPreffered) {
+    if (currentMode === systemPreferred) {
       window.localStorage.removeItem(ModeKey)
       userOverride = null
     }
@@ -51,7 +51,7 @@
     else if (userOverride === ColorScheme.Light) {
       forceLight()
     }
-    else if (systemPreffered === ColorScheme.Dark) {
+    else if (systemPreferred === ColorScheme.Dark) {
       forceDark()
     }
     else {
@@ -62,7 +62,7 @@
   window
     .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', event => {
-      systemPreffered = event.matches ? ColorScheme.Dark : ColorScheme.Light;
+      systemPreferred = event.matches ? ColorScheme.Dark : ColorScheme.Light;
       render()
     });
 

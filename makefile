@@ -4,12 +4,7 @@ clean:
 	rm -rf dist
 
 build:
-	@cd .github/scripts && test -d node_modules || pnpm install
-ifeq (${COMPILE_SCRIPTS}, true)
-	@cd .github/scripts && pnpm run build
-else
-	@cd .github/scripts && test -d dist || pnpm run build
-endif
+	@cd test -d node_modules || pnpm install
 	@make clean -s
 	@cd .github/scripts && pnpm run start
 

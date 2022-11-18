@@ -1,23 +1,28 @@
 <% 
-  meta = parseYaml(readFile('meta.yaml'))
-%>
+  parseYamlFromFile = requireModule('../../_require/parse-yaml.ts', { cwd: template.dirname_absolute() }).parseYamlFromFile
+  includeStyle = requireModule('../../_require/include-style.ts', { cwd: template.dirname_absolute() }).includeStyle
+  renderMarkdownFile = requireModule('../../_require/render-markdown.ts', { cwd: template.dirname_absolute() }).renderMarkdownFile
+  escapeHtml = requireModule('../../_require/escape-html.ts', { cwd: template.dirname_absolute() }).escapeHtml
+    
+  includeDir('./assets', { cwd: input.dirname_absolute() })
 
+  meta = parseYamlFromFile(locals, './meta.yaml', { cwd: input.dirname_absolute() })
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('../../_partials/meta'); -%>
   <title>Blog - <%= meta.title %></title>
 
-  <meta property="og:url"                content="https://davidalsh.com/<%- relative_dirname() %>" />
+  <meta property="og:url"                content="https://davidalsh.com/<%- output.dirname_relative() %>" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="<%- meta.title %>" />
   <meta property="og:description"        content="<%- meta.description %>" />
-  <meta property="og:image"              content="https://davidalsh.com/<%- relative_dirname() %>/<%- meta.image %>" />
+  <meta property="og:image"              content="https://davidalsh.com/<%- output.dirname_relative() %>/<%- meta.image %>" />
   
-  <%- include('../../_partials/links'); -%>  
-  <%- includeStyle('./style.scss') %>
-  <%- includeStyle('../../style.scss', { fromVirtualPath: true }) %>
-  <%  includeDir('./assets') %>
+  <%- include('../../_partials/links'); -%>
+  <%- includeStyle(locals, './style.scss', { cwd: input.dirname_absolute() }); -%>
+  <%- includeStyle(locals, '../../style.scss', { cwd: template.dirname_absolute() }); -%>
   <%- include('../../_partials/dark-mode'); -%>
 </head>
 
@@ -47,7 +52,7 @@
     </header>
 
     <main lang="en" class="markdown">
-      <%- renderMarkdown('./readme.md') %>
+      <%- renderMarkdownFile(locals, './readme.md', { cwd: input.dirname_absolute() }) %>
     </main>
 
     <script type="module">

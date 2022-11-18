@@ -2,6 +2,7 @@ import { Directories } from "../platform/directories"
 import { TemplateContext } from "./context"
 import * as fs from "../platform/fs"
 import * as node_fs from 'node:fs'
+import * as node_path from 'node:path'
 import * as ejs from 'ejs'
 import * as yaml from 'yaml'
 import * as prettier from "prettier"
@@ -50,8 +51,6 @@ for (const item of fs.ls(`${Directories.Root}/posts`)) {
 }
 
 for (const entry of Entries) {
-  console.log()
-
   let result: undefined | string
   let outputName: undefined | string
   let inputName: undefined | string
@@ -89,14 +88,17 @@ for (const entry of Entries) {
     }
 
     const inputContent = fs.readFile(`${Directories.Src}/${inputDirRel}`)
+    ;(global as any).context = undefined
     
     if (entry.type === 'template') {
       console.log(fs.path(`${entry.virtualInputDirectory}/${entry.virtualFileName}`) + ' (virtual)')
 
-      const ctx = new TemplateContext(inputName, entry.inputDirRel, outDirAbs, entry.virtualInputDirectory)
+      const path_input_file_abs_template = node_path.join(Directories.Src, entry.template)
+      const ctx = new TemplateContext(inputName, entry.inputDirRel, outDirAbs, path_input_file_abs_template)
 
       result = ejs.render(inputContent, ctx, {
         async: false,
+        cache: false,
         filename: fs.path(`${Directories.Src}/${entry.virtualInputDirectory}/${inputName}`),
       })
     }
@@ -108,6 +110,7 @@ for (const entry of Entries) {
 
       result = ejs.render(inputContent, ctx, {
         async: false,
+        cache: false,
         filename: fs.path(`${Directories.Src}/${outDir}/${inputName}`),
       })
     }    

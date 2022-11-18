@@ -1,15 +1,22 @@
+<%
+  includeStyle = requireModule('./_require/include-style.ts').includeStyle
+
+  includeDir('./assets')
+  includeFile('./robots.txt')
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('./_partials/meta'); -%>
   <%- include('./_partials/links'); -%>
+  <%- includeStyle(locals, './style.scss'); -%>
   <%- include('./_partials/dark-mode'); -%>
-  <%- includeStyle('./style.scss') %>
-  <%  includeDir('./assets') %>
-  <%  includeFile('./robots.txt') %>
   <title>David Alsh Portfolio</title>
 </head>
 <body class="page-home">
+  <script type="application/json">
+  </script>
   <%- include('./_partials/nav'); -%>
   <main class="content-max-width framed markdown grow hidden-content">
     <article v-for="post of posts">

@@ -1,0 +1,4 @@
+packages:
+  - './.github/scripts'
+  - 'web'
+  - posts/*
