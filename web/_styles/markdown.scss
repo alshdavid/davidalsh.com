@@ -123,6 +123,10 @@ html.light {
     margin: 0 0 var(--margin-bottom-mobile) 0;
     line-height: 26px;
 
+    p {
+      margin-bottom: 0;
+    }
+
     @media (min-width: 1000px) {
       font-size: 17px;
       margin: 0 0 var(--margin-bottom-desktop) 0;
@@ -172,7 +176,7 @@ html.light {
     margin: 0 0 var(--margin-bottom-desktop) 0;
   }
 
-  code {
+  code, .codeblock {
     -webkit-font-smoothing: initial;
     padding: 2px 8px;
     font-family: var(--font-family-3);
@@ -181,6 +185,32 @@ html.light {
     background-color: var(--tag-code-background-color);
     transition: background-color var(--color-scheme-transistion-duration) ease-in-out;
     transition: color var(--color-scheme-transistion-duration) ease-in-out;
+  }
+
+  .codeblock {
+    margin: 0 0 var(--margin-bottom-desktop) 0;
+    display: block;
+    border-radius: 4px;
+    padding: 1.25em 1em;
+    font-family: var(--font-family-3);
+    border-radius: 4px;
+    -webkit-font-smoothing: initial;
+    overflow-x: scroll;
+    max-width: 100%;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    * {
+      -webkit-font-smoothing: inherit;
+    }
+
+    &.language-plaintext {
+      padding: 0 0 0 12px;
+    }
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   pre {
@@ -207,6 +237,10 @@ html.light {
       max-width: 100%;
       -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;  /* Firefox */
+
+      &.language-plaintext {
+        padding: 0 0 0 12px;
+      }
       
       &::-webkit-scrollbar {
         display: none;

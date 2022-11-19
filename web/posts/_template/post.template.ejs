@@ -27,8 +27,7 @@
 </head>
 
 <body class="page-article">
-  <div class="content-max-width framed">
-    <header>
+    <header class="content-max-width framed">
       <nav>
         <div>
           <a href="/">Back home</a>
@@ -46,12 +45,24 @@
           <p class="article-publish-date">Published<br class="for-desktop"> <%- meta.publish_date %></p>
         </div>
       </div>
+      <% if ('video_youtube' in meta) { %>
+      <div class="article-image">
+        <iframe 
+          id="ytplayer" 
+          type="text/html"
+          width="640" 
+          height="360"
+          src="https://www.youtube.com/embed/<%- meta.video_youtube %>"
+          frameborder="0"></iframe>
+      </div>
+      <% } else if ('image' in meta) { %>
       <div class="article-image">
         <img src="<%- meta.image %>" alt="<%- meta.image_alt %>">
       </div>
+      <% } %>
     </header>
 
-    <main lang="en" class="markdown">
+    <main lang="en" class="content-max-width framed markdown grow">
       <%- renderMarkdownFile(locals, './readme.md', { cwd: input.dirname_absolute() }) %>
     </main>
 
@@ -68,6 +79,5 @@
         }
       })()
     </script>
-  </div>
 </body>
 </html>

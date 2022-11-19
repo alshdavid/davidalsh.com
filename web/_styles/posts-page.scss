@@ -1,6 +1,15 @@
 .page-article {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &>header, &>nav, &>main, &>footer {
+    width: 100%;
+  }
+
   main {
     padding-bottom: 40px;
+    flex-grow: 1;
   }
 
   .article-image {

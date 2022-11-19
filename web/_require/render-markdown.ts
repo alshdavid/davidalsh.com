@@ -33,22 +33,25 @@ function _renderMarkdownFile(context: IContext, text: string, { renderHighlighti
       if (!renderHighlighting) {
         return ''
       }
-      // @ts-ignore
-      PrismComponents.silent = true
-      PrismComponents(lang)
+      let output = code
+      if (lang !== 'plaintext') {
+        // @ts-ignore
+        PrismComponents.silent = true
+        PrismComponents(lang)
 
-      let lineNumbersWrapper;
+        let lineNumbersWrapper;
 
-      Prism.hooks.add('after-tokenize', function (env) {
-        const match = env.code.match(NEW_LINE_EXP);
-        const linesNum = match ? match.length + 1 : 1;
-        const lines = new Array(linesNum + 1).join('<span></span>');
+        Prism.hooks.add('after-tokenize', function (env) {
+          const match = env.code.match(NEW_LINE_EXP);
+          const linesNum = match ? match.length + 1 : 1;
+          const lines = new Array(linesNum + 1).join('<span></span>');
+        
+          lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
+        });
+
+        output = Prism.highlight(code, Prism.languages[lang], lang) + lineNumbersWrapper;
+      }
       
-        lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
-      });
-
-      const output = Prism.highlight(code, Prism.languages[lang], lang) + lineNumbersWrapper;
-
       const hash = node_crypto.createHash('sha256').update(output).digest('hex').substring(0,10)
 
       const sourcePath = `fragments/${hash}/${hash}.txt`
