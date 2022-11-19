@@ -84,3 +84,14 @@ body {
   }
 }
 
+input {
+  border-radius: 30px;
+  padding: 4px 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  transition: 
+    background var(--color-scheme-transistion-duration) ease-in-out,
+    border var(--color-scheme-transistion-duration) ease-in-out;
+}
+
+

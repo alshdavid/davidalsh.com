@@ -4,6 +4,9 @@
 
   includeDir('./assets')
   includeFile('./robots.txt')
+  includeFile('./manifest.json')
+
+  postsDetails = getPosts(locals)
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,15 +15,19 @@
   <%- include('./_partials/links'); -%>
   <%- includeStyle(locals, './style.scss'); -%>
   <%- include('./_partials/dark-mode'); -%>
-  <title>David Alsh Portfolio</title>
+  <title>David Alsh - Home</title>
 </head>
 <body class="page-home">
-  <script type="application/json">
-  </script>
   <%- include('./_partials/nav'); -%>
   <main class="content-max-width framed markdown grow">
-    <% for (const post of getPosts(locals).posts) { %>
-    <article>
+    <div class="filter" id="filter">
+      <span>Categories</span>
+      <button class="unselectable" onclick="filterByTags([])">All</button>
+      <button onclick="filterByTags(['article'])">Articles</button>
+      <button onclick="filterByTags(['video'])">Videos</button>
+    </div>
+    <% for (const post of postsDetails.posts) { %>
+    <article data-tags="<%= post.tags.join(' ') %>">
       <div>
         <div class="publish-date">
           <time datetime="<%= post.publish_date %>"><%= post.publish_date %></time>
@@ -42,5 +49,46 @@
     </article>
     <% } %>
   </main>
+  <script type="module">
+    function filterByTags(tags) {
+      const articles = document.querySelectorAll('article')
+      if (tags.length === 0) {
+        for (const article of articles) {
+          article.style.display = null
+        }
+        return
+      }
+      for (const article of articles) {
+        const articleTags = article.getAttribute('data-tags')
+        let found = false
+
+        for (const tag of tags) {
+          if (articleTags.includes(tag)) {
+            found = true
+            break
+          }
+        }
+
+        if (found) {
+          article.style.display = null
+        } else {
+          article.style.display = 'none'
+        }
+      }
+    }
+
+    const filterEl = document.querySelector('#filter')
+    const filterButtonEls = filterEl.querySelectorAll('button')
+
+    filterEl.addEventListener('click', e => {
+      for(const filterButtonEl of filterButtonEls) {
+        if (filterButtonEl === e.target) continue
+        filterButtonEl.classList.remove('selected')
+      }
+      e.target.classList.add('selected')
+    })
+
+    window.filterByTags = filterByTags
+  </script>
 </body>
 </html>

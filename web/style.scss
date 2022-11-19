@@ -7,15 +7,17 @@
 @import './_styles/syntax-highlighting/prism-light.scss';
 
 :root {
-  --arrow-height: 40px;
+  --highlight-color-dark: rgba(255,255,255,0.2);
+  --highlight-color-light: rgba(0,0,0,0.1);
+  --highlight-color: var(--highlight-color-light);
 }
 
 html.dark {
-  --hero-image-grayscale: var(--hero-image-grayscale-dark);
+  --highlight-color: var(--highlight-color-dark);
 }
 
 html.light {
-  --hero-image-grayscale: var(--hero-image-grayscale-light);
+  --highlight-color: var(--highlight-color-light);
 }
 
 .page-home, .page-posts {
@@ -48,22 +50,60 @@ html.light {
       @media (min-width: 1000px) {
         flex-direction: row;
       }
+
+      &:last-child {
+        flex-direction: column;
+        align-items: center;
+
+        @media (min-width: 1000px) {
+          align-items: flex-end;
+        }
+
+        button {
+          display: block;
+          margin-bottom: 8px;
+        }
+
+        input {
+          width: 250px;
+        }
+      }
     }
 
     .links {
       margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
 
       @media (min-width: 1000px) {
-        margin: none;
+        margin: 0;
       }
     }
 
     .link {
       font-size: 18px;
-      margin-right: 12px;
+      margin-right: 20px;
       border-bottom: 1px solid;
       text-decoration: none;
-      margin-bottom: 6px;
+      display: block;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.github-icon, 
+      &.linkedin-icon {
+        border-bottom: none;
+
+        svg {
+          height: 25px;
+          display: block;
+        }
+
+        path {
+          fill: var(--font-color);
+        }
+      }
     }
 
     .logo {
@@ -99,29 +139,42 @@ html.light {
     flex-direction: column;
     flex-grow: 1;
 
-    &.hidden-content {
-      &>* {
-        display: none;
+    .filter {
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+
+      >span, button {
+        padding: 12px 0;
+        margin: 0 20px 0 0;
+        font-size: 15px;
+        font-family: var(--font-family-2);
       }
-    }
 
-    .hero-image {
-      // margin: 24px auto;
-      // filter: grayscale(1);
-      height: 400px;
-    }
-
-    .recent-posts, .all-posts {
-      font-family: var(--font-family-1);
-      margin-top: 10px;
-      font-size: 23px;
-      font-weight: 500;
-
-      @media (min-width: 1000px) {
-        font-size: 25px;
-        margin: 10px 0 16px 0;
+      span {
+        display: inline-block;
       }
-    }
+
+      button {
+        padding: 12px 8px;
+        margin: 0;
+        background-color: transparent;
+        color: var(--font-color);
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: background-color 150ms ease-in-out;
+
+        &.selected {
+          background-color: var(--highlight-color);
+
+          &.unselectable {
+            background-color: transparent;
+          }
+        }
+      }
+    }    
 
     article {
       display: flex;
@@ -161,7 +214,11 @@ html.light {
       .publish-date {
         font-family: var(--font-family-2);
         font-size: 14px;
-        margin: 0 0 16px 0;
+        margin: 0 0 8px 0;
+
+        @media (min-width: 1000px) {
+          margin: 0 0 16px 0;
+        }
       }
 
       h2 {
@@ -221,72 +278,3 @@ html.light {
 
   }
 }
-
-/*
-    article {
-      margin: 0 0 12px 0;
-
-      &>div {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 0 12px 0;
-
-        &>div {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
-
-          &:last-child {
-            align-items: flex-end;
-          }
-        }
-      }
-
-      h2 {
-        font-size: 20px;
-        font-weight: 600;
-        margin: 0 0 4px 0;
-
-        a {
-          text-decoration: none;
-          display: block;
-
-          &:after {
-            content: '';
-            display: block;
-            height: 1px;
-            margin-top: 4px;
-            background-color: var(--font-color);
-          }
-        }
-      }
-
-      .subtitle {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 0 8px 0;
-        width: 100%;
-      }
-
-      h3 {
-        font-size: 18px;
-        font-weight: 500;
-        margin: 0;
-        font-style: italic;
-      }
-
-
-
-      .publish-date {
-        span {
-          font-size: 12px;
-        }
-      }
-
-      p {
-        font-size: 16px;
-        text-align: justify;
-      }
-    }
-*/

@@ -29,6 +29,7 @@ type EntryConfig = (EntryConfigFile | EntryConfigTemplate) & {
 const Entries: EntryConfig[] = [
   { type: 'file', processor: 'ejs', inputDirRel: '', fileName: 'index.ejs' },
   { type: 'file', processor: 'ejs', inputDirRel: '', fileName: '404.ejs' },
+  { type: 'file', processor: 'ejs', inputDirRel: 'portfolio', fileName: 'index.ejs' },
   { type: 'file', processor: 'ejs', inputDirRel: 'posts/api', fileName: 'all.ejs', outputExtension: 'json' },
 ]
 
