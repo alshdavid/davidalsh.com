@@ -4,6 +4,7 @@ tags: [article, web, html, security, privacy]
 
 title: The Case For a Sandboxed Script Tag
 subtitle: Enhancing security on the web
+description: An article examining the utility of allowing script tags to be sandboxable
 
 image: assets/hero.png
 image_alt: Picture of a children's sand pit

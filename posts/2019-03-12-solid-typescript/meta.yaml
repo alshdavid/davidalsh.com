@@ -4,6 +4,7 @@ tags: [article, typescript, software-design]
 
 title: SOLID TypeScript
 subtitle: Less about frameworks, more about engineering
+description: An article exploring the application of SOLID principles to TypeScript
 
 image: assets/hero.png
 image_alt: Picture of pillars with SOLID written on top
