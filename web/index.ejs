@@ -30,6 +30,7 @@
       <button class="unselectable" onclick="filterByTags([])">All</button>
       <button onclick="filterByTags(['article'])">Articles</button>
       <button onclick="filterByTags(['video'])">Videos</button>
+      <button onclick="filterByTags(['tutorial'])">Tutorials</button>
     </div>
     <% for (const post of postsDetails.posts) { %>
     <article data-tags="<%= post.tags.join(' ') %>">
