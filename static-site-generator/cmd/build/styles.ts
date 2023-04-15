@@ -1,6 +1,6 @@
+import * as sass from "sass"
 import { DirectoryMap } from "../../platform/crawl-dir";
 import * as hash from "../../platform/hash";
-import * as sass from "sass"
 
 const ENTRY = 'index.scss'
 
@@ -16,17 +16,17 @@ export async function renderStyles(
   const sourceEntry = sourceFiles.getRelative(ENTRY)
 
   if (!sourceEntry) {
-    return false
+    return true
   }
 
   const result = await sass.compileAsync(sourceEntry.absolutePath)
   const content = result.css.toString()
 
-  let filename = 'styles.css'
+  let filename = 'styles/styles.css'
 
   if (options.contentHash) {
     const hex = hash.sha1(content, 20)
-    filename = `${hex}.css`
+    filename = `styles/styles.${hex}.css`
   }
 
   outFiles.set(filename, content)

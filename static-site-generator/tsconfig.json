@@ -13,5 +13,8 @@
     "cmd/**/*.ts",
     "platform/**/*.ts",
     "kit/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

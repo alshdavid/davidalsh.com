@@ -1,18 +1,18 @@
 {
   "files.exclude": {
-    "**/.git": false,
-    "**/.svn": false,
-    "**/.hg": false,
-    "**/CVS": false,
-    "**/.DS_Store": false,
-    "**/Thumbs.db": false,
-    ".vscode": false,
-    "**/node_modules": false,
-    "**/dist": false,
-    "**/tsconfig.json": false,
-    "website/package.json": false,
-    "**/pnpm-lock.yaml": false,
-    "**/pnpm-workspace.yaml": false,
-    ".github": false
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    ".vscode": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/tsconfig.json": true,
+    "website/package.json": true,
+    "**/pnpm-lock.yaml": true,
+    "**/pnpm-workspace.yaml": true,
+    ".github": true
   }
 }
