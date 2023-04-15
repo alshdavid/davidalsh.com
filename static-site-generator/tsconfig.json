@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node16",
+    "lib": ["ESNext"],
+    "strict": true,
+    "declaration": false,
+    "jsx": "react",
+  },
+  "include": [
+    "cmd/**/*.ts",
+    "platform/**/*.ts",
+    "kit/**/*.ts",
+  ]
+}

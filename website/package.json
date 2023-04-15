@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@alshdavid/static-site-generator": "*",
+    "@alshdavid/rxjs": "^1.2.0",
+    "preact": "^10.13.2",
+    "typescript": "^5.0.4"
+  }
+}

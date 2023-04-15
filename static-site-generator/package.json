@@ -1,0 +1,37 @@
+{
+  "name": "@alshdavid/static-site-generator",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "tsc": "pnpm run tsc:types && pnpm run tsc:cjs && pnpm run tsc:esm",
+    "tsc:cjs": "rm -rf dist/cjs && npx tsc --outDir dist/cjs --module CommonJS",
+    "tsc:esm": "rm -rf dist/esm && npx tsc --outDir dist/esm --module ESNext",
+    "tsc:types": "rm -rf dist/types && npx tsc --outDir dist/types --module ESNext --declaration true --emitDeclarationOnly true",
+    "script": "pnpm run tsc:cjs && node bin/run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ejs": "^3.1.2",
+    "@types/marked": "^4.0.8",
+    "@types/mime-types": "^2.1.1",
+    "@types/node": "^18.15.11",
+    "ejs": "^3.1.9",
+    "marked": "^4.3.0",
+    "mime-types": "^2.1.35",
+    "sass": "^1.62.0",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "webpack": "^5.79.0",
+    "yaml": "^2.2.1"
+  }
+}
