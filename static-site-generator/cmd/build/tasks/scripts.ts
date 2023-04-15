@@ -2,7 +2,7 @@ import * as webpack from 'webpack'
 import { createFsFromVolume, Volume } from 'memfs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { DirectoryMap } from "../../platform/crawl-dir";
+import { DirectoryMap } from "../../../platform/crawl-dir";
 
 const ENTRY = 'index.ts'
 

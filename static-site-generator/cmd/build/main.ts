@@ -2,8 +2,8 @@ import * as path from "node:path";
 import { crawlDir } from "../../platform/crawl-dir";
 import * as files from "../../platform/files";
 import { Args } from "./args";
-import { renderScripts } from "./scripts";
-import { renderStyles } from "./styles";
+import { renderScripts } from "./tasks/scripts";
+import { renderStyles } from "./tasks/styles";
 
 process.stdout.setEncoding('utf8')
 

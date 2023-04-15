@@ -1,6 +1,6 @@
 import * as sass from "sass"
-import { DirectoryMap } from "../../platform/crawl-dir";
-import * as hash from "../../platform/hash";
+import { DirectoryMap } from "../../../platform/crawl-dir";
+import * as hash from "../../../platform/hash";
 
 const ENTRY = 'index.scss'
 
