@@ -303,10 +303,7 @@ html.light {
           justify-content: flex-start;
           align-items: center;
           flex-flow: row wrap;
-
           margin: 0 0 12px 0;
-          @include desktop() {
-          }
 
           span {
             text-decoration: underline;
@@ -337,12 +334,8 @@ html.light {
           overflow: hidden;
           margin: 0 0 8px 0;
           opacity: 0.7;
-          line-height: 25px;
+          line-height: 20px;
           
-          @include mobile {
-            // display: none;
-          }
-
           a {
             text-decoration: none;
           }

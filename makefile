@@ -4,9 +4,9 @@ clean:
 	rm -rf dist
 
 build:
-	@cd test -d node_modules || pnpm install
-	@make clean -s
-	@cd .github/scripts && pnpm run start
+	pnpm install
+	rm -rf dist
+	cd .github/scripts && pnpm run start
 
 watch:
 	pnpm install

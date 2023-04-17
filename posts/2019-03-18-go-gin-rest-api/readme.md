@@ -1,3 +1,3 @@
-This is my first video. Let me know what you think!
+This is a tutoraial demonstrating how to put together a REST API using the Go programming language.
 
-A simple demonstration of how you'd put together a REST API in Go using the Gin web framework. Some simple tests are included as well as a simple rundown of interfaces. 
+We go through how to tuse the Gin web framework, how to write some basic unti tests and how to use Go interfaces to best effect.
