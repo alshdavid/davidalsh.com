@@ -1,4 +1,4 @@
-# What does it mean to “Sandbox” a script?
+## What does it mean to “Sandbox” a script?
 
 Sandboxed scripts are isolated from their environment and can only talk to other scripts through a secure channel — think Docker or Virtual Machines_
 
@@ -53,11 +53,11 @@ Sandboxed scripts would communicate with the host page using the `postMessage` A
 </script>
 ```
 
-# Why is this useful?
+## Why is this useful?
 
 You might be wondering what value there is in limiting the reach that a script has.
 
-## Privacy
+### Privacy
 
 Often applications will need to reference an external script in order to perform a task the engineers are unable to code themselves. Examples of this are things like third party Social login, Firebase, Analytics tooling, Performance monitoring tooling.
 
@@ -65,21 +65,21 @@ Granting these third party integrations completely unregulated root level access
 
 Sandboxing a script like this means the third party only has access to data explicitly sent by the hosting web application.
 
-## Security
+### Security
 
 Leading on from the previous point, it’s also possible for these third party scripts to be collecting user data unwittingly through vulnerabilities in their own client side script.
 
 Perhaps they have a malicious dependency in their JavaScript bundle. Having the host explicitly send data to the script ensures that host applications are not liable for damages resulting from vulnerabilities in third party scripts.
 
-## Performance
+### Performance
 
 Knowing that a script does not have access to the host context allows browsers to execute the script in its own process thread, allowing for parallel execution which can improve the performance of websites that would otherwise evaluate this code directly on the host thread.
 
-# This sounds like a Web Worker?
+## This sounds like a Web Worker?
 
 In some ways, yes — this resembles a web worker, it does however present some notable differences:
 
-## Cross origin script compatibility
+### Cross origin script compatibility
 
 Web workers cannot be instantiated from a script located on a cross origin domain. So, essentially if a third party offers an integration — that integration cannot use multi threading (at least not easily) and that third party integration cannot be sandboxed.
 
@@ -88,7 +88,7 @@ Web workers cannot be instantiated from a script located on a cross origin domai
 const worker = new Worker('https://example.com/auth-integration.js')
 ```
 
-## Opt-in sandbox features and same-origin Iframe access
+### Opt-in sandbox features and same-origin Iframe access
 
 Web Workers are unconditionally sandboxed from their execution context meaning they are strictly unable to access anything from the host.
 
@@ -113,7 +113,7 @@ Perhaps exploring `sandbox` attribute values would allow for more versatility fo
 ></script>
 ```
 
-## Browser optimisations
+### Browser optimisations
 
 You might be wonder why advocate for a sandbox flag over simply asking for Worker to accept cross origin scripts and, honestly, if that was on offer I’d take it.
 
@@ -125,9 +125,9 @@ This “once over” optimisation does not extend to Worker scripts because the 
 
 Worker scripts are also instantiated synchronously, where `<script>` tags can be evaluated asynchronously with the async attribute.
 
-# Current solutions
+## Current solutions
 
-## Iframes
+### Iframes
 
 Currently companies will use hidden iframes to sandbox third party or cross origin scripts.
 

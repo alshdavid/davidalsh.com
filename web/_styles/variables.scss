@@ -3,9 +3,10 @@
   --width: 1000px;
   --grid-gutter: var(--base);
   --grid-height: calc(2 * var(--base));
-  --font-family-1: 'Lora', serif;
-  --font-family-2: 'Inter', sans-serif;
-  --font-family-3: 'Inconsolata', monospace;
+
+  --font-family-1: 'Times New Roman', serif;
+  --font-family-2: Arial, Helvetica, sans-serif;
+  --font-family-3: "Courier New", Courier, monospace;
   --margin-bottom-desktop: 28px;
   --margin-bottom-mobile: 18px;
 
@@ -25,24 +26,25 @@
   --border-color-invert: var(--border-color-dark);
 
   --color-scheme-transistion-duration: 150ms;
+  --color-brand-1: #ffc000;
 
-  @media (prefers-color-scheme: dark) {
-    --background-color: var(--background-color-dark);
-    --background-color-invert: var(--background-color-light);
-    --font-color: var(--font-color-dark);
-    --font-color-invert: var(--font-color-light);
-    --border-color: var(--border-color-dark);
-    --border-color-invert: var(--border-color-light);
-  }
-  
-  @media (prefers-color-scheme: light) {
-    --background-color: var(--background-color-light);
-    --background-color-invert: var(--background-color-dark);
-    --font-color: var(--font-color-light);
-    --font-color-invert: var(--font-color-dark);
-    --border-color: var(--border-color-light);
-    --border-color-invert: var(--border-color-dark);
-  }
+  --spacing-00: 0px;
+  --spacing-01: 4px;
+  --spacing-02: 8px;
+  --spacing-03: 12px;
+  --spacing-04: 16px;
+  --spacing-05: 20px;
+  --spacing-06: 24px;
+  --spacing-07: 28px;
+  --spacing-08: 32px;
+  --spacing-09: 36px;
+  --spacing-10: 40px;
+  --spacing-11: 44px;
+  --spacing-12: 48px;
+  --spacing-13: 56px;
+  --spacing-14: 64px;
+  --spacing-15: 72px;
+  --spacing-16: 144px;
 }
 
 html.dark {
@@ -61,4 +63,32 @@ html.light {
   --font-color-invert: var(--font-color-dark);
   --border-color: var(--border-color-light);
   --border-color-invert: var(--border-color-dark);
+}
+
+@mixin desktop {
+  @media (min-width: 1001px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 1000px) {
+    @content;
+  }
+}
+
+@mixin dark {
+  @at-root {
+    html.dark & {
+      @content;
+    }
+  }
+}
+
+@mixin light {
+  @at-root {
+    html.light & {
+      @content;
+    }
+  }
 }

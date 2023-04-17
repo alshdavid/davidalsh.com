@@ -3,6 +3,7 @@
   includeStyle = requireModule('../../_require/include-style.ts', { cwd: template.dirname_absolute() }).includeStyle
   renderMarkdownFile = requireModule('../../_require/render-markdown.ts', { cwd: template.dirname_absolute() }).renderMarkdownFile
   escapeHtml = requireModule('../../_require/escape-html.ts', { cwd: template.dirname_absolute() }).escapeHtml
+  prettyDate = requireModule('../../_require/pretty-date.ts', { cwd: template.dirname_absolute() }).prettyDate
     
   includeDir('./assets', { cwd: input.dirname_absolute() })
 
@@ -30,7 +31,7 @@
 <body class="page-article">
     <header class="content-max-width framed">
       <nav>
-        <div>
+        <div class="back">
           <a href="/">Back home</a>
         </div>
         <div>
@@ -43,7 +44,7 @@
           <p class="article-subtitle"><%- escapeHtml(meta.subtitle) %></p>
         </div>
         <div>
-          <p class="article-publish-date">Published<br class="for-desktop"> <%- meta.publish_date %></p>
+          <p class="article-publish-date">Published<br class="for-desktop"> <%- prettyDate(meta.publish_date) %></p>
         </div>
       </div>
       <% if ('video_youtube' in meta) { %>

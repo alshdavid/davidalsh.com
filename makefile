@@ -9,14 +9,15 @@ build:
 	@cd .github/scripts && pnpm run start
 
 watch:
+	pnpm install
+	cd .github/scripts && \
 	nodemon \
 		--signal SIGTERM \
-		--watch web \
-		--watch posts \
-		--watch .github/scripts/src \
-		--ext .* \
-		--delay .5 \
-		--exec 'clear && make build && echo'
+		--watch '../../web/**/*' \
+		--watch '../../posts/**/*' \
+		--watch './src/**/*' \
+		--signal SIGTERM --ext '*' \
+		--exec 'rm -rf ../../dist && npx ts-node ./src/cmd/main.ts --no-cache || exit 1'
 
 serve:
 	http-server -c=-1 ./dist

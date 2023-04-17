@@ -1,6 +1,7 @@
 <%
   includeStyle = requireModule('./_require/include-style.ts').includeStyle
   getPosts = requireModule('./_require/get-posts.ts').getPosts
+  prettyDate = requireModule('./_require/pretty-date.ts').prettyDate
 
   includeDir('./assets')
   includeFile('./robots.txt')
@@ -35,24 +36,21 @@
     </div>
     <% for (const post of postsDetails.posts) { %>
     <article data-tags="<%= post.tags.join(' ') %>">
-      <div>
-        <div class="publish-date">
-          <time datetime="<%= post.publish_date %>"><%= post.publish_date %></time>
+      <a href="/posts/<%= post.slug %>/">
+        <div class="article-content">
+          <h2><%= post.title %></h2>
+          <div class="post-meta">
+            <time datetime="<%= post.publish_date %>"><%= prettyDate(post.publish_date) %></time>
+            <% for (const tag of post.tags) { %>
+            <span><%= tag %></span>
+            <% } %>
+          </div>
+          <p><%= post.preview %></p>
         </div>
-        <h2><a href="/posts/<%= post.slug %>/"><%= post.title %></a></h2>
-        <p><a href="/posts/<%= post.slug %>/"><%= post.preview %></a></p>
-        <div class="tags">
-          <% for (const tag of post.tags) { %>
-          <span><%= tag %></span>
-          <% } %>
+        <div class="image">
+          <img src="/posts/<%= post.slug %>/<%= post.image %>" alt="<%= post.image_alt %>">
         </div>
-        <div class="read-more">
-          <a href="/posts/<%= post.slug %>/">Read More</a>
-        </div>
-      </div>
-      <div>
-        <img src="/posts/<%= post.slug %>/<%= post.image %>" alt="<%= post.image_alt %>">
-      </div>
+      </a>
     </article>
     <% } %>
   </main>
