@@ -4,6 +4,7 @@ import * as files from "../../platform/files";
 import { Args } from "./args";
 import { renderScripts } from "./tasks/scripts";
 import { renderStyles } from "./tasks/styles";
+import { renderTemplates } from "./tasks/templates";
 
 process.stdout.setEncoding('utf8')
 
@@ -45,6 +46,7 @@ async function main() {
   const success = await runTasks([
     { taskName: 'Styles', task: () => renderStyles(sourceFiles, outFiles, { contentHash: false }) },
     { taskName: 'Scripts', task: () => renderScripts(sourceFiles, outFiles) },
+    { taskName: 'Templates', task: () => renderTemplates(args, sourceFiles, outFiles) },
   ])
 
   if (!success) {

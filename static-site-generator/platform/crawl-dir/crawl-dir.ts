@@ -11,6 +11,7 @@ export type CrawlDirOptions = {
 export class DirectoryEntry {
   readonly absolutePath: string
   readonly relativePath: string
+  readonly relativeDir: string
   readonly basePath: string
   readonly targetType: TargetType
 
@@ -22,6 +23,7 @@ export class DirectoryEntry {
   ) {
     this.absolutePath = absolutePath
     this.relativePath = relativePath
+    this.relativeDir = path.dirname(relativePath)
     this.basePath = basePath
     this.targetType = targetType
   }
@@ -49,6 +51,10 @@ export class DirectoryMap {
       return null
     }
     return result
+  }
+
+  entries(): IterableIterator<[string, DirectoryEntry]> {
+    return this.#files.entries();
   }
 }
 
