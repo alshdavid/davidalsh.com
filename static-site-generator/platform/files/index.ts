@@ -40,3 +40,11 @@ export async function existsAsync(file: string) {
     return false;
   }
 }
+
+export async function createLink(existingPath: string, newPath: string): Promise<void> {
+  const parent = path.dirname(newPath)
+  if (!await existsAsync(parent)) {
+    await fsAsync.mkdir(parent, { recursive: true })
+  }
+  await fsAsync.symlink(existingPath, newPath)
+}

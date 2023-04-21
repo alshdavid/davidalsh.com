@@ -5,14 +5,14 @@ import { Args } from "./args";
 import { renderScripts } from "./tasks/scripts";
 import { renderStyles } from "./tasks/styles";
 import { renderTemplates } from "./tasks/templates";
+import { LinkSymbol, linkAssets } from "./tasks/assets";
 
 process.stdout.setEncoding('utf8')
 
-async function runTask(taskName: string, task: () => Promise<boolean>): Promise<boolean> {
+async function runTask(taskName: string, task: () => Promise<void>): Promise<void> {
   try {
     await task()
     process.stdout.write(`${taskName} ✔\n`)
-    return true
   } catch (error) {
     if ((error as any).message) {
       process.stdout.write(`${taskName} ✘\n\n${(error as any).message}\n\n`)
@@ -20,20 +20,17 @@ async function runTask(taskName: string, task: () => Promise<boolean>): Promise<
     } else {
       process.stdout.write(`${taskName} ✘\n\n${(error as any).toString()}\n\n`)
     }
-    return false
   }
 }
 
-async function runTasks(tasks: Array<{ taskName: string, task: () => Promise<boolean> }>): Promise<boolean> {
+async function runTasks(tasks: Array<{ taskName: string, task: () => Promise<void> }>): Promise<void> {
   const arr = []
 
   for (const task of tasks) {
     arr.push(runTask(task.taskName, task.task))
   }
 
-  const result = await Promise.all(arr)
-
-  return !result.includes(false)
+  await Promise.all(arr)
 }
 
 async function main() {
@@ -43,22 +40,25 @@ async function main() {
 
   console.log('== Building ==')
   
-  const success = await runTasks([
+  await runTasks([
     { taskName: 'Styles', task: () => renderStyles(sourceFiles, outFiles, { contentHash: false }) },
     { taskName: 'Scripts', task: () => renderScripts(sourceFiles, outFiles) },
     { taskName: 'Templates', task: () => renderTemplates(args, sourceFiles, outFiles) },
+    { taskName: 'Assets', task: () => linkAssets(sourceFiles, outFiles) },
   ])
-
-  if (!success) {
-    process.exit(1)
-  }
 
   console.log('== Writing ==')
 
-  await files.rmDir(args.outDir)
+  if (await files.existsAsync(args.outDir)) {
+    await files.rmDir(args.outDir)
+  }
   for (const [relativePath, contents] of outFiles.entries()) {
     console.log(relativePath)
-    await files.writeFile(path.resolve(args.outDir, relativePath), contents)
+    if (contents === LinkSymbol) {
+      await files.createLink(path.join(args.projectRoot, relativePath), path.join(args.outDir, relativePath))
+    } else {
+      await files.writeFile(path.resolve(args.outDir, relativePath), contents)
+    }
   }
 }
 

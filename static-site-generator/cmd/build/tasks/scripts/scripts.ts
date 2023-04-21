@@ -2,18 +2,18 @@ import * as webpack from 'webpack'
 import { createFsFromVolume, Volume } from 'memfs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { DirectoryMap } from "../../../platform/crawl-dir";
+import { DirectoryMap } from "../../../../platform/crawl-dir";
 
 const ENTRY = 'index.ts'
 
 export async function renderScripts(
   sourceFiles: DirectoryMap,
   outFiles: Map<string, string>,
-): Promise<boolean> {
+): Promise<void> {
   const sourceEntry = sourceFiles.getRelative(ENTRY)
 
   if (!sourceEntry) {
-    return true
+    return
   }
 
   const options: webpack.Configuration = {
@@ -57,6 +57,4 @@ export async function renderScripts(
     const contents = virtualFs.readFileSync(path.join(path.sep, absolutePath), { encoding: 'utf-8' }).toString()
     outFiles.set(absolutePath, contents)
   }
-
-  return true
 }

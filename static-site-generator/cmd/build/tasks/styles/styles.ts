@@ -1,6 +1,6 @@
 import * as sass from "sass"
-import { DirectoryMap } from "../../../platform/crawl-dir";
-import * as hash from "../../../platform/hash";
+import { DirectoryMap } from "../../../../platform/crawl-dir";
+import * as hash from "../../../../platform/hash";
 
 const ENTRY = 'index.scss'
 
@@ -12,11 +12,11 @@ export async function renderStyles(
   sourceFiles: DirectoryMap,
   outFiles: Map<string, string>,
   options: RenderStylesOptions,
-): Promise<boolean> {
+): Promise<void> {
   const sourceEntry = sourceFiles.getRelative(ENTRY)
 
   if (!sourceEntry) {
-    return true
+    return
   }
 
   const result = await sass.compileAsync(sourceEntry.absolutePath)
@@ -30,5 +30,4 @@ export async function renderStyles(
   }
 
   outFiles.set(filename, content)
-  return true
 }

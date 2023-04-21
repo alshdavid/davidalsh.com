@@ -10,9 +10,12 @@ export async function renderTemplates(
   args: Args,
   sourceFiles: DirectoryMap,
   outFiles: Map<string, string>,
-): Promise<boolean> {
+): Promise<void> {
   for (const [sourceFilePath, fileEntry] of sourceFiles.entries()) {
-    if (sourceFilePath.includes('_')) continue  
+    if (
+      sourceFilePath.includes('_') ||
+      sourceFilePath.includes('/assets/')
+    ) continue  
     if (
       !sourceFilePath.endsWith('index.ejs') &&
       !sourceFilePath.endsWith('index.html')
@@ -39,6 +42,4 @@ export async function renderTemplates(
 
     outFiles.set(outFile, result)
   }
-
-  return true
 }
