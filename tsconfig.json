@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESnext",
+    "module": "ESNext",
+    "moduleResolution": "Node16",
+    "lib": ["ESNext", "DOM"],
+    "types": [],
+    "strict": true,
+    "outDir": "dist"
+  },
+  "include": ["**/*.ts"],
+  "exclude": [".github"],
+}

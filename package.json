@@ -1,0 +1,23 @@
+{
+  "name": "davidalsh-com",
+  "scripts": {
+    "build": "node ./.github/scripts/cmd/build/index.mjs",
+    "dev": "node ./.github/scripts/cmd/dev/index.mjs",
+    "serve": "npx http-server -c=-1 -cors=true ./.github/scripts/dist"
+  },
+  "devDependencies": {
+    "@alshdavid/kit": "^0.8.5",
+    "@types/ejs": "^3.1.2",
+    "@types/marked": "^5.0.0",
+    "@types/node": "^20.3.1",
+    "ejs": "^3.1.9",
+    "http-server": "^14.1.1",
+    "marked": "^5.1.0",
+    "marked-gfm-heading-id": "^3.0.4",
+    "nodemon": "^2.0.22",
+    "sass": "^1.63.4",
+    "ts-loader": "^9.4.3",
+    "webpack": "^5.87.0",
+    "yaml": "^2.3.1"
+  }
+}
