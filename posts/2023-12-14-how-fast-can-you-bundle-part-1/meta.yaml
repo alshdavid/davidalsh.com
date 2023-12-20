@@ -1,9 +1,9 @@
-slug: how-fast-can-you-bundle-part-1
+slug: writing-a-bundler-part-1
 publish_date: 2023-12-14
 tags: [article, web, bundling]
 
-title: How Fast Can You Bundle JavaScript? Part 1
-subtitle: The Fastest Transformation Pipeline Possible 
+title: Writing A Bundler In Rust - Part 1 - Transformation
+subtitle: Gotta go fast! 
 description: A series digging into what is required to build a modern JavaScript bundler in Rust
 
 image: assets/hero.jpg

@@ -1,0 +1,11 @@
+[workspace]
+
+resolver = "1"
+
+members = [
+    "single-threaded-transformer",
+    "multi-threaded-transformer",
+    "vendor/parcel-transformer-js",
+    "vendor/parcel-node-resolver",
+    "vendor/parcel-json-comments",
+]

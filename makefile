@@ -11,7 +11,7 @@ build:
 watch:
 	pnpm install
 	cd .github/scripts && \
-	nodemon \
+	node node_modules/nodemon/bin/nodemon.js \
 		--signal SIGTERM \
 		--watch '../../web/**/*' \
 		--watch '../../posts/**/*' \

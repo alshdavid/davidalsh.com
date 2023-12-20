@@ -296,28 +296,12 @@ td {
   border: 1px solid #e6e6e6;
 }
 
-thead tr,
-tfoot tr {
-  background-color: #f5f5f5;
-}
-
 thead th,
 thead td,
 tfoot th,
 tfoot td {
   font-size: 14px;
   padding: var(--spacing-01);
-}
-
-thead th code,
-thead td code,
-tfoot th code,
-tfoot td code {
-  background-color: #fff;
-}
-
-tbody tr {
-  background-color: #fff;
 }
 
 input {
