@@ -5,7 +5,6 @@ mod transform;
 use std::fs;
 use std::path::PathBuf;
 use std::collections::HashMap;
-use std::collections::VecDeque;
 use std::collections::HashSet;
 use std::sync::Arc;
 use std::sync::Mutex;
@@ -23,24 +22,22 @@ fn main() {
     let config = Config::new();
     println!("Threads: {}", config.threads);
 
-    // Queue of files to transform
-    let queue = Arc::new(Mutex::new(VecDeque::<(PathBuf, String)>::new()));
     // Channel to notify parked threads when new work comes in
-    let (notify_queue_push, on_queue_push) = crossbeam_channel::unbounded::<()>();
+    let (submit_job, on_submitted_job) = crossbeam_channel::unbounded::<Option<(PathBuf, String)>>();
     // Counter of the tasks in flight
     let in_flight = Arc::new(AtomicUsize::new(0));
 
     // Map of path -> asset contents
-    let assets = Arc::new(Mutex::new(HashMap::<PathBuf, Option<String>>::new()));
+    let assets = Arc::new(Mutex::new(HashMap::<PathBuf, String>::new()));
     // Graph as tuples rather than strings
     let asset_graph = Arc::new(Mutex::new(HashSet::<(PathBuf, PathBuf)>::new()));
 
     // Add the entry asset to queue
     in_flight.fetch_add(1, Ordering::Relaxed);
-    queue.lock().unwrap().push_back((
+    submit_job.send(Some((
         config.project_root.clone(),
         config.entry_point.clone().to_str().unwrap().to_string()
-    ));
+    ))).unwrap();
 
     // Hold the threads so we know when they all exit
     // In JavaScript terms, you can sort of think of this as an "Array<Promise<void>>"
@@ -52,21 +49,18 @@ fn main() {
         // Clone all of the Arcs - this clones the pointer, not the value
         // Rust will move the cloned pointers into the thread
         // You can think of this as a sort of "dependency injection" for each thread
-        let queue = queue.clone();
         let assets = assets.clone();
         let asset_graph = asset_graph.clone();
         let in_flight = in_flight.clone();
-        let notify_queue_push = notify_queue_push.clone();
-        let on_queue_push = on_queue_push.clone();
+        let submit_job = submit_job.clone();
+        let on_submitted_job = on_submitted_job.clone();
+        let threads_num = config.threads.clone();
 
         // In JavaScript terms, you can think of "thread::spawn()" as "setTimeout(cb)" if it returned a Promise
         thread_handles.push(thread::spawn(move || {
-            // Keep looping while there are active jobs
-            while in_flight.load(Ordering::Relaxed) > 0 {
-                let Some((from_path, specifier)) = queue.lock().unwrap().pop_front() else {
-                    // If there are no items in the queue wait to get a message saying there are
-                    on_queue_push.recv().unwrap();
-                    continue;
+            while let Ok(msg) = on_submitted_job.recv() {
+                let Some((from_path, specifier)) = msg else {
+                    break;
                 };
 
                 // Resolve and ignore errors
@@ -84,13 +78,17 @@ fn main() {
 
                 // Skip if transformed previously
                 if assets_unlocked.contains_key(&absolute_path) {
-                    // This job is done
-                    in_flight.fetch_sub(1, Ordering::Relaxed);
+                    // This job is done, kill all threads if there's no more work
+                    if in_flight.fetch_sub(1, Ordering::Relaxed) == 1 {
+                        for _ in 0..threads_num {
+                            submit_job.send(None).unwrap();
+                        }
+                    };
                     continue;
                 }
 
                 // Insert a placeholder so other threads will skip it when checking if it exists
-                assets_unlocked.insert(absolute_path.clone(), None);
+                assets_unlocked.insert(absolute_path.clone(), String::new());
                 
                 // Unlock the mutex manually
                 drop(assets_unlocked);
@@ -102,18 +100,21 @@ fn main() {
                 let (content_transformed, specifiers) = transform(&contents, &absolute_path);
 
                 for specifier in specifiers.iter() {
-                    // Add new specifiers to queue
                     in_flight.fetch_add(1, Ordering::Relaxed);
-                    queue.lock().unwrap().push_back((absolute_path.clone(), specifier.clone()));
-                    // Tell other parked threads that new work is available 
-                    notify_queue_push.send(()).unwrap();
+                    // Send job to another thread 
+                    submit_job.send(Some((absolute_path.clone(), specifier.clone()))).unwrap();
                 }
 
                 // Add asset to the asset store
-                assets.lock().unwrap().insert(absolute_path, Some(content_transformed));
+                assets.lock().unwrap().insert(absolute_path, content_transformed);
 
-                // This job is done
-                in_flight.fetch_sub(1, Ordering::Relaxed);
+                // This job is done, kill all threads if there's no more work
+                if in_flight.fetch_sub(1, Ordering::Relaxed) == 1 {
+                    for _ in 0..threads_num {
+                        submit_job.send(None).unwrap();
+                    }
+                    continue;
+                };
             }
         }));
     }
