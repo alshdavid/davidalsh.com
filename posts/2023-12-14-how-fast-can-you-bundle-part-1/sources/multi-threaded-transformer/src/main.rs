@@ -31,6 +31,8 @@ fn main() {
     let assets = Arc::new(Mutex::new(HashMap::<PathBuf, String>::new()));
     // Graph as tuples rather than strings
     let asset_graph = Arc::new(Mutex::new(HashSet::<(PathBuf, PathBuf)>::new()));
+    // Track complete jobs
+    let assets_done = Arc::new(Mutex::new(HashSet::<PathBuf>::new()));
 
     // Add the entry asset to queue
     in_flight.fetch_add(1, Ordering::Relaxed);
@@ -51,6 +53,7 @@ fn main() {
         // You can think of this as a sort of "dependency injection" for each thread
         let assets = assets.clone();
         let asset_graph = asset_graph.clone();
+        let assets_done = assets_done.clone();
         let in_flight = in_flight.clone();
         let submit_job = submit_job.clone();
         let on_submitted_job = on_submitted_job.clone();
@@ -69,29 +72,14 @@ fn main() {
                 // Add to graph
                 asset_graph.lock().unwrap().insert((from_path, absolute_path.clone()));
 
-                // In the case where multiple different files import the same target file, it's  
-                // possible that the same file will be resolved from different threads. To prevent  
-                // that file from being transformed multiple times, we hold the lock to the
-                // the shared data store, check if the file has already been transformed and
-                // if it hasn't, we insert a placeholder preventing others from trying.
-                let mut assets_unlocked = assets.lock().unwrap();
-
                 // Skip if transformed previously
-                if assets_unlocked.contains_key(&absolute_path) {
+                if !assets_done.lock().unwrap().insert(absolute_path.clone()) {
                     // This job is done, kill all threads if there's no more work
                     if in_flight.fetch_sub(1, Ordering::Relaxed) == 1 {
-                        for _ in 0..threads_num {
-                            submit_job.send(None).unwrap();
-                        }
+                        for _ in 0..threads_num { submit_job.send(None).unwrap(); }
                     };
                     continue;
                 }
-
-                // Insert a placeholder so other threads will skip it when checking if it exists
-                assets_unlocked.insert(absolute_path.clone(), String::new());
-                
-                // Unlock the mutex manually
-                drop(assets_unlocked);
 
                 // Read file and ignore errors
                 let contents = fs::read_to_string(&absolute_path).unwrap();
@@ -110,9 +98,7 @@ fn main() {
 
                 // This job is done, kill all threads if there's no more work
                 if in_flight.fetch_sub(1, Ordering::Relaxed) == 1 {
-                    for _ in 0..threads_num {
-                        submit_job.send(None).unwrap();
-                    }
+                    for _ in 0..threads_num { submit_job.send(None).unwrap(); }
                     continue;
                 };
             }
