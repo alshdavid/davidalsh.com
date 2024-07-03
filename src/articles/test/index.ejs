@@ -4,5 +4,22 @@
 </head>
 
 <body>
+  <button id="btn-dark">dark</button>
+  <script>
+    const html = document.querySelector('html')
+
+    document.querySelector('#btn-dark').addEventListener('click', () => {
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark')
+        html.classList.add('light')
+      } else {
+        html.classList.remove('light')
+        html.classList.add('dark')
+      }
+    })
+
+    // html.classList.add('light')
+
+  </script>
   <%- await markdown.render("./content.md") %>
 </body>

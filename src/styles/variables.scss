@@ -4,29 +4,33 @@
   --grid-gutter: var(--base);
   --grid-height: calc(2 * var(--base));
 
-  --font-family-1: 'Times New Roman', serif;
-  --font-family-2: Arial, Helvetica, sans-serif;
-  --font-family-3: "Courier New", Courier, monospace;
   --margin-bottom-desktop: 28px;
   --margin-bottom-mobile: 18px;
 
+  --color-scheme-transition-duration: 150ms;
+
+  --font-family-1: 'Times New Roman', serif;
+  --font-family-2: Arial, Helvetica, sans-serif;
+  --font-family-3: "Courier New", Courier, monospace;
+  
+  --color-brand-1: #ffc000;
+
   --font-color-light: #292929;
   --font-color-dark: #e1e1e1;
+  --background-color-dark: #020617;
+  --background-color-light: #fff;
+  --border-color-light: #e6e6e6;
+  --border-color-dark: #757575;
+
+  // Defaults
   --font-color: var(--font-color-light);
   --font-color-invert: var(--font-color-dark);
-
-  --background-color-dark: #202125;
-  --background-color-light: #fff;
+  
   --background-color: var(--background-color-light);
   --background-color-invert: var(--background-color-dark);
 
-  --border-color-light: #e6e6e6;
-  --border-color-dark: #757575;
   --border-color: var(--border-color-light);
   --border-color-invert: var(--border-color-dark);
-
-  --color-scheme-transistion-duration: 150ms;
-  --color-brand-1: #ffc000;
 
   --spacing-00: 0px;
   --spacing-01: 4px;

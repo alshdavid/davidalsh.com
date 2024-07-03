@@ -1,4 +1,5 @@
 import path from 'node:path';
+import * as node_crypto from "node:crypto"
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -24,7 +25,7 @@ let index_files = glob.sync("**/index.ejs", {
   cwd: path.join(__dirname, "..", "src")
 })
 
-let scripts = new Set<string>()
+let scripts = new Map<string, Promise<string>>()
 let styles = new Set<string>()
 let assets = new Set<string>()
 let virtual_assets = new Map<string, Buffer>()
@@ -38,14 +39,40 @@ for (const index_file of index_files) {
     let contents = fs.readFileSync(path_abs_index_file, 'utf-8')
 
     let local_scripts = {
-      add: (str: string) => {
+      add: async (str: string) => {
         let script_path = str
         if (!path.isAbsolute(script_path)) {
           script_path = path.normalize(path.join(__src, file.dir, str))
         }
-        scripts.add(script_path)
-        let rel_path = path.relative(path.dirname(path_abs_index_file), script_path)
-        return `<script src="${rename_ext(rel_path, 'js')}" type="module" async></script>`
+
+        if (!scripts.has(script_path)) {
+          scripts.set(script_path, (async () => {
+            let rel_path = path.relative(__src, path.dirname(script_path))
+
+            const result = await esbuild.build({
+              entryPoints: [script_path],
+              minify: true,
+              metafile: true,
+              bundle: true,
+              outdir: path.join(__dist, rel_path),
+              write: true
+            })
+            
+            const out_path = path.join(__root, Object.keys(result.metafile.outputs)[0]);
+            
+            const file = await fs.promises.readFile(out_path)
+            const hash = node_crypto.createHash('sha256').update(file).digest('hex').substring(0,10)
+
+            const out_path_hash = path.join(path.dirname(out_path), `${hash}.js`);
+            await fs.promises.rename(out_path, out_path_hash)
+            return `${hash}.js`
+          })())
+        }
+
+        const out_path = await scripts.get(script_path)!
+
+        let rel_path = path.relative(path.dirname(path_abs_index_file), path.join(__src, out_path))
+        return `<script src="${rel_path}" type="module" async></script>`
       }
     }
 
@@ -122,17 +149,6 @@ for (const index_file of index_files) {
 }
 
 await Promise.all(templates)
-
-for (const [_, script_file] of scripts.entries()) {
-  let rel_path = path.relative(__src, path.dirname(script_file))
-
-  await esbuild.build({
-    entryPoints: [script_file],
-    bundle: true,
-    outdir: path.join(__dist, rel_path),
-    write: true
-  })
-}
 
 for (const [_, style_file] of styles.entries()) {
   let rel_path = path.relative(__src, path.dirname(style_file))

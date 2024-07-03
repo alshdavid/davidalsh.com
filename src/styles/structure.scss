@@ -1,0 +1,25 @@
+.column {
+  display: flex;
+
+  & > * {
+    width: 100%;
+  }
+
+  &.border { 
+    border: 1px grey solid;
+    border-radius: 4px;
+    
+    & > * {
+      border-right: inherit;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  &.pad > * {
+    padding: 1em;
+  }
+}
+
