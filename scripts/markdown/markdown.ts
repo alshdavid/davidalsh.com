@@ -1,14 +1,12 @@
 import * as fs from "node:fs/promises";
-import * as fsSync from "node:fs";
 import * as path from "node:path";
 import * as node_crypto from "node:crypto"
 import { Marked } from 'marked'
-import * as child_process from 'node:child_process'
 import * as ejs from 'ejs'
 import Prism from 'prismjs'
 import PrismComponents from 'prismjs/components/'
 import { markedHighlight } from "./markdown-highlight";
-import * as paths from "../paths";
+import * as mermaid from "./mermaid";
 
 const NEW_LINE_EXP = /\n(?!$)/g;
 
@@ -37,34 +35,10 @@ export class Markdown {
           if (lang  === 'mermaid') {
             const hash = node_crypto.createHash('sha256').update(code).digest('hex').substring(0,10)
 
-            if (!fsSync.existsSync(path.join(dirpath, 'mermaid'))) {
-              await fs.mkdir(path.join(dirpath, 'mermaid'), { recursive: true })
-            }
+            const [light, dark] = mermaid.queue_mermaid(code)
 
-            if (!fsSync.existsSync(path.join(dirpath, 'mermaid', hash + '_light.svg'))) {
-              const dir = path.join(paths.__temp, hash)
-              await fs.mkdir(dir, { recursive: true })
-
-              await fs.writeFile(path.join(dir, hash), code, 'utf8')
-              
-              child_process.execSync(`npx mmdc --input ${path.join(dir, hash)} -o ${path.join(dirpath, 'mermaid', hash + '_light.svg')} -b transparent`)
-  
-              await fs.rm(dir, { force: true, recursive: true })
-            }
-
-            if (!fsSync.existsSync(path.join(dirpath, 'mermaid', hash + '_dark.svg'))) {
-              const dir = path.join(paths.__temp, hash)
-              await fs.mkdir(dir, { recursive: true })
-
-              await fs.writeFile(path.join(dir, hash), code, 'utf8')
-  
-              child_process.execSync(`npx mmdc --input ${path.join(dir, hash)} -o ${path.join(dirpath, 'mermaid', hash + '_dark.svg')} -t dark -b transparent`)
-  
-              await fs.rm(dir, { force: true, recursive: true })
-            }
-
-            ctx.assets.add(path.join('mermaid', hash + '_light.svg'))
-            ctx.assets.add(path.join('mermaid', hash + '_dark.svg'))
+            ctx.virtual_assets.set(path.join('mermaid', hash + '_light.svg'), (await light).data)
+            ctx.virtual_assets.set(path.join('mermaid', hash + '_dark.svg'), (await dark).data)
             
             return `<div class="mermaid">
               <img class="light-mode" src="mermaid/${hash}_light.svg" />

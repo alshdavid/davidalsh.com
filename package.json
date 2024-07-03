@@ -21,6 +21,7 @@
     "@types/prismjs": "*",
     "esbuild-sass-plugin": "*",
     "mermaid": "*",
+    "puppeteer-core": "*",
     "@mermaid-js/mermaid-cli": "*"
   },
   "nodemonConfig": {
