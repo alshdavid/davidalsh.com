@@ -1,22 +1,35 @@
 <header>
-  <div class="inner">
-  <nav>
-    <ol>
-      <li><a href="/">Home</a></li>
-      <% if (typeof breadcrumbs !== 'undefined') for (const [title, slug] of breadcrumbs) { %>
-        <li><a href="<%- slug %>"><%- title %></a></li>
-      <% } %>
-    </ol>
-  </nav>
-  <div>
-    <h1>
-      <small>Software Engineer </small> David Alsh
-    </h1>
-    <div>
-      <a href="https://github.com/alshdavid">Github</a>
-      <a href="https://github.com/alshdavid">YouTube</a>
-      <a href="https://github.com/alshdavid">Linkedin</a>
+  <div class="upper">
+    <div class="inner content-max-width">
+      <nav>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <% if (typeof breadcrumbs !=='undefined' ) for (const [title, slug] of breadcrumbs) { %>
+            <li><a href="<%- slug %>"><%- title %></a></li>
+            <% } %>
+        </ol>
+      </nav>
+      <div>
+        <h1>
+          <small>Software Engineer </small> David Alsh
+        </h1>
+        
+      </div>
     </div>
   </div>
-</div>
+  <div class="lower">
+    <div class="content-max-width">
+      <div>
+        <div class="search">
+          <svg src="/assets/icons/magnifying-glass.svg" svg-replace></svg>
+          <input type="text" placeholder="Search Articles">
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/alshdavid">Github</a>
+        <a href="https://github.com/alshdavid">YouTube</a>
+        <a href="https://github.com/alshdavid">Linkedin</a>
+      </div>
+    </div>
+  </div>
 </header>

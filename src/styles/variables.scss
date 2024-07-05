@@ -1,6 +1,8 @@
+$page-width: 900px;
+
 :root {
   --base: .8rem;
-  --width: 1280px;
+  --width: $page-width;
   --grid-gutter: var(--base);
   --grid-height: calc(2 * var(--base));
 
@@ -18,8 +20,10 @@
 
   --font-color-light: #292929;
   --font-color-dark: #e1e1e1;
+
   --background-color-dark: #0d1116;
   --background-color-light: #fff;
+
   --border-color-light: #e6e6e6;
   --border-color-dark: #757575;
 
@@ -71,13 +75,13 @@ html.light {
 }
 
 @mixin desktop {
-  @media (min-width: 1281px) {
+  @media (min-width: #{$page-width + 1}) {
     @content;
   }
 }
 
 @mixin mobile {
-  @media (max-width: 1280px) {
+  @media (max-width: #{$page-width}) {
     @content;
   }
 }
@@ -98,32 +102,11 @@ html.light {
   }
 }
 
-@mixin content-max-width-xs {
-  overflow: auto;
-  padding: 0 12px;
-
-  @include desktop() {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-}
-
 @mixin content-max-width {
-  overflow: auto;
   padding: 0 12px;
 
   @include desktop() {
     max-width: 900px;
-    margin: 0 auto;
-  }
-}
-
-@mixin content-max-width-l {
-  overflow: auto;
-  padding: 0 12px;
-
-  @include desktop() {
-    max-width: 1280px;
     margin: 0 auto;
   }
 }
