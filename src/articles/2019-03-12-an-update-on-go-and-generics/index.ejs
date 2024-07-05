@@ -1,26 +1,33 @@
+<% 
+  const publish_date = util.moment('2019-03-12')
+  const tags = ['article', 'golang', 'generics', 'go', 'update']
+  const title = "An Update on Go and Generics in 2019"
+  const subtitle = "Technically it's called “Parametric Polymorphism” but that's fine"
+  const description = ''
+  const image = slug_full + "assets/hero.webp"
+  const image_alt = 'Picture transformers'
+%>
+
 <head>
   <%- assets.add("./assets") %>
   <%- await include('../../partials/head.ejs', {
-    title: "Test Article",
+    title,
     meta: {
       type: {
         key: "article", 
         attributes: {
-          published_time: changes[0],
+          published_time: publish_date,
           modified_time: changes[changes.length - 1],
-          // expiration_time: "",
-          author: "David ALsh",
+          author: "David Alsh",
           section: "Technology",
-          tag: ["one", "two"],
+          tag: tags,
         }
       },
-      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
-      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
-      image: "assets/social.jpeg"
+      description,
+      image
     }
   }) %>
 </head>
 
 <body>
-  <%- await markdown.render("./readme.md") %>
 </body>

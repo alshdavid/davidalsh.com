@@ -1,26 +1,33 @@
+<% 
+  const publish_date = util.moment('2022-01-06')
+  const tags = ['tutorial', 'video', 'linux', 'gnome']
+  const title = 'Installing Gnome 4x on Debian Sid'
+  const subtitle = 'Using vanilla Gnome with a vanilla Debian based Linux distro'
+  const description = 'A tutorial on installing Gnome 4x on Debian Sid'
+  const image = slug_full + 'assets/hero.png'
+  const image_alt = 'Picture transformers'
+%>
+
 <head>
   <%- assets.add("./assets") %>
   <%- await include('../../partials/head.ejs', {
-    title: "Test Article",
+    title,
     meta: {
       type: {
         key: "article", 
         attributes: {
-          published_time: changes[0],
+          published_time: publish_date,
           modified_time: changes[changes.length - 1],
-          // expiration_time: "",
-          author: "David ALsh",
+          author: "David Alsh",
           section: "Technology",
-          tag: ["one", "two"],
+          tag: tags,
         }
       },
-      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
-      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
-      image: "assets/social.jpeg"
+      description,
+      image
     }
   }) %>
 </head>
 
 <body>
-  <%- await markdown.render("./readme.md") %>
 </body>

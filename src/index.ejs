@@ -1,23 +1,2 @@
-<head>
-  <%- assets.add("./assets") %>
-
-  <%- await include('./partials/head.ejs', {
-    title: "Home",
-    meta: {
-      type: "website",
-      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
-      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
-      image: "assets/social.jpeg"
-    }
-  }) %>
-</head>
-
-<body>
-  <%- await include(paths.root + '/partials/header/header.ejs') %>
-
-  <main>
-    <article>
-      
-    </article>
-  </main>
-</body>
+<% assets.add("./assets") %>
+<%- await include('./pages/home/home.ejs') %>

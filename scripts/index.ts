@@ -31,15 +31,26 @@ let index_files = glob.sync("**/index.ejs", {
 let scripts = new Map<string, Promise<string>>()
 let styles = new Set<string>()
 let assets = new Set<string>()
+let index = {}
 let virtual_assets = new Map<string, Buffer>()
 
 const templates: Array<Promise<void>> = []
 
 for (const index_file of index_files) {
   templates.push((async () => {
+    const slug = path.dirname(index_file) === "." ? "/" : path.dirname(index_file);
+
     let path_abs_index_file = path.join(__src, index_file);
     let file = path.parse(index_file)
     let contents = fs.readFileSync(path_abs_index_file, 'utf-8')
+
+    index[slug] = {}
+
+    let local_index = {
+      set(key: any, data?: any) {
+        index[slug][key] = data
+      }
+    }
 
     let local_scripts = {
       add: async (str: string) => {
@@ -136,9 +147,10 @@ for (const index_file of index_files) {
         root: __src,
         dirname: path.dirname(path_abs_index_file)
       },
+      index_meta: local_index,
       url: URL,
-      slug_full: path.dirname(index_file) === "." ? URL : URL + '/' + path.dirname(index_file) + '/',
-      slug: path.dirname(index_file) === "." ? "" : path.dirname(index_file),
+      slug_full: path.dirname(index_file) === "." ? URL : URL + '/' + slug + '/',
+      slug,
       scripts: local_scripts,
       styles: local_styles,
       assets: local_assets,
@@ -196,6 +208,7 @@ for (const [filepath, data] of virtual_assets.entries()) {
   fs.writeFileSync(path.join(outdir, path.basename(filepath)), data, 'binary')
 }
 
+fs.writeFileSync(path.join(__dist, 'index.json'), JSON.stringify(index, null, 2), 'utf8')
 await mermaid.close_mermaid()
 
 function rename_ext(t: string, w: string): string {

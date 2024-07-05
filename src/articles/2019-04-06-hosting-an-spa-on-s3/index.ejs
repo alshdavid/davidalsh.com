@@ -1,26 +1,33 @@
+<% 
+  const publish_date = util.moment('2022-01-06')
+  const tags = ['tutorial', 'video', 'web development', 'aws']
+  const title = "Hosting a Single Page Application on Amazon's AWS S3"
+  const subtitle = "The best part is it's practically free!"
+  const description = "A tutorial on using AWS S3 to host a Single Page Application"
+  const image = slug_full + "assets/hero.png"
+  const image_alt = 'Picture transformers'
+%>
+
 <head>
   <%- assets.add("./assets") %>
   <%- await include('../../partials/head.ejs', {
-    title: "Test Article",
+    title,
     meta: {
       type: {
         key: "article", 
         attributes: {
-          published_time: changes[0],
+          published_time: publish_date,
           modified_time: changes[changes.length - 1],
-          // expiration_time: "",
-          author: "David ALsh",
+          author: "David Alsh",
           section: "Technology",
-          tag: ["one", "two"],
+          tag: tags,
         }
       },
-      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
-      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
-      image: "assets/social.jpeg"
+      description,
+      image
     }
   }) %>
 </head>
 
 <body>
-  <%- await markdown.render("./readme.md") %>
 </body>

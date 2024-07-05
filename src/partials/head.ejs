@@ -26,22 +26,36 @@
   if (typeof meta !== "undefined") for (let [meta_key, meta_value] of Object.entries(meta)) {
   if (typeof meta_value === "string") {
     meta_value = { key: meta_value }
-  } 
+  }
 %>
   <meta property="og:<%- meta_key %>" content="<%- meta_value.key %>" />
   <% 
-    if (meta_value.attributes) for (let [key, values] of Object.entries(meta_value.attributes)) { 
+    if (meta_value.attributes) for (let [key, values] of Object.entries(meta_value.attributes)) {
+      const file_meta = {}
       if (!Array.isArray(values)) values = [values]
       for (let value of values) {
         if (value instanceof util.moment )  { 
           value = value.toISOString()
         } 
-  %><meta property="<%- meta.type.key %>:<%- key %>" content="<%- value %>" /><% 
+        
+        %><meta property="<%- meta.type.key %>:<%- key %>" content="<%- value %>" /><% 
       }
-    } 
+
+      if (values.length === 1) {
+        index_meta.set(key, values[0])
+      } else {
+        index_meta.set(key, values)
+      }
+      index_meta.set(meta_key, file_meta.key)
+    } else {
+      index_meta.set(meta_key, meta_value.key)
+    }
   } 
 %>
 
+<% if (typeof meta !== "undefined" && !meta.title && title) { %>
+  <meta property="og:title" content="<%- title %>" />
+<% } %>
 
 <% if (typeof title !== "undefined") { %>
  <title>David Alsh - <%- title %></title>

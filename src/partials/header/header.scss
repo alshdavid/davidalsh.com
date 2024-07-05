@@ -4,6 +4,7 @@ header {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-family-serif);
+  height: 100px;
 
   &>ol, h1 {
     display: flex;
@@ -29,6 +30,7 @@ header {
     font-weight: 400;
     font-size: 30px;
     margin: 0;
+    line-height: 1em;
 
     small {
       display: inline-block;
