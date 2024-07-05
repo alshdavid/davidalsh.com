@@ -1,0 +1,10 @@
+slug: writing-a-bundler-part-1
+publish_date: 2023-12-14
+tags: [article, web, bundling]
+
+title: Writing A Bundler In Rust - Part 1 - Transformation
+subtitle: Gotta go fast! 
+description: A series digging into what is required to build a modern JavaScript bundler in Rust
+
+image: assets/hero.jpg
+image_alt: Picture transformers

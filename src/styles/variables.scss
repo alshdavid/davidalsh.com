@@ -9,6 +9,7 @@
 
   --color-scheme-transition-duration: 0ms; // This is set in JavaScript
 
+  --font-family-serif: "Wittgenstein", serif;
   --font-family-1: 'Times New Roman', serif;
   --font-family-2: Arial, Helvetica, sans-serif;
   --font-family-3: "Courier New", Courier, monospace;
@@ -94,5 +95,35 @@ html.light {
     html.light & {
       @content;
     }
+  }
+}
+
+@mixin content-max-width-xs {
+  overflow: auto;
+  padding: 0 12px;
+
+  @include desktop() {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+@mixin content-max-width {
+  overflow: auto;
+  padding: 0 12px;
+
+  @include desktop() {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+@mixin content-max-width-l {
+  overflow: auto;
+  padding: 0 12px;
+
+  @include desktop() {
+    max-width: 1280px;
+    margin: 0 auto;
   }
 }

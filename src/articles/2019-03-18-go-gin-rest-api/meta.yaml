@@ -1,0 +1,10 @@
+slug: go-gin-rest-api
+publish_date: 2019-03-18
+tags: [tutorial, video, golang, go, software-design]
+
+title: Creating a REST API with Go and Gin
+subtitle: First steps when starting to develop Go web applications
+description: A tutorial on creating a REST API with Go (Golang) and Gin
+
+image: assets/hero.jpeg
+video_youtube: LOn1GUsjOF4

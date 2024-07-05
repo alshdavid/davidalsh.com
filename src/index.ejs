@@ -1,5 +1,5 @@
 <head>
-  <%- assets.add("./assets/**/*") %>
+  <%- assets.add("./assets") %>
 
   <%- await include('./partials/head.ejs', {
     title: "Home",
@@ -13,5 +13,11 @@
 </head>
 
 <body>
-  <img class="logo" src="assets/logo.svg" svg-replace>
+  <%- await include(paths.root + '/partials/header/header.ejs') %>
+
+  <main>
+    <article>
+      
+    </article>
+  </main>
 </body>
