@@ -1,12 +1,16 @@
 <header>
+  <div class="inner">
   <nav>
     <ol>
       <li><a href="/">Home</a></li>
+      <% if (typeof breadcrumbs !== 'undefined') for (const [title, slug] of breadcrumbs) { %>
+        <li><a href="<%- slug %>"><%- title %></a></li>
+      <% } %>
     </ol>
   </nav>
   <div>
     <h1>
-      <small>Random blog by</small> David Alsh
+      <small>Software Engineer </small> David Alsh
     </h1>
     <div>
       <a href="https://github.com/alshdavid">Github</a>
@@ -14,4 +18,5 @@
       <a href="https://github.com/alshdavid">Linkedin</a>
     </div>
   </div>
+</div>
 </header>

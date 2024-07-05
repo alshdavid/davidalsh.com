@@ -3,7 +3,9 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react",
+    "jsxFactory": "h"
   },
   "include": [
     "./src"

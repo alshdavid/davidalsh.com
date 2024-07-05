@@ -4,9 +4,11 @@
   http-equiv="Content-Security-Policy"
   content="
     default-src 'self';
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app;
+    script-src 'self' https://giscus.app;
     font-src 'self' https://fonts.gstatic.com;
     img-src 'self' data:;
+    frame-src 'self' https://giscus.app;
   " />
 
 <link data-favicon rel="icon" href="/assets/favicon.svg" />
@@ -18,8 +20,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-
 <meta name="theme-color" content="#ffffff" />
+
+<style>
+  html {
+    background-color: #fff;
+    color: #292929;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      background-color: #181818;
+      color: #e1e1e1;
+    }
+  }
+  
+  @media (prefers-color-scheme: light) {
+    html {
+      background-color: #fff;
+      color: #292929;
+    }
+  }
+</style>
 
 <meta property="og:url" content="<%- slug_full %>" />
 <% 
@@ -41,12 +63,15 @@
         %><meta property="<%- meta.type.key %>:<%- key %>" content="<%- value %>" /><% 
       }
 
+      if (values.length === 1 && values[0] instanceof util.moment) {
+        index_meta.set(key + '_pretty', values[0].format('DD MMM YYYY'))
+      }
       if (values.length === 1) {
         index_meta.set(key, values[0])
       } else {
         index_meta.set(key, values)
       }
-      index_meta.set(meta_key, file_meta.key)
+      index_meta.set(meta_key, meta_value.key)
     } else {
       index_meta.set(meta_key, meta_value.key)
     }
@@ -55,9 +80,11 @@
 
 <% if (typeof meta !== "undefined" && !meta.title && title) { %>
   <meta property="og:title" content="<%- title %>" />
-<% } %>
+  <% index_meta.set('title', title)
+ } %>
 
-<% if (typeof title !== "undefined") { %>
+<% if (typeof title !== "undefined") { 
+  index_meta.set('title', title) %>
  <title>David Alsh - <%- title %></title>
 <% } else { %>
  <title>David Alsh</title>

@@ -1,32 +1,17 @@
 <% 
-  const publish_date = util.moment('2019-03-19')
-  const tags = ['tutorial', 'video', 'golang', 'go', 'web development']
-  const title = "Building a Web Application with Go and Angular"
-  const subtitle = "Wielding this dynamic duo has never been easier"
-  const description = "A tutorial on creating a web application using Go and Angular"
-  const image = slug_full + "assets/hero.png"
+  assets.add("./assets")
+  ctx.publish_date = util.moment('2019-03-19')
+  ctx.tags = ['tutorial', 'video', 'golang', 'go', 'web development']
+  ctx.title = "Building a Web Application with Go and Angular"
+  ctx.subtitle = "Wielding this dynamic duo has never been easier"
+  ctx.description = "A tutorial on creating a web application using Go and Angular"
+  ctx.image = slug_full + "assets/hero.png"
+  index_meta.set('peek', '')
 %>
+<%- await include(paths.root + '/pages/article/article_header.ejs', ctx) %>
 
-<head>
-  <%- assets.add("./assets") %>
-  <%- await include('../../partials/head.ejs', {
-    title,
-    meta: {
-      type: {
-        key: "article", 
-        attributes: {
-          published_time: publish_date,
-          modified_time: changes[changes.length - 1],
-          author: "David Alsh",
-          section: "Technology",
-          tag: tags,
-        }
-      },
-      description,
-      image
-    }
-  }) %>
-</head>
+<main class="content-max-width">
+  <%- await markdown.render('./readme.md') %>
+</main>
 
-<body>
-</body>
+<%- await include(paths.root + '/pages/article/article_footer.ejs') %>

@@ -1,0 +1,24 @@
+<head>
+  <%- await include(paths.root + '/partials/head.ejs', {
+    title,
+    meta: {
+      type: {
+        key: "article", 
+        attributes: {
+          published_time: publish_date,
+          modified_time: changes[changes.length - 1],
+          author: "David Alsh",
+          section: "Technology",
+          tag: tags,
+        }
+      },
+      description,
+      image
+    }
+  }) %>
+</head>
+
+<body class="page-article <%- util.path.basename(paths.dirname) %>">
+  <%- await include(paths.root + '/partials/header/header.ejs', {
+    breadcrumbs: [[title, slug]]
+  }) %>

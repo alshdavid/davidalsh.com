@@ -1,33 +1,41 @@
 <% 
-  const publish_date = util.moment('2023-12-14')
-  const tags = ['article', 'web', 'bundling']
-  const title = 'Writing A Bundler In Rust - Part 1 - Transformation'
-  const subtitle = 'Gotta go fast!'
-  const description = 'A series digging into what is required to build a modern JavaScript bundler in Rust'
-  const image = slug_full + 'assets/hero.jpg'
-  const image_alt = 'Picture transformers'
+  assets.add("./assets")
+
+  ctx.publish_date = util.moment('2023-12-14')
+  ctx.tags = ['article', 'web', 'bundling']
+  ctx.title = 'Writing A Bundler In Rust - Part 1 - Transformation'
+  ctx.subtitle = 'Gotta go fast!'
+  ctx.description = 'A series digging into what is required to build a modern JavaScript bundler in Rust'
+  ctx.image = slug_full + 'assets/hero.jpg'
+  ctx.image_alt = 'Picture transformers'
+  
+  index_meta.set('peek', `
+    In today's web development landscape, web applications require a bundler to transpile, combine, 
+    and optimize the source code of a project so that end users receive distributable code that is 
+    optimally packaged for downloading and executing within their browser.
+  `.replace('/n', ''))
 %>
+<%- await include(paths.root + '/pages/article/article_header.ejs', ctx) %>
 
-<head>
-  <%- assets.add("./assets") %>
-  <%- await include('../../partials/head.ejs', {
-    title,
-    meta: {
-      type: {
-        key: "article", 
-        attributes: {
-          published_time: publish_date,
-          modified_time: changes[changes.length - 1],
-          author: "David Alsh",
-          section: "Technology",
-          tag: tags,
-        }
-      },
-      description,
-      image
-    }
-  }) %>
-</head>
+<main class="content-max-width">
+  <%- await markdown.render('./readme.md') %>
 
-<body>
-</body>
+  <script src="https://giscus.app/client.js"
+        data-repo="alshdavid/davidalsh-com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk2ODQ0NzA1NA=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOBBRrTs4Cgmfx"
+        data-mapping="og:title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="1"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</main>
+
+<%- await include(paths.root + '/pages/article/article_footer.ejs') %>

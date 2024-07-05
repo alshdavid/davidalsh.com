@@ -1,33 +1,18 @@
 <% 
-  const publish_date = util.moment('2022-01-06')
-  const tags = ['tutorial', 'video', 'linux', 'gnome']
-  const title = 'Installing Gnome 4x on Debian Sid'
-  const subtitle = 'Using vanilla Gnome with a vanilla Debian based Linux distro'
-  const description = 'A tutorial on installing Gnome 4x on Debian Sid'
-  const image = slug_full + 'assets/hero.png'
-  const image_alt = 'Picture transformers'
+  assets.add("./assets")
+  ctx.publish_date = util.moment('2022-01-06')
+  ctx.tags = ['tutorial', 'video', 'linux', 'gnome']
+  ctx.title = 'Installing Gnome 4x on Debian Sid'
+  ctx.subtitle = 'Using vanilla Gnome with a vanilla Debian based Linux distro'
+  ctx.description = 'A tutorial on installing Gnome 4x on Debian Sid'
+  ctx.image = slug_full + 'assets/hero.png'
+  ctx.image_alt = 'Picture transformers'
+  index_meta.set('peek', '')
 %>
+<%- await include(paths.root + '/pages/article/article_header.ejs', ctx) %>
 
-<head>
-  <%- assets.add("./assets") %>
-  <%- await include('../../partials/head.ejs', {
-    title,
-    meta: {
-      type: {
-        key: "article", 
-        attributes: {
-          published_time: publish_date,
-          modified_time: changes[changes.length - 1],
-          author: "David Alsh",
-          section: "Technology",
-          tag: tags,
-        }
-      },
-      description,
-      image
-    }
-  }) %>
-</head>
+<main class="content-max-width">
+  <%- await markdown.render('./readme.md') %>
+</main>
 
-<body>
-</body>
+<%- await include(paths.root + '/pages/article/article_footer.ejs') %>

@@ -7,6 +7,7 @@
     "serve": "npx http-server -c=-1 ./dist"
   },
   "dependencies": {
+    "preact": "*"
   },
   "devDependencies": {
     "@types/node": "*",

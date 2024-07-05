@@ -38,7 +38,7 @@ const templates: Array<Promise<void>> = []
 
 for (const index_file of index_files) {
   templates.push((async () => {
-    const slug = path.dirname(index_file) === "." ? "/" : path.dirname(index_file);
+    const slug = path.dirname(index_file) === "." ? "/" : '/' + path.dirname(index_file);
 
     let path_abs_index_file = path.join(__src, index_file);
     let file = path.parse(index_file)
@@ -53,7 +53,7 @@ for (const index_file of index_files) {
     }
 
     let local_scripts = {
-      add: async (str: string) => {
+      add: async (str: string, options: { wrap?: boolean, rename?: boolean } = { wrap: true, rename: true }) => {
         let script_path = str
         if (!path.isAbsolute(script_path)) {
           script_path = path.normalize(path.join(__src, file.dir, str))
@@ -75,19 +75,28 @@ for (const index_file of index_files) {
             
             const out_path = path.join(__root, Object.keys(result.metafile.outputs)[0]);
             
-            const file = await fs.promises.readFile(out_path)
-            const hash = node_crypto.createHash('sha256').update(file).digest('hex').substring(0,10)
-
-            const out_path_hash = path.join(path.dirname(out_path), `${hash}.js`);
-            await fs.promises.rename(out_path, out_path_hash)
-            return `${hash}.js`
+            if (options.rename) {
+              const file = await fs.promises.readFile(out_path)
+              const hash = node_crypto.createHash('sha256').update(file).digest('hex').substring(0,10)
+              const out_path_hash = path.join(path.dirname(out_path), `${hash}.js`);
+              await fs.promises.rename(out_path, out_path_hash)
+              return `${hash}.js`
+            }
+        
+            let script_path_2 = path.relative(path.dirname(path_abs_index_file), out_path)
+            
+            return script_path_2
           })())
         }
 
         const out_path = await scripts.get(script_path)!
 
         let rel_path = path.relative(path.dirname(path_abs_index_file), path.join(__src, out_path))
-        return `<script src="${rel_path}" type="module" async></script>`
+        if (options.wrap) {
+          return `<script src="${rel_path}" type="module" async></script>`
+        } else {
+          return rename_ext(path.relative(path.dirname(path_abs_index_file), script_path), 'js')
+        }
       }
     }
 
@@ -149,14 +158,17 @@ for (const index_file of index_files) {
       },
       index_meta: local_index,
       url: URL,
-      slug_full: path.dirname(index_file) === "." ? URL : URL + '/' + slug + '/',
+      slug_full: path.dirname(index_file) === "." ? URL : URL + slug + '/',
       slug,
       scripts: local_scripts,
       styles: local_styles,
       assets: local_assets,
       virtual_assets: local_virtual_assets,
       markdown: local_markdown,
-      require: (str: string) => local_require(path.join(path.dirname(path_abs_index_file), str))
+      require: (str: string) => local_require(path.join(path.dirname(path_abs_index_file), str)),
+      get ctx() {
+        return this 
+      }
     }
 
     let result = await ejs.render(contents, ctx, {
@@ -170,6 +182,9 @@ for (const index_file of index_files) {
     }
 
     result = await prettier.format(result, { parser: 'html' })
+
+    const hash = node_crypto.createHash('sha256').update(result).digest('hex').substring(0,20)
+    local_index.set("hash", hash)
 
     fs.mkdirSync(path.join(__dist, file.dir), { recursive: true })
     fs.writeFileSync(path.join(__dist, file.dir, rename_ext(file.name, 'html')), result, 'utf-8')

@@ -18,3 +18,7 @@ body {
   color: var(--font-color);
   transition: background-color var(--color-scheme-transition-duration) ease-in-out;
 }
+
+.content-max-width {
+  @include content-max-width;
+}
