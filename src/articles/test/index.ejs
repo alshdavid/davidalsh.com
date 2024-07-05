@@ -1,6 +1,23 @@
 <head>
-  <%- await include('../../partials/head.ejs') %>
-  <title>Document</title>
+  <%- await include('../../partials/head.ejs', {
+    title: "Test Article",
+    meta: {
+      type: {
+        key: "article", 
+        attributes: {
+          published_time: changes[0],
+          modified_time: changes[changes.length - 1],
+          // expiration_time: "",
+          author: "David ALsh",
+          section: "Technology",
+          tag: ["one", "two"],
+        }
+      },
+      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
+      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
+      image: "assets/social.jpeg"
+    }
+  }) %>
 </head>
 
 <body>

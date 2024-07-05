@@ -1,9 +1,17 @@
 <head>
-  <%- await include('./partials/head.ejs') %>
   <%- assets.add("./assets/**/*") %>
-  <title>Document</title>
+
+  <%- await include('./partials/head.ejs', {
+    title: "Home",
+    meta: {
+      type: "website",
+      title: "David Alsh - Software Engineering Articles, Videos, Tutorials and More",
+      description: "My personal website where I share my thoughts and experiences, like and subscribe!",
+      image: "assets/social.jpeg"
+    }
+  }) %>
 </head>
 
 <body>
-
+  <img class="logo" src="assets/logo.svg" svg-replace>
 </body>

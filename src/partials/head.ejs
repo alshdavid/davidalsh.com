@@ -1,9 +1,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-  document.querySelector('html').classList.add('dark')
-</script>
+<meta
+  http-equiv="Content-Security-Policy"
+  content="
+    default-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+  " />
+
+<link data-favicon rel="icon" href="/assets/favicon.svg" />
+<link data-favicon rel="apple-touch-icon" href="/assets/favicon.svg" />
+<link data-favicon rel="mask-icon" href="/assets/favicon.svg" color="#000000" >
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:url" content="<%- slug_full %>" />
+<% 
+  if (typeof meta !== "undefined") for (let [meta_key, meta_value] of Object.entries(meta)) {
+  if (typeof meta_value === "string") {
+    meta_value = { key: meta_value }
+  } 
+%>
+  <meta property="og:<%- meta_key %>" content="<%- meta_value.key %>" />
+  <% 
+    if (meta_value.attributes) for (let [key, values] of Object.entries(meta_value.attributes)) { 
+      if (!Array.isArray(values)) values = [values]
+      for (let value of values) {
+        if (value instanceof util.moment )  { 
+          value = value.toISOString()
+        } 
+  %><meta property="<%- meta.type.key %>:<%- key %>" content="<%- value %>" /><% 
+      }
+    } 
+  } 
+%>
+
+
+<% if (typeof title !== "undefined") { %>
+ <title>David Alsh - <%- title %></title>
+<% } else { %>
+ <title>David Alsh</title>
+<% } %>
 
 <%- styles.add(paths.root + "/styles.scss") %>
 <%- await scripts.add(paths.root + "/index.ts") %>
-

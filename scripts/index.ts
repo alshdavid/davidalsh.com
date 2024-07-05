@@ -1,17 +1,20 @@
 import path from 'node:path';
 import * as node_crypto from "node:crypto"
+import * as child_process from "node:child_process"
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import * as glob from 'glob'
+import moment from 'moment'
 import * as ejs from 'ejs'
 import * as esbuild from 'esbuild'
 import * as prettier from 'prettier'
-import { Markdown } from './markdown/markdown';
+import { Markdown } from './markdown/markdown.js';
 import {sassPlugin} from 'esbuild-sass-plugin'
-import * as mermaid from "./markdown/mermaid";
+import * as mermaid from "./markdown/mermaid.js";
 
 const PROD = process.env.PROD === 'true'
+const URL = process.env.URL || 'http://localhost:8080'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
@@ -53,6 +56,7 @@ for (const index_file of index_files) {
               entryPoints: [script_path],
               minify: true,
               metafile: true,
+              format: 'esm',
               bundle: true,
               outdir: path.join(__dist, rel_path),
               write: true
@@ -118,11 +122,23 @@ for (const index_file of index_files) {
 
     const local_require = createRequire(path.dirname(path_abs_index_file))
 
+    const git_changes = child_process
+      .execSync(`git log --follow --format=%ad --date iso-strict ${path_abs_index_file}`)
+      .toString().trim().split('\n').map(ds => moment(ds))
+
     const ctx = {
+      changes: git_changes,
+      util: {
+        path,
+        moment,
+      },
       paths: {
         root: __src,
         dirname: path.dirname(path_abs_index_file)
       },
+      url: URL,
+      slug_full: path.dirname(index_file) === "." ? URL : URL + '/' + path.dirname(index_file) + '/',
+      slug: path.dirname(index_file) === "." ? "" : path.dirname(index_file),
       scripts: local_scripts,
       styles: local_styles,
       assets: local_assets,

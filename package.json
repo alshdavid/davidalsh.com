@@ -1,5 +1,6 @@
 {
   "name": "davidalsh-com",
+  "type": "module",
   "scripts": {
     "build": "node --import tsx ./scripts/index.ts",
     "watch": "npx nodemon",
@@ -22,6 +23,7 @@
     "esbuild-sass-plugin": "*",
     "mermaid": "*",
     "puppeteer-core": "*",
+    "moment": "*",
     "@mermaid-js/mermaid-cli": "*"
   },
   "nodemonConfig": {

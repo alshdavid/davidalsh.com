@@ -7,7 +7,7 @@
   --margin-bottom-desktop: 28px;
   --margin-bottom-mobile: 18px;
 
-  --color-scheme-transition-duration: 150ms;
+  --color-scheme-transition-duration: 0ms; // This is set in JavaScript
 
   --font-family-1: 'Times New Roman', serif;
   --font-family-2: Arial, Helvetica, sans-serif;
@@ -17,7 +17,7 @@
 
   --font-color-light: #292929;
   --font-color-dark: #e1e1e1;
-  --background-color-dark: #020617;
+  --background-color-dark: #181818;
   --background-color-light: #fff;
   --border-color-light: #e6e6e6;
   --border-color-dark: #757575;
