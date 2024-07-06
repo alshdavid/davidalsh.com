@@ -11,13 +11,18 @@
 
   article {
     width: 100%;
+    border-bottom: 1px #30363db3 solid;
+
+    &:first-child a {
+      margin-top: 0;
+    }
 
     & > a {
       flex-direction: row;
       display: flex;
       width: 100%;
       justify-content: space-between;
-      margin-bottom: 18px;
+      margin: 18px 0;
       text-decoration: none;
 
       img {
@@ -28,36 +33,90 @@
       }
 
       h2 {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 500;
         margin: 0 0 12px 0;
       }
 
       p {
         font-size: 14px;
+        color: #8d96a0;
         flex: 1;
       }
 
-      span {
+      .reactions {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        font-size: 14px;
-        text-decoration: underline;
 
-        svg {
-          display: inline-block;
-          height: 14px;
-          margin-left: 12px;
+        i {
+          height: 26px;
+          padding: 0 8px !important;
+          margin-right: 0;
+          font-size: 12px;
+          line-height: 26px;
+          background-color: transparent;
+          border: 1px solid #30363d;
+          border-radius: 100px;
+          display: flex;
+          align-items: center;
+          margin-right: 4px;
+          font-style: normal;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+          color: #8d96a0;
 
-          path {
-            fill: var(--font-color);
+          svg, span {
+            display: inline-flex;
+            align-items: center;
+            height: 16px;
+            width: 16px;
+            object-fit: contain;
+            margin-right: 4px;
+            fill: #8d96a0;
+          }
+
+          svg {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .foot {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 12px;
+          background-color: #21262d;
+          color: #c9d1d9;
+          padding: 8px;
+          border: 1px #30363d solid;
+          border-radius: 4px;
+          cursor: pointer;
+          // text-decoration: underline;
+
+          svg {
+            display: inline-block;
+            height: 10px;
+            margin-left: 6px;
+
+            path {
+              fill: var(--font-color);
+            }
           }
         }
       }
     }
 
-    div {
+    .details {
       display: flex;
       flex-direction: column;
       width: calc(100% - 250px);
