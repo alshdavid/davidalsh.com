@@ -15,22 +15,26 @@ export async function initHomePage() {
       <Fragment>
         {articles.map((article, i) => (
           <article key={article.slug}>
-            <a href={article.slug}>
-              <img src={article.image} alt="" srcset="" />
+            {/* <a href={article.slug}> */}
+              <a class="image" href={article.slug}>
+                <img src={article.image} alt="" srcset="" />
+              </a>
               <div class="details">
-                <h2>{article.title}</h2>
-                {/* <time>{article.published_time_pretty}</time> */}
-                <p>{article.description}</p>
-                <div class="foot">
-                  <div>
-                    
-                  </div>
-                  <button>
-                    Read<svg src="/assets/icons/arrow.svg" svg-replace></svg>
-                  </button>
+                <a class="button" href={article.slug}>
+                  <span>Read more</span>
+                  <svg src="/assets/icons/arrow.svg" svg-replace></svg>
+                </a>
+                <a href={article.slug}><h2>{article.title}</h2></a>
+                <p>{article.description.trim()}</p>
+                <div class="tags">
+                  {article.tag.map(tag => <div>{tag}</div>)}
+                </div>
+                <div class="published-date">
+                  <span>Published:</span>
+                  <time datetime={article.published_time}>{article.published_time_pretty}</time>
                 </div>
               </div>
-            </a>
+            {/* </a> */}
           </article>
         ))}
       </Fragment>

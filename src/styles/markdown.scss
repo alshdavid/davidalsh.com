@@ -1,5 +1,4 @@
 .markdown-body {
-
   img, video {
     max-width: 80%;
     margin: 0 auto 16px;
@@ -241,13 +240,13 @@
   background-color: var(--bgColor-default);
 }
 
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre,
-.markdown-body samp {
-  font-family: monospace;
-  font-size: 1em;
-}
+// .markdown-body code,
+// .markdown-body kbd,
+// .markdown-body pre,
+// .markdown-body samp {
+//   font-family: monospace;
+//   font-size: 1em;
+// }
 
 .markdown-body figure {
   margin: 1em 40px;
@@ -474,20 +473,20 @@
   margin-left: 0;
 }
 
-.markdown-body tt,
-.markdown-body code,
-.markdown-body samp {
-  font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
-  font-size: 12px;
-}
+// .markdown-body tt,
+// .markdown-body code,
+// .markdown-body samp {
+//   font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
+//   font-size: 12px;
+// }
 
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
-  font-size: 12px;
-  word-wrap: normal;
-}
+// .markdown-body pre {
+//   margin-top: 0;
+//   margin-bottom: 0;
+//   font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
+//   font-size: 12px;
+//   word-wrap: normal;
+// }
 
 .markdown-body .octicon {
   display: inline-block;
@@ -827,7 +826,7 @@
   text-align: right;
 }
 
-.markdown-body code,
+// .markdown-body code,
 .markdown-body tt {
   padding: .2em .4em;
   margin: 0;
@@ -837,7 +836,7 @@
   border-radius: 6px;
 }
 
-.markdown-body code br,
+// .markdown-body code br,
 .markdown-body tt br {
   display: none;
 }
@@ -850,18 +849,18 @@
   font-size: 85%;
 }
 
-.markdown-body pre code {
-  font-size: 100%;
-}
+// .markdown-body pre code {
+//   font-size: 100%;
+// }
 
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
+// .markdown-body pre>code {
+//   padding: 0;
+//   margin: 0;
+//   word-break: normal;
+//   white-space: pre;
+//   background: transparent;
+//   border: 0;
+// }
 
 .markdown-body .highlight {
   margin-bottom: 16px;
@@ -872,18 +871,18 @@
   word-break: normal;
 }
 
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  color: var(--fgColor-default);
-  background-color: var(--bgColor-muted);
-  border-radius: 6px;
-}
+// .markdown-body .highlight pre,
+// .markdown-body pre {
+//   padding: 16px;
+//   overflow: auto;
+//   font-size: 85%;
+//   line-height: 1.45;
+//   color: var(--fgColor-default);
+//   background-color: var(--bgColor-muted);
+//   border-radius: 6px;
+// }
 
-.markdown-body pre code,
+// .markdown-body pre code,
 .markdown-body pre tt {
   display: inline;
   max-width: auto;

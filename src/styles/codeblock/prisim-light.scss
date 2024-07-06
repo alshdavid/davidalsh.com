@@ -1,4 +1,19 @@
-html.light {
+@include light {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    --hl-light-color-0: #fff;
+    --hl-light-color-1: #e1e1e1;
+    --hl-light-color-2: #cceae7;
+    --hl-light-color-3: #263238;
+    --hl-light-color-4: #f76d47;
+    --hl-light-color-5: #7c4dff;
+    --hl-light-color-6: #39adb5;
+    --hl-light-color-7: #f6a434;
+    --hl-light-color-8: #6182b8;
+    --hl-light-color-9: #aabfc9;
+    --hl-light-color-10: #e53935;
+  }
+
   code[class*="language-"],
   pre[class*="language-"] {
     text-align: left;
@@ -6,8 +21,8 @@ html.light {
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;
-    color: var(--font-color-code);
-    background: var(--background-color-code);
+    color: var(--hl-light-color-1);
+    background: var(--hl-light-color-0);
     font-size: 1em;
     line-height: 1.5em;
 

@@ -1,3 +1,48 @@
+
+@mixin desktop {
+  @media (min-width: #{$page-width + 1}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$page-width}) {
+    @content;
+  }
+}
+
+@mixin dark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+  // @at-root {
+  //   html.dark & {
+  //     @content;
+  //   }
+  // }
+}
+
+@mixin light {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+  // @at-root {
+  //   html.light & {
+  //     @content;
+  //   }
+  // }
+}
+
+@mixin content-max-width {
+  padding: 0 12px;
+
+  @include desktop() {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+
 $page-width: 900px;
 
 :root {
@@ -12,6 +57,7 @@ $page-width: 900px;
   --color-scheme-transition-duration: 0ms; // This is set in JavaScript
 
   --font-family-serif: "Wittgenstein", serif;
+  --font-family-0: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-family-1: 'Times New Roman', serif;
   --font-family-2: Arial, Helvetica, sans-serif;
   --font-family-3: "Courier New", Courier, monospace;
@@ -20,6 +66,8 @@ $page-width: 900px;
 
   --font-color-light: #292929;
   --font-color-dark: #e1e1e1;
+
+  --font-color-hyperlink: #4493f8;
 
   --background-color-dark: #0d1116;
   --background-color-light: #fff;
@@ -56,57 +104,22 @@ $page-width: 900px;
   --spacing-16: 144px;
 }
 
-html.dark {
-  --background-color: var(--background-color-dark);
-  --background-color-invert: var(--background-color-light);
-  --font-color: var(--font-color-dark);
-  --font-color-invert: var(--font-color-light);
-  --border-color: var(--border-color-dark);
-  --border-color-invert: var(--border-color-light);
-}
-
-html.light {
-  --background-color: var(--background-color-light);
-  --background-color-invert: var(--background-color-dark);
-  --font-color: var(--font-color-light);
-  --font-color-invert: var(--font-color-dark);
-  --border-color: var(--border-color-light);
-  --border-color-invert: var(--border-color-dark);
-}
-
-@mixin desktop {
-  @media (min-width: #{$page-width + 1}) {
-    @content;
+:root {
+  @include dark {
+    --background-color: var(--background-color-dark);
+    --background-color-invert: var(--background-color-light);
+    --font-color: var(--font-color-dark);
+    --font-color-invert: var(--font-color-light);
+    --border-color: var(--border-color-dark);
+    --border-color-invert: var(--border-color-light);
   }
-}
 
-@mixin mobile {
-  @media (max-width: #{$page-width}) {
-    @content;
-  }
-}
-
-@mixin dark {
-  @at-root {
-    html.dark & {
-      @content;
-    }
-  }
-}
-
-@mixin light {
-  @at-root {
-    html.light & {
-      @content;
-    }
-  }
-}
-
-@mixin content-max-width {
-  padding: 0 12px;
-
-  @include desktop() {
-    max-width: 900px;
-    margin: 0 auto;
+  @include light {
+    --background-color: var(--background-color-light);
+    --background-color-invert: var(--background-color-dark);
+    --font-color: var(--font-color-light);
+    --font-color-invert: var(--font-color-dark);
+    --border-color: var(--border-color-light);
+    --border-color-invert: var(--border-color-dark);
   }
 }
