@@ -34,7 +34,9 @@
 }
 
 @mixin content-max-width {
-  padding: 0 12px;
+  @include mobile() {
+    padding: 0 12px;
+  }
 
   @include desktop() {
     max-width: 900px;

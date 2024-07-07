@@ -3,32 +3,34 @@
     <div class="inner content-max-width">
       <nav>
         <ol>
-          <li><a href="/">Home</a></li>
+          <li><a href="/"><h1>David Alsh</h1></a></li>
           <% if (typeof breadcrumbs !=='undefined' ) for (const [title, slug] of breadcrumbs) { %>
             <li><a href="<%- slug %>"><%- title %></a></li>
             <% } %>
         </ol>
       </nav>
       <div>
-        <h1>
-          <small>Software Engineer </small> David Alsh
-        </h1>
+        <div class="links">
+          <a href="https://github.com/alshdavid">Github</a>
+          <a href="https://github.com/alshdavid">YouTube</a>
+          <a href="https://github.com/alshdavid">Linkedin</a>
+        </div>
       </div>
     </div>
   </div>
   <div class="lower">
     <div class="content-max-width">
-      <div>
+        <p class="blurb">Software Engineer</p>
+
         <!-- <div class="search">
           <svg src="/assets/icons/magnifying-glass.svg" svg-replace></svg>
           <input type="text" placeholder="Search Articles">
         </div> -->
-      </div>
-      <div>
+      <!-- <div>
         <a href="https://github.com/alshdavid">Github</a>
         <a href="https://github.com/alshdavid">YouTube</a>
         <a href="https://github.com/alshdavid">Linkedin</a>
-      </div>
+      </div> -->
     </div>
   </div>
 </header>
