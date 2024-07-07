@@ -16,14 +16,20 @@ export async function initHomePage() {
         {articles.map((article, i) => (
           <article key={article.slug}>
             {/* <a href={article.slug}> */}
-              <a class="image" href={article.slug}>
+              <button 
+                aria-label={article.title}
+                class="image" 
+                onClick={() => window.location.assign(article.slug)}>
                 <img src={article.image} alt="" srcset="" />
-              </a>
+              </button>
               <div class="details">
-                <a class="button" href={article.slug}>
+                <button 
+                  aria-label={article.title}
+                  class="button"
+                  onClick={() => window.location.assign(article.slug)}>
                   <span>Read more</span>
                   <svg src="/assets/icons/arrow.svg" svg-replace></svg>
-                </a>
+                </button>
                 <a href={article.slug}><h2>{article.title}</h2></a>
                 <p>{article.description.trim()}</p>
                 <div class="tags">

@@ -1,50 +1,3 @@
-
-@mixin desktop {
-  @media (min-width: #{$page-width + 1}) {
-    @content;
-  }
-}
-
-@mixin mobile {
-  @media (max-width: #{$page-width}) {
-    @content;
-  }
-}
-
-@mixin dark {
-  @media (prefers-color-scheme: dark) {
-    @content;
-  }
-  // @at-root {
-  //   html.dark & {
-  //     @content;
-  //   }
-  // }
-}
-
-@mixin light {
-  @media (prefers-color-scheme: light) {
-    @content;
-  }
-  // @at-root {
-  //   html.light & {
-  //     @content;
-  //   }
-  // }
-}
-
-@mixin content-max-width {
-  @include mobile() {
-    padding: 0 12px;
-  }
-
-  @include desktop() {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-}
-
-
 $page-width: 900px;
 
 :root {
@@ -107,21 +60,21 @@ $page-width: 900px;
 }
 
 :root {
-  @include dark {
+  // @include dark {
     --background-color: var(--background-color-dark);
     --background-color-invert: var(--background-color-light);
     --font-color: var(--font-color-dark);
     --font-color-invert: var(--font-color-light);
     --border-color: var(--border-color-dark);
     --border-color-invert: var(--border-color-light);
-  }
+  // }
 
-  @include light {
-    --background-color: var(--background-color-light);
-    --background-color-invert: var(--background-color-dark);
-    --font-color: var(--font-color-light);
-    --font-color-invert: var(--font-color-dark);
-    --border-color: var(--border-color-light);
-    --border-color-invert: var(--border-color-dark);
-  }
+  // @include light {
+  //   --background-color: var(--background-color-light);
+  //   --background-color-invert: var(--background-color-dark);
+  //   --font-color: var(--font-color-light);
+  //   --font-color-invert: var(--font-color-dark);
+  //   --border-color: var(--border-color-light);
+  //   --border-color-invert: var(--border-color-dark);
+  // }
 }

@@ -9,15 +9,15 @@ code, .codeblock {
     background-color var(--color-scheme-transition-duration) ease-in-out, 
     color var(--color-scheme-transition-duration) ease-in-out;
 
-  @include dark {
+  // @include dark {
     color: #e6e6e6;
     background-color: #292929;
-  }
+  // }
 
-  @include light {
-    color: #292929;
-    background-color: #e6e6e6;
-  }
+  // @include light {
+  //   color: #292929;
+  //   background-color: #e6e6e6;
+  // }
 
   .codeblock-inner {
     position: relative;

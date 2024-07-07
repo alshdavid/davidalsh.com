@@ -15,32 +15,34 @@
 <link data-favicon rel="apple-touch-icon" href="/assets/favicon.svg" />
 <link data-favicon rel="mask-icon" href="/assets/favicon.svg" color="#000000" >
 
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
 <meta name="theme-color" content="#ffffff" />
 
+<% if (typeof meta !== "undefined" && meta.description) { %>
+<meta name="description" content="<%- meta.description %>">
+<% } %>
+
 <style>
-  html {
-    background-color: #fff;
-    color: #292929;
+  :root {
+    --background-color-dark: #0d1116;
+    --font-color-dark: #e1e1e1;
+
+    /* --background-color-light: #fff;
+    --font-color-light: #292929; */
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) { */
     html {
-      background-color: #181818;
-      color: #e1e1e1;
+      background-color: var(--background-color-dark);
+      color: var(--font-color-dark);
     }
-  }
-  
+  /* } */
+/*   
   @media (prefers-color-scheme: light) {
     html {
-      background-color: #fff;
-      color: #292929;
+      background-color: var(--background-color-light);
+      color: var(--font-color-light);
     }
-  }
+  } */
 </style>
 
 <meta property="og:url" content="<%- slug_full %>" />

@@ -32,8 +32,11 @@
         display: flex;
         width: 250px;
         height: 100%;
+        background-color: transparent;
+        border: none;
         overflow: auto;
         position: relative;
+        cursor: pointer;
 
         img {
           object-fit: cover;

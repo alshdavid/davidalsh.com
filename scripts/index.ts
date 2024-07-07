@@ -16,6 +16,8 @@ import * as mermaid from "./markdown/mermaid.js";
 const PROD = process.env.PROD === 'true'
 const URL = process.env.URL || 'http://localhost:8080'
 
+console.log({ PROD, URL })
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 const __root = path.join(__dirname, ".."); 
@@ -200,6 +202,7 @@ for (const [_, style_file] of styles.entries()) {
     entryPoints: [style_file],
     bundle: true,
     outdir: path.join(__dist, rel_path),
+    external: ["*"],
     plugins: [
       sassPlugin()
     ],
@@ -211,7 +214,7 @@ for (const [_, asset] of assets.entries()) {
   let outdir = path.join(__dist, path.dirname(asset))
   fs.mkdirSync(outdir, { recursive: true })
   if (PROD) {
-    fs.cpSync(path.join(__src, asset), path.join(outdir, path.basename(asset)))
+    fs.cpSync(path.join(__src, asset), path.join(outdir, path.basename(asset)), { recursive: true })
   } else {
     fs.symlinkSync(path.join(__src, asset), path.join(outdir, path.basename(asset)))
   }
