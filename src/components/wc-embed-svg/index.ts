@@ -7,18 +7,6 @@ export class WcEmbedSvg extends HTMLElement {
 
   static register() {
     customElements.define("wc-embed-svg", WcEmbedSvg);
-    const styles = document.createElement('style')
-    styles.innerHTML = /*css*/`
-      wc-embed-svg {
-        display: contents
-      }
-      
-      wc-embed-svg svg {
-        margin: 0 auto;
-        display: block;
-      }
-    `
-    document.head.appendChild(styles)
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

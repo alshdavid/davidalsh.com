@@ -7,19 +7,6 @@ export class WcEmbedHtml extends HTMLElement {
 
   static register() {
     customElements.define("wc-embed-html", WcEmbedHtml);
-    const styles = document.createElement('style')
-    styles.innerHTML = /*css*/`
-      wc-embed-html {
-        display: contents;
-      }
-      
-      wc-embed-html iframe {
-        display: block;
-        border: none;
-        width: 100%;
-      }
-    `
-    document.head.appendChild(styles)
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

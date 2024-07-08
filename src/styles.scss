@@ -5,6 +5,8 @@
 @import "./styles/codeblock/index.scss";
 @import "./styles/markdown.scss";
 
+@import "./components/wc-embed-html/wc-embed-html.scss";
+@import "./components/wc-embed-svg/wc-embed-svg.scss";
 @import "./components/wc-grid/wc-grid.scss";
 
 @import "./partials/header/header.scss";

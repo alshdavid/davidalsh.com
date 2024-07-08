@@ -37,4 +37,5 @@ declare module 'preact' {
 }
 
 interface WcGridHtmlAttributes extends preact.JSX.HTMLAttributes<HTMLElement> {
+  children: any[]
 }
