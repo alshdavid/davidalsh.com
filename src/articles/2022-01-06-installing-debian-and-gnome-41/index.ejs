@@ -9,10 +9,4 @@
   ctx.image_alt = 'Picture transformers'
   index_meta.set('peek', '')
 %>
-<%- await include(paths.root + '/pages/article/article_header.ejs', ctx) %>
-
-<main class="content-max-width">
-  <%- await markdown.render('./readme.md') %>
-</main>
-
-<%- await include(paths.root + '/pages/article/article_footer.ejs') %>
+<%- await include(paths.root + '/pages/article/article', ctx) %>

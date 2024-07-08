@@ -1,5 +1,5 @@
 .markdown-body {
-  img, video {
+  .img, img, video {
     max-width: 80%;
     margin: 0 auto 16px;
     display: block;
@@ -233,7 +233,8 @@
   top: -0.5em;
 }
 
-.markdown-body img {
+.markdown-body img,
+.markdown-body .img {
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
@@ -862,7 +863,8 @@
 //   border: 0;
 // }
 
-.markdown-body .highlight {
+.markdown-body .highlight,
+.markdown-body .column {
   margin-bottom: 16px;
 }
 
@@ -1115,7 +1117,8 @@
   vertical-align: -0.075em;
 }
 
-.markdown-body g-emoji img {
+.markdown-body g-emoji img,
+.markdown-body g-emoji .img {
   width: 1em;
   height: 1em;
 }

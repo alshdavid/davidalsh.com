@@ -1,5 +1,6 @@
 div.line-numbers {
   counter-reset: linenumber;
+  height: 100%;
 }
 
 div.line-numbers > code {
@@ -8,6 +9,7 @@ div.line-numbers > code {
 }
 
 .line-numbers .line-numbers-rows {
+  height: 100%;
   position: absolute;
   pointer-events: none;
   top: 0;

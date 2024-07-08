@@ -17,9 +17,9 @@
 
 <meta name="theme-color" content="#ffffff" />
 
-<% if (typeof meta !== "undefined" && meta.description) { %>
-<meta name="description" content="<%- meta.description %>">
-<% } %>
+<% if (ctx.meta?.description) { %> 
+  <meta name="description" content="<%- meta.description %>">
+<% } %> 
 
 <style>
   :root {
@@ -45,9 +45,10 @@
   } */
 </style>
 
-<meta property="og:url" content="<%- slug_full %>" />
+<meta property="og:url" content="<%- ctx.slug_full %>" />
+
 <% 
-  if (typeof meta !== "undefined") for (let [meta_key, meta_value] of Object.entries(meta)) {
+  if (typeof meta !== 'undefined') for (let [meta_key, meta_value] of Object.entries(meta || {})) {
   if (typeof meta_value === "string") {
     meta_value = { key: meta_value }
   }
@@ -80,13 +81,14 @@
   } 
 %>
 
-<% if (typeof meta !== "undefined" && !meta.title && title) { %>
-  <meta property="og:title" content="<%- title %>" />
-  <% index_meta.set('title', title)
- } %>
+<% if (!ctx.meta?.title && ctx.title) { %>
+    <meta property="og:title" content="<%- title %>" />
+<% 
+    index_meta.set('title', title)
+  } 
+%>
 
-<% if (typeof title !== "undefined") { 
-  index_meta.set('title', title) %>
+<% if (ctx.title) { %>
  <title>David Alsh - <%- title %></title>
 <% } else { %>
  <title>David Alsh</title>

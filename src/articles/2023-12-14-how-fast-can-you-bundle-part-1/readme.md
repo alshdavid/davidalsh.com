@@ -25,7 +25,48 @@ Parcel brought to the bundling world many novel features; like incremental bundl
 
 This allowed for drastically simplified development environments that had a reduced burden of dependency maintenance.
 
-<img src="assets/from-to.png" class="xxl">
+<div class="column border no-padding">
+<div>
+
+<div class="banner">That Allows This:</div>
+
+```json
+{
+  "devDependencies": {
+    "copy-webpack-plugin": "*",
+    "css-loader": "*",
+    "html-webpack-plugin": "*",
+    "mini-css-extract-plugin": "*",
+    "sass": "*",
+    "sass-loader": "*",
+    "style-loader": "*",
+    "ts-loader": "*",
+    "typescript": "*",
+    "webpack": "*",
+    "webpack-bundle-analyzer": "*",
+    "webpack-cli": "*",
+    "webpack-dev-server": "*",
+    "worker-loader": "*"
+  }
+}
+```
+
+
+</div>
+<div>
+
+<div class="banner">To Become This:</div>
+
+```json
+{
+  "devDependencies": {
+    "parcel": "*"
+  }
+}
+```
+
+</div>
+</div>
 
 Parcel's plugin system allowed for extensibility where required, however by default Parcel ships everything you need to build a modern web application.
 
@@ -55,7 +96,9 @@ This first article will center around the creation of the first phase in the bun
 
 Parcel's bundling pipeline follows roughly the following flow:
 
-<img src="assets/flow.png" class="xxl" />
+<br>
+
+<wc-embed-svg class="img" loading="lazy" width="60%" src="../2023-12-14-how-fast-can-you-bundle-part-1/assets/diagrams/bundler-high-level.svg" ></wc-embed-svg>
 <br>
 
 You can also view a more descriptive flow diagram on [Parcel's website](https://parceljs.org/plugin-system/overview/)
@@ -74,8 +117,6 @@ The transformation pipeline is broken down into 2 major steps
 To start off, an "entry" file is passed into the pipeline, the `import` declarations are extracted resulting in the pipeline discovering new files to transform - continuing the loop.
 
 The new found files have their `import` declarations extracted, again continuing the loop, stopping once all the `import`s in a project have been extracted.
-
-<img src="assets/transformer-pipeline.png" class="xxl" />
 
 During transformation, the file is read, potentially converted from TypeScript to JavaScript then stored in memory within a "store". 
 
@@ -141,7 +182,46 @@ After the specifier has been resolved to an absolute path of the dependency, the
 
 The transformer will read the file contents from the disk then, using a JavaScript parser like [SWC](https://play.swc.rs/?version=1.3.100&code=H4sIAAAAAAAAA8vMLcgvKlFIy89XSCvKz1VQArKUuJLz84rzc1L1cvLTNYACmlwAcKvMWScAAAA%3D&config=H4sIAAAAAAAAA1WPSw7DIAwF9zkF8rrbdtE79BCIOhERP9mOVBTl7oUE0maH3xszsA5KwcwGnmotxzIkTYx0ziXhHER%2FSgKSE7IhmwRuvRWu1agd4x5tRwOiaUKpW8j3hoOLkbHjLfM22DH%2FC030iZD5ClZUh8nhVTc0Jfj4XvayfaQ%2B9tA%2F4Ad12XkxWH71TaEFh%2B0LYuVI0xQBAAA%3D), will convert the source code into an AST.
 
-<img src="assets/ast-import.png" class="m" />
+<div class="column border no-padding">
+<div>
+<div class="banner">Source code:</div>
+
+```javascript
+import foo from 'foo'
+```
+
+</div>
+<div>
+<div class="banner">Resulting AST:</div>
+
+```json
+{
+  "type": "Module",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "value": "foo",
+            "optional": false
+          }
+        }
+      ],
+      "source": {
+        "type": "StringLiteral",
+        "value": "foo",
+        "raw": "\"foo\""
+      }
+    }
+  ]
+}
+```
+
+</div>
+</div>
 
 We can then walk the AST, identify the imports, extract the specifiers and give them to the next iteration of the loop.
 
@@ -183,7 +263,7 @@ The first thing we need is something to bundle. For this I have taken the famili
 
 To scale the benchmark up; we take the three-js source code and copy it 250 times. This results in a project that contain approximately 90,000 source files.
 
-<img src="assets/over-90000.png" class="xxs"/>
+<img src="assets/over-90000.png" loading="lazy" class="xxs"/>
 
 We then need to generate an entry point that imports each copy and re-exports it to avoid the bundler optimizing away unused imports.
 
@@ -204,15 +284,7 @@ window.copy_3 = copy_3;
 
 I will be using my personal desktop computer that has the following hardware:
 
-<img src="assets/system.png"/>
-
-|Item|Details|
-|-|-|
-|CPU|AMD Ryzen 7950x - 16 Cores @ 5.8ghz (SMT off) |
-|RAM|98 GB|
-|SSD|PCI-E NVMe SSD (silly fast I/O)|
-|OS|Fedora Linux 39|
-|Node|v20.10.0|
+<wc-embed-html loading="lazy" src="./assets/screenfetch.html"></wc-embed-html>
 
 ## Baseline
 
@@ -247,7 +319,7 @@ env \
 
 Running the build we see the following results:
 
-<img src="assets/bench-baseline-parcel-x16.png" class="xxl" />
+<img src="assets/bench-baseline-parcel-x16.png" loading="lazy" class="xxl" />
 
 The transformation took 60 seconds where the CPU usage peaked at about 11 cores and averaged 5 cores. The process consumed 7gb of RAM.
 
@@ -275,7 +347,7 @@ done
 
 When the `PARCEL_WORKER` variable is set to `0`, Parcel will run the compilation on the main thread. So that means `main thread + n workers = total threads`.
 
-<img src="assets/build-time-vs-threads-parcel.png" class="xxl" />
+<img src="assets/build-time-vs-threads-parcel.png" loading="lazy" class="xxl" />
 
 What we can observe is that we stop seeing improvements beyond 4 threads however there is a continued escalation of maximum CPU usage, while average CPU usage remains the same.
 
@@ -469,7 +541,7 @@ env \
 ```
 #### Results
 
-<img src="assets/single-threaded-performance.png" class="xxl" />
+<img src="assets/single-threaded-performance.png" loading="lazy" class="xxl" />
 
 Looking at the chart, on a single thread, our home baked transformer circuit was able to transform the 90k source file three-js benchmark in 40 seconds and consumed 600mb of ram while doing it!
 
@@ -610,7 +682,7 @@ fn main() {
 
 Running this circuit against the 250x three-js project using 16 threads:
 
-<img src="assets/multi-threaded-bench.png" class="xxl" />
+<img src="assets/multi-threaded-bench.png" loading="lazy" class="xxl" />
 
 🤯🤯🤯🤯🤯🤯🤯🤯🤯🤯 **3 seconds!?**
 
@@ -637,7 +709,7 @@ for THREADS in $(seq 1 16); do
 done
 ```
 
-<img src="assets/hypersonic-threads-comparison.png" class="xxl" />
+<img src="assets/hypersonic-threads-comparison.png" loading="lazy" class="xxl" />
 
 The blue line tracks the actual build time.
 
