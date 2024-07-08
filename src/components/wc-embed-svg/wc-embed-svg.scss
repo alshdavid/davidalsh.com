@@ -1,3 +1,7 @@
+wc-embed-svg:not(:defined) { 
+  display: none 
+}
+
 wc-embed-svg {
   display: contents
 }
