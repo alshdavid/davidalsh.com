@@ -22,10 +22,7 @@
     "prismjs": "*",
     "@types/prismjs": "*",
     "esbuild-sass-plugin": "*",
-    "mermaid": "*",
-    "puppeteer-core": "*",
-    "moment": "*",
-    "@mermaid-js/mermaid-cli": "*"
+    "moment": "*"
   },
   "nodemonConfig": {
     "ignore": ["**/node_modules/**", "**/.git/**", "**/dist/**"],
