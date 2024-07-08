@@ -25,21 +25,21 @@
   }) %>
 
   <main class="markdown-body">
-    <% if (ctx.image) { %> 
+    <!-- <% if (ctx.image) { %> 
       <div class="hero-image">
         <img src="<%- ctx.image %>" alt="<%- ctx.image_alt || '' %>" /> 
         <% if (ctx.image_subtitle) { %> 
           <i><%- ctx.image_subtitle %></i>
         <% } %>
       </div>
-    <% } %>
+    <% } %> -->
 
     <%- await markdown.render('./readme.md') %>    
   </main>
   
   <div class="comments">
-    <div class="attribution">
-      <div class="author">
+    <!-- <div class="attribution"> -->
+      <!-- <div class="author">
         <h4><a href="/">David Alsh</a></h4>
         <p><%- ctx.publish_date.format('DD MMM YYYY') %></p>
       </div>
@@ -47,8 +47,8 @@
         <h4>Share this post</h4>
         <a href="">twitter</a>
         <a href="">facebook</a>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
 
     <script src="https://giscus.app/client.js"
         data-repo="alshdavid/davidalsh-com"

@@ -1,4 +1,6 @@
-### Introduction
+<h1>Writing a Bundler - Part 1</h1>
+
+## Introduction
 
 In today's web development landscape, web applications require a bundler to transpile, combine, and optimize the source code of a project so that end users receive distributable code that is optimally packaged for downloading and executing within their browser.
 
