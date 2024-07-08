@@ -6,7 +6,6 @@ import * as ejs from 'ejs'
 import Prism from 'prismjs'
 import PrismComponents from 'prismjs/components/'
 import { markedHighlight } from "./highlight";
-import * as mermaid from "./mermaid";
 
 const NEW_LINE_EXP = /\n(?!$)/g;
 
@@ -46,11 +45,6 @@ export class Markdown {
           if (lang  === 'mermaid') {
             const hash = node_crypto.createHash('sha256').update(code).digest('hex').substring(0,10)
 
-            const [light, dark] = mermaid.queue_mermaid(code)
-
-            ctx.virtual_assets.set(path.join('mermaid', hash + '_light.svg'), (await light).data)
-            ctx.virtual_assets.set(path.join('mermaid', hash + '_dark.svg'), (await dark).data)
-            
             return `<div class="mermaid">
               <img class="light-mode" src="mermaid/${hash}_light.svg" />
               <img class="dark-mode" src="mermaid/${hash}_dark.svg" />

@@ -11,7 +11,6 @@ import * as esbuild from 'esbuild'
 import * as prettier from 'prettier'
 import { Markdown } from './markdown/markdown.js';
 import {sassPlugin} from 'esbuild-sass-plugin'
-import * as mermaid from "./markdown/mermaid.js";
 
 const PROD = process.env.PROD === 'true'
 const URL = process.env.URL || 'http://localhost:8080'
@@ -228,7 +227,6 @@ for (const [filepath, data] of virtual_assets.entries()) {
 }
 
 fs.writeFileSync(path.join(__dist, 'index.json'), JSON.stringify(index, null, 2), 'utf8')
-await mermaid.close_mermaid()
 
 function rename_ext(t: string, w: string): string {
   let file = path.parse(t)
