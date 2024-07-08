@@ -4,26 +4,14 @@ rules:
   - regex: ^\/etag\.json$
     cacheControl: 'max-age=0'
 
-  # /**/index.html, /**/index.css, /**/index.js
-  - regex: ^(\/)(.*)(index\.(css|js|html))$
+  # /**/index.html, /**/index.css, /**/index.js, /**/index.json
+  - regex: ^(\/)(.*)(index\.(css|js|html|json))$
     cacheControl: 'max-age=0'
 
   # /**/*.html, /**/*.css, /**/*.js
   - regex: ^(\/)(.*)(\.css|js|html|json)$
     cacheControl: 'max-age=31536000, immutable, public'
 
-  # /api/uncached/**/*
-  - regex: ^(\/)(api\/uncached\/)(.*)$
-    cacheControl: 'max-age=0'
-
-  # /api/cached/**/index.json
-  - regex: ^(\/)(api\/cached\/)(.*)(index\.json)$
-    cacheControl: 'max-age=0'
-
-  # /api/cached/**/*
-  - regex: ^(\/)(api\/cached\/)(.*)$
-    cacheControl: 'max-age=31536000, immutable, public'
-
-  # /uploads/**/*
-  - regex: ^(\/)(uploads\/)(.*)$
+  # /assets/**/*
+  - regex: ^(\/)(assets\/)(.*)$
     cacheControl: 'max-age=31536000, public'
