@@ -96,5 +96,10 @@
  <title>David Alsh</title>
 <% } %>
 
-<%- styles.add(paths.root + "/styles.scss") %>
-<%- await scripts.add(paths.root + "/index.ts") %>
+<% 
+const style_src = await styles.add(paths.root + "/styles.scss")
+const scripts_src = await scripts.add(paths.root + "/index.ts")
+%>
+
+<link rel="stylesheet" href="<%- style_src %>" />
+<script src="<%- scripts_src %>" type="module" async></script>

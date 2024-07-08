@@ -1,23 +1,23 @@
 import path from 'node:path';
 import * as node_crypto from "node:crypto"
 import * as child_process from "node:child_process"
-import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import fs, { rename } from 'node:fs';
+import * as url from 'node:url';
 import { createRequire } from 'node:module';
 import * as glob from 'glob'
 import moment from 'moment'
 import * as ejs from 'ejs'
+import * as sass from 'sass'
 import * as esbuild from 'esbuild'
 import * as prettier from 'prettier'
 import { Markdown } from './markdown/markdown.js';
-import {sassPlugin} from 'esbuild-sass-plugin'
 
 const PROD = process.env.PROD === 'true'
 const URL = process.env.URL || 'http://localhost:8080'
 
 console.log({ PROD, URL })
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 const __root = path.join(__dirname, ".."); 
 const __src = path.join(__root, "src"); 
@@ -30,7 +30,7 @@ let index_files = glob.sync("**/index.ejs", {
 })
 
 let scripts = new Map<string, Promise<string>>()
-let styles = new Set<string>()
+let styles = new Map<string, Promise<string>>()
 let assets = new Set<string>()
 let index = {}
 let virtual_assets = new Map<string, Buffer>()
@@ -54,7 +54,7 @@ for (const index_file of index_files) {
     }
 
     let local_scripts = {
-      add: async (str: string, options: { wrap?: boolean, rename?: boolean } = { wrap: true, rename: true }) => {
+      add: async (str: string, options: { wrap?: boolean, rename?: boolean } = { wrap: false, rename: true }) => {
         let script_path = str
         if (!path.isAbsolute(script_path)) {
           script_path = path.normalize(path.join(__src, file.dir, str))
@@ -78,7 +78,7 @@ for (const index_file of index_files) {
             
             if (options.rename) {
               const file = await fs.promises.readFile(out_path)
-              const hash = node_crypto.createHash('sha256').update(file).digest('hex').substring(0,10)
+              const hash = node_crypto.createHash('sha256').update(file).digest('hex').substring(0,20)
               const out_path_hash = path.join(path.dirname(out_path), `${hash}.js`);
               await fs.promises.rename(out_path, out_path_hash)
               return `${hash}.js`
@@ -96,20 +96,55 @@ for (const index_file of index_files) {
         if (options.wrap) {
           return `<script src="${rel_path}" type="module" async></script>`
         } else {
-          return rename_ext(path.relative(path.dirname(path_abs_index_file), script_path), 'js')
+          return rename_ext(rel_path, 'js')
         }
       }
     }
 
     let local_styles = {
-      add: (str: string) => {
-        let style_path = str
-        if (!path.isAbsolute(style_path)) {
-          style_path = path.normalize(path.join(__src, file.dir, str))
+      add: async (str: string, options: { wrap?: boolean, rename?: boolean } = { wrap: false, rename: true }) => {
+        let script_path = str
+        if (!path.isAbsolute(script_path)) {
+          script_path = path.normalize(path.join(__src, file.dir, str))
         }
-        styles.add(style_path)
-        let rel_path = path.relative(path.dirname(path_abs_index_file), style_path)
-        return `<link rel="stylesheet" href="${rename_ext(rel_path, 'css')}" />`
+
+        if (!styles.has(script_path)) {
+          styles.set(script_path, (async () => {
+            let rel_path = path.relative(__src, path.dirname(script_path))
+            
+            const raw = await fs.promises.readFile(script_path, { encoding: 'utf8' })
+            const result = await sass.compileStringAsync(raw, {
+              url: url.pathToFileURL(script_path),
+            })
+            const content = result.css.toString()
+
+            let filename = `index.css`
+
+            if (options.rename) {
+              const hash = node_crypto.createHash('sha256').update(content).digest('hex').substring(0,20)
+              filename = `${hash}.css`
+            }
+
+            let output_path_file_abs = path.join(__dist, rel_path, filename)
+            let output_path_dir_abs = path.dirname(output_path_file_abs)
+
+            if (!fs.existsSync(output_path_dir_abs)) {
+              await fs.promises.mkdir(output_path_dir_abs, { recursive: true })
+            }
+            await fs.promises.writeFile(output_path_file_abs, content, 'utf8')
+                                    
+            return path.relative(__dist, output_path_file_abs)
+          })())
+        }
+
+        const out_path = await styles.get(script_path)!
+        let rel_path = path.relative(path.dirname(path_abs_index_file), path.join(__src, out_path))
+
+        if (options.wrap) {
+          return `<link rel="stylesheet" href="${rel_path}" />`
+        } else {
+          return rename_ext(rel_path, 'css')
+        }
       }
     }
 
@@ -194,21 +229,6 @@ for (const index_file of index_files) {
 }
 
 await Promise.all(templates)
-
-for (const [_, style_file] of styles.entries()) {
-  let rel_path = path.relative(__src, path.dirname(style_file))
-
-  await esbuild.build({
-    entryPoints: [style_file],
-    bundle: true,
-    outdir: path.join(__dist, rel_path),
-    external: ["*"],
-    plugins: [
-      sassPlugin()
-    ],
-    write: true
-  })
-}
 
 for (const [_, asset] of assets.entries()) {
   let outdir = path.join(__dist, path.dirname(asset))

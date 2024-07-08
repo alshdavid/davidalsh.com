@@ -11,17 +11,18 @@
   },
   "devDependencies": {
     "@types/node": "*",
+    "@types/ejs": "*",
     "glob": "*",
     "tsx": "*",
     "ejs": "*",
     "esbuild": "*",
     "http-server": "*",
     "nodemon": "*",
+    "sass": "*",
     "prettier": "*",
     "marked": "*",
     "prismjs": "*",
     "@types/prismjs": "*",
-    "esbuild-sass-plugin": "*",
     "moment": "*"
   },
   "nodemonConfig": {
