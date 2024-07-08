@@ -2,14 +2,14 @@
   main {
     @include content-max-width;
 
-    .hero-image {
+    .hero {
       img {
-        max-width: 50%;
+        max-width: 60%;
       }
 
       i {
         display: block;
-        max-width: 50%;
+        max-width: 60%;
         margin: 0 auto;
         text-align: center;
       }

@@ -1,0 +1,11 @@
+<% 
+  assets.add("./assets")
+
+  ctx.publish_date = util.moment('2023-12-14')
+  ctx.tags = ['article', 'web', 'bundling']
+  ctx.title = 'Writing A Bundler - Part 1'
+  ctx.description = 'An introduction to what a bundler actually does'
+  ctx.image = slug_full + 'assets/hero.webp'
+%>
+
+<%- await include(paths.root + '/pages/article/article.ejs', ctx) %>

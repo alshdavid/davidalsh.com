@@ -1,0 +1,15 @@
+<% 
+  assets.add("./assets")
+
+  ctx.publish_date = util.moment('2022-07-18')
+  ctx.tags = ['article', 'web', 'html', 'security', 'privacy']
+  ctx.title = 'The Case For a Sandboxed Script Tag'
+  ctx.description = 'An article examining the utility of allowing script tags to be sandboxable'
+  ctx.image = slug_full + 'assets/hero.png'
+  ctx.image_subtitle = 'Enhancing security on the web'
+  ctx.image_alt = 'Picture of a sand pit'
+  
+  index_meta.set('peek', ``.replace('/n', ''))
+%>
+
+<%- await include(paths.root + '/pages/article/article.ejs', ctx) %>

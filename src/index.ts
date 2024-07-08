@@ -16,6 +16,8 @@ if (window.location.pathname === '/') {
   await initHomePage()
 }
 
+window.addEventListener('message', console.warn)
+
 
 
 // for (const codeblock_outer of document.querySelectorAll('.codeblock-outer')) {
