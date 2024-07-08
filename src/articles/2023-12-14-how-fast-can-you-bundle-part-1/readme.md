@@ -27,8 +27,7 @@ Parcel brought to the bundling world many novel features; like incremental bundl
 
 This allowed for drastically simplified development environments that had a reduced burden of dependency maintenance.
 
-<div class="column border no-padding">
-<div>
+<wc-grid border="true">
 
 ```json?<%- util.query({ title: "Which Allows This:", border: false }) %>
 {
@@ -51,10 +50,6 @@ This allowed for drastically simplified development environments that had a redu
 }
 ```
 
-
-</div>
-<div>
-
 ```json?<%- util.query({ title: "To Become This:", border: false }) %>
 {
   "devDependencies": {
@@ -63,8 +58,7 @@ This allowed for drastically simplified development environments that had a redu
 }
 ```
 
-</div>
-</div>
+</wc-grid>
 
 Parcel's plugin system allowed for extensibility where required, however by default Parcel ships everything you need to build a modern web application.
 
@@ -120,7 +114,7 @@ During transformation, the file is read, potentially converted from TypeScript t
 
 Parcel actually writes these transform results to disk but for the sake of simplicity, we will keep them in memory unless it becomes a problem.
 
-<video controls autoplay muted loop class="m">
+<video controls autoplay muted loop class="m" preload="none">
   <source src="assets/video-1.mp4" type="video/mp4">
 </video>
 
@@ -180,15 +174,11 @@ After the specifier has been resolved to an absolute path of the dependency, the
 
 The transformer will read the file contents from the disk then, using a JavaScript parser like [SWC](https://play.swc.rs/?version=1.3.100&code=H4sIAAAAAAAAA8vMLcgvKlFIy89XSCvKz1VQArKUuJLz84rzc1L1cvLTNYACmlwAcKvMWScAAAA%3D&config=H4sIAAAAAAAAA1WPSw7DIAwF9zkF8rrbdtE79BCIOhERP9mOVBTl7oUE0maH3xszsA5KwcwGnmotxzIkTYx0ziXhHER%2FSgKSE7IhmwRuvRWu1agd4x5tRwOiaUKpW8j3hoOLkbHjLfM22DH%2FC030iZD5ClZUh8nhVTc0Jfj4XvayfaQ%2B9tA%2F4Ad12XkxWH71TaEFh%2B0LYuVI0xQBAAA%3D), will convert the source code into an AST.
 
-<div class="column border no-padding">
-<div>
+<wc-grid border="true" ratio="40%, 60%">
 
 ```javascript?<%- util.query({ title: "Source code:", border: false }) %>
 import foo from 'foo'
 ```
-
-</div>
-<div>
 
 ```json?<%- util.query({ title: "Resulting AST:", border: false }) %>
 {
@@ -215,9 +205,7 @@ import foo from 'foo'
   ]
 }
 ```
-
-</div>
-</div>
+</wc-grid>
 
 We can then walk the AST, identify the imports, extract the specifiers and give them to the next iteration of the loop.
 

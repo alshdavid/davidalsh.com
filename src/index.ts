@@ -1,13 +1,13 @@
 import { WcEmbedSvg } from './components/wc-embed-svg/index.js'
 import { WcEmbedHtml } from './components/wc-embed-html/index.js'
+import { WcGrid } from './components/wc-grid/index.js'
 import { initColorScheme } from "./scripts/color-scheme.js"
 import { runSvgReplace } from "./scripts/svg-replace.js"
 import { initHomePage } from "./pages/home/index.js"
-// import { getServiceWorker } from "./scripts/service-worker.js"
-import { fetchArticles } from "./scripts/meta.js"
 
 WcEmbedSvg.register()
 WcEmbedHtml.register()
+WcGrid.register()
 
 initColorScheme()
 await runSvgReplace()

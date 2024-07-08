@@ -1,0 +1,22 @@
+wc-grid {
+  display: flex;
+  visibility: hidden;
+  
+  & > * {
+    margin: 0 !important;
+    flex: 1;
+  }
+
+  &[border="true"] {
+    border: 1px var(--borderColor-default) solid;
+    border-radius: 4px;
+    
+    & > * {
+      border-right: inherit;
+  
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
