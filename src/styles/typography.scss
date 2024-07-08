@@ -17,6 +17,14 @@ body {
   background-color: var(--background-color);
   color: var(--font-color);
   transition: background-color var(--color-scheme-transition-duration) ease-in-out;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+
+main {
+  flex: 1;
 }
 
 .content-max-width {

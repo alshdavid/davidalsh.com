@@ -1,35 +1,28 @@
 <header>
   <div class="content-max-width">
-    <div class="profile-picture"></div>
-
-    <div class="upper column">
-      <nav>
-        <ol>
-          <li><a href="/">
-              <h1>David Alsh</h1>
-            </a></li>
-          <% if (typeof breadcrumbs !=='undefined' ) for (const [title, slug] of breadcrumbs) { %>
-            <li><a href="<%- slug %>"><%- title %></a></li>
-            <% } %>
-        </ol>
-      </nav>
-      <div class="links">
-        <a href="https://github.com/alshdavid">Github</a>
-        <a href="https://www.youtube.com/DavidAlsh">YouTube</a>
-      </div>
+    <div class="profile-picture">
+      <!-- <img src="/assets/profile.jpg" alt="profile-picture"> -->
     </div>
-    <div class="lower">
-      <p class="blurb">Software Engineer</p>
-
-      <!-- <div class="search">
-          <svg src="/assets/icons/magnifying-glass.svg" svg-replace></svg>
-          <input type="text" placeholder="Search Articles">
-        </div> -->
-      <!-- <div>
-        <a href="https://github.com/alshdavid">Github</a>
-        <a href="https://github.com/alshdavid">YouTube</a>
-        <a href="https://github.com/alshdavid">Linkedin</a>
-      </div> -->
+    <div class="panel">
+      <div class="upper">
+        <nav>
+          <ol>
+            <li><a href="/">
+                <h1>David Alsh</h1>
+              </a></li>
+            <% if (typeof breadcrumbs !=='undefined' ) for (const [title, slug] of breadcrumbs) { %>
+              <li><a href="<%- slug %>"><%- title %></a></li>
+              <% } %>
+          </ol>
+        </nav>
+        <div class="links">
+          <a href="https://github.com/alshdavid">Github</a>
+          <a href="https://www.youtube.com/DavidAlsh">YouTube</a>
+        </div>
+      </div>
+      <div class="lower">
+        <p class="blurb">Software Engineer</p>
+      </div>
     </div>
   </div>
 </header>

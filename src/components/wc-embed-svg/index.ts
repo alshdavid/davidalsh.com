@@ -9,6 +9,10 @@ export class WcEmbedSvg extends HTMLElement {
     customElements.define("wc-embed-svg", WcEmbedSvg);
     const styles = document.createElement('style')
     styles.innerHTML = /*css*/`
+      wc-embed-svg {
+        display: contents
+      }
+      
       wc-embed-svg svg {
         margin: 0 auto;
         display: block;
@@ -43,4 +47,16 @@ export class WcEmbedSvg extends HTMLElement {
       }
     }
   }
+}
+
+declare module 'preact' {
+  namespace JSX {
+      interface IntrinsicElements {
+          'wc-embed-svg': WcEmbedSvgAttributes;
+      }
+  }
+}
+
+interface WcEmbedSvgAttributes extends preact.JSX.HTMLAttributes<HTMLElement> {
+  src?: string;
 }

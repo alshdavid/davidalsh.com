@@ -28,7 +28,7 @@ export async function initHomePage() {
                   class="button"
                   onClick={() => window.location.assign(article.slug)}>
                   <span>Read more</span>
-                  <svg src="/assets/icons/arrow.svg" svg-replace></svg>
+                  <wc-embed-svg src="/assets/icons/arrow.svg" />
                 </button>
                 <a href={article.slug}><h2>{article.title}</h2></a>
                 <p>{article.description.trim()}</p>

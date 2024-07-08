@@ -12,7 +12,7 @@
           tag: ctx.tags,
         }
       },
-      description: ctx.description,
+      description: ctx.description || ctx.image_subtitle || '',
       image: ctx.image
     }
   }) %>

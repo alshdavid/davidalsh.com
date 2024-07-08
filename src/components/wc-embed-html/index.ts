@@ -9,6 +9,10 @@ export class WcEmbedHtml extends HTMLElement {
     customElements.define("wc-embed-html", WcEmbedHtml);
     const styles = document.createElement('style')
     styles.innerHTML = /*css*/`
+      wc-embed-html {
+        display: contents;
+      }
+      
       wc-embed-html iframe {
         display: block;
         border: none;
@@ -47,4 +51,16 @@ export class WcEmbedHtml extends HTMLElement {
       frame.style.height = `${Math.ceil(html.getBoundingClientRect().height)}px`
     }
   }
+}
+
+declare module 'preact' {
+  namespace JSX {
+      interface IntrinsicElements {
+          'wc-embed-html': WcEmbedHtmlAttributes;
+      }
+  }
+}
+
+interface WcEmbedHtmlAttributes extends preact.JSX.HTMLAttributes<HTMLElement> {
+  src?: string;
 }
