@@ -38,13 +38,13 @@
   :not(pre) > code[class*="language-"] {
     white-space: normal;
     border-radius: 0.2em;
-    padding: 0.1em;
+    // padding: 0.1em;
   }
 
   pre[class*="language-"] {
     overflow: auto;
     position: relative;
-    padding: 1.25em 1em;
+    // padding: 1.25em 1em;
   }
 
   .language-css > code,

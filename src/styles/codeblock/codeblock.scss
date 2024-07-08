@@ -21,7 +21,7 @@ code, .codeblock {
 
   .codeblock-inner {
     position: relative;
-    padding-left: 44px;
+    padding-left: 50px;
     height: 100%;
   }
 
@@ -32,11 +32,14 @@ code, .codeblock {
 }
 
 .codeblock {
-  border: 1px var(--borderColor-default) solid;
-  border-radius: 4px;
+
+  &.border {
+    border: 1px var(--borderColor-default) solid;
+    border-radius: 4px;
+  }
   
   margin: 0;
-  padding: 0 0 0 4px;
+  padding: 0 0 0 0;
   // margin: 0 0 var(--margin-bottom-desktop) 0;
   display: block;
   height: 100%;
@@ -50,5 +53,9 @@ code, .codeblock {
   
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  pre {
+    margin: 0 !important;
   }
 }

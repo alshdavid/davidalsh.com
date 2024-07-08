@@ -70,8 +70,19 @@ export class Markdown {
           
             lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
           });
+
+          console.log(settings)
   
-          return `<pre><code class="codeblock language-${lang}"><div class="codeblock-inner"><div class="line-numbers">${Prism.highlight(code, Prism.languages[lang], lang) + lineNumbersWrapper}</div></div></code></pre>`
+          return `
+            <code class="codeblock language-${lang} ${settings.get('border') === 'false' ? '' : 'border'}">
+              <div class="codeblock-inner">
+                <div class="line-numbers">
+                  <pre>${Prism.highlight(code, Prism.languages[lang], lang)}</pre>
+                  ${lineNumbersWrapper}
+                </div>
+              </div>
+            </code>
+          `
         }
       })).parse(postContent)
     } catch (error) {

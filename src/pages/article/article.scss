@@ -1,67 +1,10 @@
-.page-home {
+.page-article {
   main {
     @include content-max-width;
-    display: flex;
-    flex-flow: row wrap;
-
-    * {
-      font-family: var(--font-family-2);
-    }
   }
-
-  article {
+  
+  .comments {
+    @include content-max-width;
     width: 100%;
-
-    & > a {
-      flex-direction: row;
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      text-decoration: none;
-
-      img {
-        object-fit: cover;
-        height: 150px;
-        width: 250px;
-        border-radius: 8px;
-      }
-
-      h2 {
-        font-size: 18px;
-        font-weight: 400;
-        margin: 0 0 12px 0;
-      }
-
-      p {
-        font-size: 14px;
-        flex: 1;
-      }
-
-      span {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-size: 14px;
-        text-decoration: underline;
-
-        svg {
-          display: inline-block;
-          height: 14px;
-          margin-left: 12px;
-
-          path {
-            fill: var(--font-color);
-          }
-        }
-      }
-    }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      width: calc(100% - 250px);
-      padding: 12px 20px;
-    }
   }
 }

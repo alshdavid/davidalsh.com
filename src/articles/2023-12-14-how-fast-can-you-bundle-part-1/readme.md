@@ -30,7 +30,7 @@ This allowed for drastically simplified development environments that had a redu
 
 <div class="banner">That Allows This:</div>
 
-```json
+```json?border=false
 {
   "devDependencies": {
     "copy-webpack-plugin": "*",
@@ -57,7 +57,7 @@ This allowed for drastically simplified development environments that had a redu
 
 <div class="banner">To Become This:</div>
 
-```json
+```json?border=false
 {
   "devDependencies": {
     "parcel": "*"

@@ -23,7 +23,7 @@
     breadcrumbs: [[ctx.title, slug]]
   }) %>
 
-  <main class="markdown-body content-max-width">
+  <main class="markdown-body">
     <% if (ctx.image) { %> 
       <div class="hero-image">
         <img src="<%- ctx.image %>" alt="<%- ctx.image_alt || '' %>" /> 
@@ -36,7 +36,7 @@
     <%- await markdown.render('./readme.md') %>
   </main>
   
-  <div class="comments content-max-width">
+  <div class="comments">
     <script src="https://giscus.app/client.js"
         data-repo="alshdavid/davidalsh-com"
         data-repo-id="MDEwOlJlcG9zaXRvcnk2ODQ0NzA1NA=="
