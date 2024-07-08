@@ -1,0 +1,11 @@
+<% 
+  assets.add("./assets")
+  ctx.publish_date = util.moment('2019-03-18')
+  ctx.tags = ['tutorial', 'video', 'golang', 'go', 'software-design']
+  ctx.title = "Creating a REST API with Go and Gin"
+  ctx.description = "A tutorial on creating a REST API with Go (Golang) and Gin"
+  ctx.image = slug_full + "assets/hero.jpeg"
+  ctx.image_subtitle = "First steps when starting to develop Go web applications"
+  index_meta.set('peek', '')
+%>
+<%- await include(paths.root + '/pages/article/article.ejs', ctx) %>

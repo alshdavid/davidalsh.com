@@ -1,0 +1,21 @@
+<head>
+  <%- await include('../../partials/head.ejs', { 
+    title: "Home", 
+    meta: { 
+      type: "website" ,
+      title: "Software Engineering Articles, Videos, Tutorials and More" ,
+      description: "My personal website where I share my thoughts and experiences, like and subscribe!" ,
+      image: "assets/social.jpeg" 
+    } 
+  }) %>
+</head>
+
+<body class="page-home">
+  <%- await include(paths.root + '/partials/header/header.ejs' ) %>
+  
+  <main>
+    <!-- Preact elements rendered here -->
+  </main>
+
+  <%- await include(paths.root + '/partials/footer/footer.ejs' ) %>
+</body>

@@ -1,0 +1,145 @@
+header {
+  background-color: #02040a;
+  border-bottom: 1px #30363db3 solid;
+  margin-bottom: 16px;
+  padding: 16px 0;
+
+  .content-max-width {
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-picture {
+    background-color: #30363d ;
+    height: 50px;
+    width: 50px;
+    background-image: url('/assets/profile.jpg');
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+  }
+
+  .panel {
+    flex: 1;
+    padding-left: 12px;
+  }
+
+  .upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .lower {
+
+    .search {
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      border: 1px #30363db3 solid;
+      border-radius: 4px;
+      height: 32px;
+      width: 350px;
+
+      input {
+        background-color: transparent;
+        border: none;
+        display: block;
+        flex: 1;
+      }
+
+      svg {
+        width: 32px;
+
+        path {
+          fill: #8d96a0;
+        }
+      }
+    }
+  }
+
+
+  ol,
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ol {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    a {
+      text-decoration: none;
+    }
+
+    li {
+      margin-left: 12px;
+      font-size: 18px;
+
+      &:first-child {
+        margin: 0;
+
+        &:before {
+          display: none;
+        }
+      }
+
+      &:before {
+        content: ">";
+        padding-right: 6px;
+
+        display: inline-block;
+      }
+    }
+  }
+
+  h1 {
+    font-weight: inherit;
+    font-size: 24px;
+    margin: inherit;
+    line-height: inherit;
+  }
+
+  .blurb {
+    display: inline-block;
+    font-size: 14px;
+    padding-right: 12px;
+    letter-spacing: -0.5px;
+    opacity: 0.8;
+    cursor: default;
+  }
+
+  .links {
+    // padding: 4px 0 0;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div:first-child {
+      flex: 1;
+    }
+
+    a {
+      display: inline-block;
+      opacity: 80;
+      margin-left: 12px;
+      font-size: 14px;
+      opacity: 0.8;
+
+      svg {
+        height: 18px;
+
+        path {
+          fill: #787878;
+        }
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,80 @@
+$page-width: 900px;
+
+:root {
+  --base: .8rem;
+  --width: $page-width;
+  --grid-gutter: var(--base);
+  --grid-height: calc(2 * var(--base));
+
+  --margin-bottom-desktop: 28px;
+  --margin-bottom-mobile: 18px;
+
+  --color-scheme-transition-duration: 0ms; // This is set in JavaScript
+
+  --font-family-serif: "Wittgenstein", serif;
+  --font-family-0: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-1: 'Times New Roman', serif;
+  --font-family-2: Arial, Helvetica, sans-serif;
+  --font-family-3: "Courier New", Courier, monospace;
+  
+  --color-brand-1: #ffc000;
+
+  --font-color-light: #292929;
+  --font-color-dark: #e1e1e1;
+
+  --font-color-hyperlink: #4493f8;
+
+  --background-color-dark: #0d1116;
+  --background-color-light: #fff;
+
+  --border-color-light: #e6e6e6;
+  --border-color-dark: #757575;
+
+  // Defaults
+  --font-color: var(--font-color-light);
+  --font-color-invert: var(--font-color-dark);
+  
+  --background-color: var(--background-color-light);
+  --background-color-invert: var(--background-color-dark);
+
+  --border-color: var(--border-color-light);
+  --border-color-invert: var(--border-color-dark);
+
+  --spacing-00: 0px;
+  --spacing-01: 4px;
+  --spacing-02: 8px;
+  --spacing-03: 12px;
+  --spacing-04: 16px;
+  --spacing-05: 20px;
+  --spacing-06: 24px;
+  --spacing-07: 28px;
+  --spacing-08: 32px;
+  --spacing-09: 36px;
+  --spacing-10: 40px;
+  --spacing-11: 44px;
+  --spacing-12: 48px;
+  --spacing-13: 56px;
+  --spacing-14: 64px;
+  --spacing-15: 72px;
+  --spacing-16: 144px;
+}
+
+:root {
+  // @include dark {
+    --background-color: var(--background-color-dark);
+    --background-color-invert: var(--background-color-light);
+    --font-color: var(--font-color-dark);
+    --font-color-invert: var(--font-color-light);
+    --border-color: var(--border-color-dark);
+    --border-color-invert: var(--border-color-light);
+  // }
+
+  // @include light {
+  //   --background-color: var(--background-color-light);
+  //   --background-color-invert: var(--background-color-dark);
+  //   --font-color: var(--font-color-light);
+  //   --font-color-invert: var(--font-color-dark);
+  //   --border-color: var(--border-color-light);
+  //   --border-color-invert: var(--border-color-dark);
+  // }
+}

@@ -1,0 +1,29 @@
+defaultCacheControl: 'max-age=86400, public'
+rules:
+  # /etag.json
+  - regex: ^\/etag\.json$
+    cacheControl: 'max-age=0'
+
+  # /**/index.html, /**/index.css, /**/index.js
+  - regex: ^(\/)(.*)(index\.(css|js|html))$
+    cacheControl: 'max-age=0'
+
+  # /**/*.html, /**/*.css, /**/*.js
+  - regex: ^(\/)(.*)(\.css|js|html)$
+    cacheControl: 'max-age=31536000, immutable, public'
+
+  # /api/uncached/**/*
+  - regex: ^(\/)(api\/uncached\/)(.*)$
+    cacheControl: 'max-age=0'
+
+  # /api/cached/**/index.json
+  - regex: ^(\/)(api\/cached\/)(.*)(index\.json)$
+    cacheControl: 'max-age=0'
+
+  # /api/cached/**/*
+  - regex: ^(\/)(api\/cached\/)(.*)$
+    cacheControl: 'max-age=31536000, immutable, public'
+
+  # /uploads/**/*
+  - regex: ^(\/)(uploads\/)(.*)$
+    cacheControl: 'max-age=31536000, public'

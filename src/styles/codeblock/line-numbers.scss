@@ -1,0 +1,42 @@
+div.line-numbers {
+  counter-reset: linenumber;
+  padding: 8px 0;
+  min-height: 23px;
+  box-sizing: content-box;
+}
+
+div.line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  padding: 8px 0;
+
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: 0;
+  width: 39px;
+  letter-spacing: -1px;
+  border-right: 1px solid #999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.line-numbers-rows > span {
+  display: block;
+  counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+  content: counter(linenumber);
+  color: #999;
+  display: block;
+  padding-right: 12px;
+  text-align: right;
+}

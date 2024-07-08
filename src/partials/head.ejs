@@ -1,0 +1,98 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <meta
+  http-equiv="Content-Security-Policy"
+  content="
+    default-src 'self';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app;
+    script-src 'self' https://giscus.app;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data:;
+    frame-src 'self' https://giscus.app;
+  " /> -->
+
+<link data-favicon rel="icon" href="/assets/favicon.svg" />
+<link data-favicon rel="apple-touch-icon" href="/assets/favicon.svg" />
+<link data-favicon rel="mask-icon" href="/assets/favicon.svg" color="#000000" >
+
+<meta name="theme-color" content="#ffffff" />
+
+<% if (ctx.meta?.description) { %> 
+  <meta name="description" content="<%- meta.description %>">
+<% } %> 
+
+<style>
+  :root {
+    --background-color-dark: #0d1116;
+    --font-color-dark: #e1e1e1;
+
+    /* --background-color-light: #fff;
+    --font-color-light: #292929; */
+  }
+
+  /* @media (prefers-color-scheme: dark) { */
+    html {
+      background-color: var(--background-color-dark);
+      color: var(--font-color-dark);
+    }
+  /* } */
+/*   
+  @media (prefers-color-scheme: light) {
+    html {
+      background-color: var(--background-color-light);
+      color: var(--font-color-light);
+    }
+  } */
+</style>
+
+<meta property="og:url" content="<%- ctx.slug_full %>" />
+
+<% 
+  if (typeof meta !== 'undefined') for (let [meta_key, meta_value] of Object.entries(meta || {})) {
+  if (typeof meta_value === "string") {
+    meta_value = { key: meta_value }
+  }
+%>
+  <meta property="og:<%- meta_key %>" content="<%- meta_value.key %>" />
+  <% 
+    if (meta_value.attributes) for (let [key, values] of Object.entries(meta_value.attributes)) {
+      const file_meta = {}
+      if (!Array.isArray(values)) values = [values]
+      for (let value of values) {
+        if (value instanceof util.moment )  { 
+          value = value.toISOString()
+        } 
+        
+        %><meta property="<%- meta.type.key %>:<%- key %>" content="<%- value %>" /><% 
+      }
+
+      if (values.length === 1 && values[0] instanceof util.moment) {
+        index_meta.set(key + '_pretty', values[0].format('DD MMM YYYY'))
+      }
+      if (values.length === 1) {
+        index_meta.set(key, values[0])
+      } else {
+        index_meta.set(key, values)
+      }
+      index_meta.set(meta_key, meta_value.key)
+    } else {
+      index_meta.set(meta_key, meta_value.key)
+    }
+  } 
+%>
+
+<% if (!ctx.meta?.title && ctx.title) { %>
+    <meta property="og:title" content="<%- title %>" />
+<% 
+    index_meta.set('title', title)
+  } 
+%>
+
+<% if (ctx.title) { %>
+ <title>David Alsh - <%- title %></title>
+<% } else { %>
+ <title>David Alsh</title>
+<% } %>
+
+<%- styles.add(paths.root + "/styles.scss") %>
+<%- await scripts.add(paths.root + "/index.ts") %>

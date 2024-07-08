@@ -1,0 +1,11 @@
+<% 
+  assets.add("./assets")
+  ctx.publish_date = util.moment('2019-03-19')
+  ctx.tags = ['tutorial', 'video', 'golang', 'go', 'web development']
+  ctx.title = "Building a Web Application with Go and Angular"
+  ctx.description = "A tutorial on creating a web application using Go and Angular"
+  ctx.image = slug_full + "assets/hero.png"
+  ctx.image_subtitle = "Wielding this dynamic duo has never been easier"
+  index_meta.set('peek', '')
+%>
+<%- await include(paths.root + '/pages/article/article.ejs', ctx) %>
