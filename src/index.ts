@@ -16,7 +16,7 @@ if (window.location.pathname === '/') {
   await initHomePage()
 }
 
-window.addEventListener('message', console.warn)
+// window.addEventListener('message', console.warn)
 
 
 
