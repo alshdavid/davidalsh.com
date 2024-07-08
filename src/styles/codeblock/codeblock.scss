@@ -32,12 +32,25 @@ code, .codeblock {
 }
 
 .codeblock {
-
+  border-radius: 4px;
+  background: #010409;
+  
   &.border {
     border: 1px var(--borderColor-default) solid;
-    border-radius: 4px;
   }
   
+  .title {
+    line-height: 30px;
+    /* margin-left: 38px; */
+    /* padding-left: 13px; */
+    border-bottom: 1px var(--borderColor-default) solid;
+    /* border-left: 1px #999 solid; */
+    /* margin-bottom: -1px; */
+    /* padding-bottom: 1px; */
+    background-color: #161b22;
+    padding-left: 12px;
+  }
+
   margin: 0;
   padding: 0 0 0 0;
   // margin: 0 0 var(--margin-bottom-desktop) 0;

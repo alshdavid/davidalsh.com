@@ -28,9 +28,7 @@ This allowed for drastically simplified development environments that had a redu
 <div class="column border no-padding">
 <div>
 
-<div class="banner">That Allows This:</div>
-
-```json?border=false
+```json?<%- util.query({ title: "Which Allows This:", border: false }) %>
 {
   "devDependencies": {
     "copy-webpack-plugin": "*",
@@ -55,9 +53,7 @@ This allowed for drastically simplified development environments that had a redu
 </div>
 <div>
 
-<div class="banner">To Become This:</div>
-
-```json?border=false
+```json?<%- util.query({ title: "To Become This:", border: false }) %>
 {
   "devDependencies": {
     "parcel": "*"
@@ -184,17 +180,15 @@ The transformer will read the file contents from the disk then, using a JavaScri
 
 <div class="column border no-padding">
 <div>
-<div class="banner">Source code:</div>
 
-```javascript
+```javascript?<%- util.query({ title: "Source code:", border: false }) %>
 import foo from 'foo'
 ```
 
 </div>
 <div>
-<div class="banner">Resulting AST:</div>
 
-```json
+```json?<%- util.query({ title: "Resulting AST:", border: false }) %>
 {
   "type": "Module",
   "body": [

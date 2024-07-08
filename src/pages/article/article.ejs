@@ -16,6 +16,7 @@
       image: ctx.image
     }
   }) %>
+  <meta name="giscus:backlink" content="https://davidalsh.com<%- slug %>">
 </head>
 
 <body class="page-article <%- util.path.basename(paths.dirname) %>">
@@ -33,10 +34,22 @@
       </div>
     <% } %>
 
-    <%- await markdown.render('./readme.md') %>
+    <%- await markdown.render('./readme.md') %>    
   </main>
   
   <div class="comments">
+    <div class="attribution">
+      <div class="author">
+        <h4><a href="/">David Alsh</a></h4>
+        <p><%- ctx.publish_date.format('DD MMM YYYY') %></p>
+      </div>
+      <div class="share">
+        <h4>Share this post</h4>
+        <a href="">twitter</a>
+        <a href="">facebook</a>
+      </div>
+    </div>
+
     <script src="https://giscus.app/client.js"
         data-repo="alshdavid/davidalsh-com"
         data-repo-id="MDEwOlJlcG9zaXRvcnk2ODQ0NzA1NA=="

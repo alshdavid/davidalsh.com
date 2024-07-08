@@ -153,6 +153,7 @@ for (const index_file of index_files) {
       util: {
         path,
         moment,
+        query: (obj: any) => new URLSearchParams(obj).toString()
       },
       paths: {
         root: __src,

@@ -71,15 +71,12 @@ export class Markdown {
             lineNumbersWrapper = `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
           });
 
-          console.log(settings)
-  
           return `
             <code class="codeblock language-${lang} ${settings.get('border') === 'false' ? '' : 'border'}">
-              <div class="codeblock-inner">
-                <div class="line-numbers">
-                  <pre>${Prism.highlight(code, Prism.languages[lang], lang)}</pre>
-                  ${lineNumbersWrapper}
-                </div>
+              ${settings.has('title') ? `<div class="title">${settings.get('title')}</div>` : ''}
+              <div class="codeblock-inner line-numbers">
+                <pre>${Prism.highlight(code, Prism.languages[lang], lang)}</pre>
+                ${lineNumbersWrapper}
               </div>
             </code>
           `
