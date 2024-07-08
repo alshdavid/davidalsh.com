@@ -27,6 +27,7 @@ jobs:
         env PROD=true URL="https://davidalsh.com" npm run build
 
         cd .github/deployment
+        npm install
         npm run start
       env:
         CI: true
