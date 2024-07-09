@@ -6,18 +6,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+
+    - name: "Install Nodejs" 
+      run: bash .github/workflows/install-nodejs.bash
+
     - name: Upload HTML to AWS
       run: |
         set -e
+        
+        node -v
 
         export AWS_DEFAULT_OUTPUT="yaml"
         export AWS_PAGER=
@@ -25,10 +24,7 @@ jobs:
 
         npm install
         env PROD=true URL="https://davidalsh.com" npm run build
-
-        cd .github/deployment
-        npm install
-        npm run start
+        env DRY=false npm run publish
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
