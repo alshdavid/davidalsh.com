@@ -14,11 +14,3 @@
 
 @import "./pages/home/home.scss";
 @import "./pages/article/article.scss";
-
-wc-lazy:not(:defined) {
-  display:none
-}
-
-wc-lazy >* {
-  display: none;
-}

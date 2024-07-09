@@ -1,7 +1,7 @@
-import { RemoteOptions } from "./remote-options";
+import { RemoteOptions } from "./remote-options.js";
 import * as mime from "mime-types";
 import * as S3 from "@aws-sdk/client-s3";
-import * as paths from "../paths";
+import * as paths from "../paths.js";
 import * as path from "node:path";
 
 export type PutTextOptions = {

@@ -12,7 +12,7 @@ WcGrid.register()
 initColorScheme()
 await runSvgReplace()
 
-if (window.location.pathname === '/') {
+if (window.location.pathname === '/' || window.location.pathname === '') {
   await initHomePage()
 }
 

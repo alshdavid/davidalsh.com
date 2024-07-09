@@ -1,5 +1,5 @@
 import * as S3 from '@aws-sdk/client-s3'
-import { RemoteOptions } from "./remote-options"
+import { RemoteOptions } from "./remote-options.js"
 
 export async function getIntegrityFile({ Bucket, Client }: RemoteOptions): Promise<Record<string, string>> {
   try {

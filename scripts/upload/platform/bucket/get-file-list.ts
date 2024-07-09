@@ -1,5 +1,5 @@
 import * as S3 from '@aws-sdk/client-s3'
-import { RemoteOptions } from "./remote-options"
+import { RemoteOptions } from "./remote-options.js"
 
 export type MD5Hash = string
 

@@ -1,8 +1,8 @@
-import { DeleteItemsOptions, deleteItems } from "./delete-items";
-import { MD5Hash, getFileList } from "./get-file-list";
-import { PutFileOptions, putFile } from "./put-file";
-import { PutTextOptions, putText } from "./put-text";
-import { RemoteOptions } from "./remote-options";
+import { DeleteItemsOptions, deleteItems } from "./delete-items.js";
+import { MD5Hash, getFileList } from "./get-file-list.js";
+import { PutFileOptions, putFile } from "./put-file.js";
+import { PutTextOptions, putText } from "./put-text.js";
+import { RemoteOptions } from "./remote-options.js";
 
 export class BucketService {
   readonly #remoteOptions: RemoteOptions
