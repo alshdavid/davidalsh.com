@@ -3,11 +3,11 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": ["DOM", "ESNext"],
-    "jsx": "react",
-    "jsxFactory": "h"
+    "lib": ["ESNext"]
   },
   "include": [
-    "./upload"
+    "./upload",
+    "./build",
+    "./platform",
   ]
 }

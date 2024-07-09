@@ -8,7 +8,11 @@ import * as Remote from './platform/bucket/index.js'
 import * as CloudFront from './platform/cloudfront/index.js'
 import * as Local from './platform/local/index.js'
 import { CacheControl } from './platform/cache-control/index.js';
-import * as paths from '../../../scripts/paths.js'
+import * as paths from '../platform/paths.js'
+
+const DRY = process.env.DRY === "false" ? false : true; 
+const BUCKET = process.env.AWS_S3_BUCKET || 'alshdavid-web-com-davidalsh-www'
+const DISTRIBUTION = process.env.AWS_CLOUDFRONT_DISTRIBUTION || 'E1RN9EP7R6042I'
 
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename); 
@@ -20,10 +24,6 @@ function readFile(filepath: string): string {
 function readJson<T = any>(filepath: string): T {
   return JSON.parse(readFile(filepath))
 }
-
-const BUCKET = process.env.AWS_S3_BUCKET || 'alshdavid-web-com-davidalsh-www'
-const DISTRIBUTION = process.env.AWS_CLOUDFRONT_DISTRIBUTION || 'E1RN9EP7R6042I'
-const DRY = process.env.DRY ? process.env.DRY === 'true' : false
 
 const S3 = new S3Client({ region: 'ap-southeast-2' });
 const CF = new CloudFrontClient({ region: 'ap-southeast-2' })
@@ -41,7 +41,7 @@ void async function main() {
     Dry: DRY,
   })
 
-  const cacheControl = new CacheControl([__dirname, 'cache-control.yml'])
+  const cacheControl = new CacheControl([paths.__src, 'cache-control.yml'])
 
   const localFileList = {
     ...Local.getFileList({ filepath: paths.__dist }),
@@ -99,6 +99,13 @@ void async function main() {
   }
   for (const keyPath of toDeleteList) {
     console.log(chalk.red(`DEL: ${keyPath}`))
+  }
+
+  if (DRY) {
+    console.log('\nSKIP')
+    return
+  } else {
+    console.log('\nSTARTING\n')
   }
 
   for (const keyPath of toPutList) {

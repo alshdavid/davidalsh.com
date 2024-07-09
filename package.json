@@ -2,9 +2,10 @@
   "name": "davidalsh-com",
   "type": "module",
   "scripts": {
-    "build": "node --import tsx ./scripts/index.ts",
+    "build": "node --import tsx ./scripts/build/index.ts",
     "watch": "npx nodemon",
-    "serve": "npx http-server -c=-1 ./dist"
+    "serve": "npx http-server -c=-1 ./dist",
+    "publish": "node --import tsx ./scripts/upload/main.ts"
   },
   "dependencies": {
     "preact": "*"
@@ -23,7 +24,19 @@
     "marked": "*",
     "prismjs": "*",
     "@types/prismjs": "*",
-    "moment": "*"
+    "moment": "*",
+    "@aws-sdk/client-cloudfront": "*",
+    "@aws-sdk/client-s3": "*",
+    "@types/chalk": "*",
+    "@types/marked": "*",
+    "@types/mime-types": "*",
+    "chalk": "^4.0.0",
+    "mime-types": "*",
+    "ts-loader": "*",
+    "ts-node": "*",
+    "typescript": "*",
+    "webpack": "*",
+    "yaml": "*"
   },
   "nodemonConfig": {
     "ignore": ["**/node_modules/**", "**/.git/**", "**/dist/**"],
