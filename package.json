@@ -1,48 +1,17 @@
 {
-  "name": "davidalsh-com",
-  "type": "module",
+  "name": "rspress-doc-template",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "node --import tsx ./scripts/build/index.ts",
-    "watch": "npx nodemon",
-    "serve": "npx http-server -c=-1 ./dist",
-    "publish": "node --import tsx ./scripts/upload/main.ts"
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
   },
   "dependencies": {
-    "preact": "*"
+    "react": "*",
+    "rspress": "*"
   },
   "devDependencies": {
-    "@types/node": "*",
-    "@types/ejs": "*",
-    "glob": "*",
-    "tsx": "*",
-    "ejs": "*",
-    "esbuild": "*",
-    "http-server": "*",
-    "nodemon": "*",
-    "sass": "*",
-    "prettier": "*",
-    "marked": "*",
-    "prismjs": "*",
-    "@types/prismjs": "*",
-    "moment": "*",
-    "@aws-sdk/client-cloudfront": "*",
-    "@aws-sdk/client-s3": "*",
-    "@types/marked": "*",
-    "@types/mime-types": "*",
-    "chalk": "*",
-    "mime-types": "*",
-    "ts-loader": "*",
-    "ts-node": "*",
-    "typescript": "*",
-    "webpack": "*",
-    "yaml": "*"
-  },
-  "nodemonConfig": {
-    "ignore": ["**/node_modules/**", "**/.git/**", "**/dist/**"],
-    "watch": ["src/**/*", "src/.partials/**/*", "src/.utils/**/*", "scripts/**/*"],
-    "ext": "*",
-    "delay": 250,
-    "signal" : "SIGTERM",
-    "exec": "clear && npm run build"
+    "@types/node": "^16"
   }
 }

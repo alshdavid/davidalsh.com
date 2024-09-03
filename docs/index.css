@@ -1,0 +1,36 @@
+:root {
+  --rp-c-brand: #f00;
+  --rp-c-brand-dark: #ffa500;
+  --rp-c-brand-darker: #c26c1d;
+  --rp-c-brand-light: #f2a65a;
+  --rp-c-brand-lighter: #f2a65a;
+  --rp-sidebar-width: 280px;
+  --rp-aside-width: 256px;
+  --rp-code-title-bg: rgba(250, 192, 61, 0.15);
+  --rp-code-block-bg: rgba(214, 188, 70, 0.05);
+}
+
+body {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  overflow-y: scroll;
+}
+
+#aside-container, 
+div[class^='aside-container'],
+.rspress-sidebar-menu,
+.rspress-sidebar {
+  display: none !important;
+}
+
+.rspress-nav div[class^='navBarTitle'] a {
+  font-size: 20px !important;
+  font-weight: 400 !important;
+}
+
+.rspress-doc {
+  img, video {
+    margin: 0 auto;
+  }
+}
