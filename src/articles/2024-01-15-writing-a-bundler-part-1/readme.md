@@ -1,5 +1,5 @@
 <h1> 
-  📦 Writing a Bundler - From Source to Bundle
+  📦 Writing a Bundler - From Source to Bundle (TODO)
 </h1>
 
 This is the first episode in a series that explores writing a web bundler.

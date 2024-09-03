@@ -13,6 +13,8 @@ import * as prettier from 'prettier'
 import { Markdown } from './markdown/markdown.js';
 import * as paths from '../platform/paths.js';
 
+console.clear()
+
 const PROD = process.env.PROD === 'true'
 const URL = process.env.URL || 'http://localhost:8080'
 

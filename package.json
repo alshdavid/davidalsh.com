@@ -43,6 +43,6 @@
     "ext": "*",
     "delay": 250,
     "signal" : "SIGTERM",
-    "exec": "clear && npm run build"
+    "exec": "npm run build"
   }
 }
